@@ -1,13 +1,12 @@
-
-import './App.css'
+import "./App.css";
+import Layout from "./Layout";
 
 function App() {
-
   return (
     <div>
-      <h1 className='flex items-center justify-center'>LinkedIn Porject Home page</h1>
+      <Layout />
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
