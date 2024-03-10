@@ -15,13 +15,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import AutocompleteModal from "../ui/AutocompleteModal";
 import ProfileDropdown from "../ui/ProfileDropdown";
+import { Link, useLocation } from "react-router-dom";
 
 interface NavabrProps {
   handleMenu: () => void;
 }
 const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
-  const [activeIndx, setActiveIndx] = useState(1);
   const [isSearchClick, setIsSearchClick] = useState(false);
+  const { pathname } = useLocation();
 
   const searchClick = () => {
     setIsSearchClick((prev) => !prev);
@@ -59,75 +60,85 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
         <ul className="flex items-center">
           {/* HOME ROUTE */}
           <li
-            onClick={() => setActiveIndx(1)}
             className={`${
-              activeIndx === 1
+              pathname === "/"
                 ? "text-black border-b-2 border-black"
                 : "text-gray-600"
             } hover:text-black p-4 pb-2 pt-2`}
           >
-            <a className="flex flex-col justify-center items-center" href="#">
+            <Link
+              className="flex flex-col justify-center items-center"
+              to="/home"
+            >
               <FontAwesomeIcon className="w-6 h-6" icon={faHouse} />
               <span className="text-[12px] max-[800px]:hidden">Home</span>
-            </a>
+            </Link>
           </li>
           {/* MY NETWORK ROUTE */}
           <li
-            onClick={() => setActiveIndx(2)}
             className={`${
-              activeIndx === 2
+              pathname === "/mynetwork"
                 ? "text-black border-b-2 border-black"
                 : "text-gray-600"
             } hover:text-black p-4 pb-2 pt-2`}
           >
-            <a className="flex flex-col justify-center items-center" href="#">
+            <Link
+              className="flex flex-col justify-center items-center"
+              to="/mynetwork"
+            >
               <FontAwesomeIcon className="w-6 h-6" icon={faUserGroup} />
               <span className="text-[12px] max-[800px]:hidden">My Network</span>
-            </a>
+            </Link>
           </li>
           {/* JOBS ROUTE */}
           <li
-            onClick={() => setActiveIndx(3)}
             className={`${
-              activeIndx === 3
+              pathname === "/jobs"
                 ? "text-black border-b-2 border-black "
                 : "text-gray-600"
             } hover:text-black p-4 pb-2 pt-2`}
           >
-            <a className="flex flex-col justify-center items-center" href="#">
+            <Link
+              className="flex flex-col justify-center items-center"
+              to="/jobs"
+            >
               <FontAwesomeIcon className="w-6 h-6" icon={faBriefcase} />
               <span className="text-[12px] max-[800px]:hidden">Jobs</span>
-            </a>
+            </Link>
           </li>
           {/* MESSAGING ROUTE */}
           <li
-            onClick={() => setActiveIndx(4)}
             className={`${
-              activeIndx === 4
+              pathname === "/messaging"
                 ? "text-black border-b-2 border-black "
                 : "text-gray-600"
             } hover:text-black p-4 pb-2 pt-2 max-[350px]:hidden`}
           >
-            <a className="flex flex-col justify-center items-center" href="#">
+            <Link
+              className="flex flex-col justify-center items-center"
+              to="/messaging"
+            >
               <FontAwesomeIcon className="w-6 h-6" icon={faCommentDots} />
               <span className="text-[12px] max-[800px]:hidden">Messaging</span>
-            </a>
+            </Link>
           </li>
           {/* NOTIFICATIONS ROUTE */}
           <li
-            onClick={() => setActiveIndx(5)}
             className={`${
-              activeIndx === 5
+              pathname === "/notifications"
                 ? "text-black border-b-2 border-black  "
                 : "text-gray-600"
             } hover:text-black p-4 pb-2 pt-2 max-[410px]:hidden`}
           >
-            <a className="flex flex-col justify-center items-center" href="#">
+            <Link
+              className="flex flex-col justify-center items-center"
+              to="/notifications"
+            >
               <FontAwesomeIcon className="w-6 h-6" icon={faBell} />
               <span className="text-[12px] max-[800px]:hidden">
                 Notifications
               </span>
-            </a>
+            </Link>
           </li>
         </ul>
 
