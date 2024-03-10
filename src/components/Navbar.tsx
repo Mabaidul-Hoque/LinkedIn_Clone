@@ -16,6 +16,7 @@ import { useState } from "react";
 import AutocompleteModal from "../ui/AutocompleteModal";
 import ProfileDropdown from "../ui/ProfileDropdown";
 import { Link, useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
 interface NavabrProps {
   handleMenu: () => void;
@@ -61,7 +62,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
           {/* HOME ROUTE */}
           <li
             className={`${
-              pathname === "/"
+              pathname === "/" || pathname === "/home"
                 ? "text-black border-b-2 border-black"
                 : "text-gray-600"
             } hover:text-black p-4 pb-2 pt-2`}
@@ -144,17 +145,14 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
 
         <div className="flex items-center justify-center gap-4 max-[550px]:hidden">
           {/* PROFILE SECTION */}
-          {/* <div className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer">
-            <FontAwesomeIcon className="w-6 h-6" icon={faCircleUser} />
-            <span className="text-[12px] max-[800px]:hidden">
-              Me <FontAwesomeIcon className="w-3 h-3" icon={faCaretDown} />
-            </span>
-          </div> */}
           <ProfileDropdown />
           {/* DIVIDER */}
           <div className="border-r-1 border-gray-500"></div>
           {/*  FOR BUSSINESS  */}
-          <div className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer">
+          <div
+            onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
+            className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer"
+          >
             <FontAwesomeIcon className="w-6 h-6" icon={faGripVertical} />
             <span className="text-[12px] max-[800px]:hidden">
               For Bussiness{" "}
@@ -162,7 +160,10 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
             </span>
           </div>
           {/* ADVERTISE */}
-          <div className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer">
+          <div
+            onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
+            className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer"
+          >
             <FontAwesomeIcon className="w-6 h-6" icon={faRectangleAd} />
             <span className="text-[12px] max-[800px]:hidden">Advertise</span>
           </div>
