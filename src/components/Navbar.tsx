@@ -14,6 +14,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import AutocompleteModal from "../ui/AutocompleteModal";
+import ProfileDropdown from "../ui/ProfileDropdown";
 
 interface NavabrProps {
   handleMenu: () => void;
@@ -36,7 +37,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
           alt="LinedIn_logo"
         />
         {/* SEARCH SECTION */}
-        <div className="flex items-center">
+        <div className="flex items-center z-50">
           <input
             className={`bg-[#EDF3F8] w-64 xl:focus:w-80 h-9 pl-10 rounded focus:outline-blue-500 ${
               isSearchClick ? "block" : "hidden"
@@ -132,12 +133,13 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
 
         <div className="flex items-center justify-center gap-4 max-[550px]:hidden">
           {/* PROFILE SECTION */}
-          <div className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer">
+          {/* <div className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer">
             <FontAwesomeIcon className="w-6 h-6" icon={faCircleUser} />
             <span className="text-[12px] max-[800px]:hidden">
               Me <FontAwesomeIcon className="w-3 h-3" icon={faCaretDown} />
             </span>
-          </div>
+          </div> */}
+          <ProfileDropdown />
           {/* DIVIDER */}
           <div className="border-r-1 border-gray-500"></div>
           {/*  FOR BUSSINESS  */}
