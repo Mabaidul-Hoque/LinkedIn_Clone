@@ -3,8 +3,6 @@ import { Post } from "../../../pages/Home";
 import {
   faRetweet,
   faCommentDots,
-  faGlobe,
-  faThumbsUp,
   faPaperPlane,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

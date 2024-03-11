@@ -1,14 +1,13 @@
 import React from "react";
 import Box from "@mui/material/Box";
-import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Modal from "@mui/material/Modal";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 
 interface AutocompleteModalProps {
-  searchClick: () => void; // Assuming searchClick is a function that doesn't return anything
-  isSearchClick: boolean; // Assuming isSearchClick is a boolean
+  searchClick: () => void;
+  isSearchClick: boolean;
 }
 
 const style = {
@@ -28,7 +27,7 @@ const AutocompleteModal: React.FC<AutocompleteModalProps> = ({
   isSearchClick,
 }) => {
   const [open, setOpen] = React.useState(false);
-  const handleOpen = () => setOpen(true);
+  // const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   return (
     <div>

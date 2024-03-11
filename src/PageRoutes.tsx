@@ -1,5 +1,4 @@
-import React, { ReactNode } from "react";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { createBrowserRouter } from "react-router-dom";
 import App from "./App.tsx";
 import MyNetwork from "./pages/MyNetwork.tsx";
 import Jobs from "./pages/Jobs.tsx";

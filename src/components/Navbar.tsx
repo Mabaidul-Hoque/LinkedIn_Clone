@@ -2,12 +2,10 @@ import {
   faBell,
   faBriefcase,
   faCaretDown,
-  faCircleUser,
   faCommentDots,
   faEllipsis,
   faGripVertical,
   faHouse,
-  faMagnifyingGlass,
   faRectangleAd,
   faUserGroup,
 } from "@fortawesome/free-solid-svg-icons";

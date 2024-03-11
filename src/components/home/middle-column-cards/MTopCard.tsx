@@ -1,7 +1,7 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
-import { faFileVideo, faImage } from "@fortawesome/free-solid-svg-icons";
+import { faImage } from "@fortawesome/free-solid-svg-icons";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 
 const MTopCard = () => {
