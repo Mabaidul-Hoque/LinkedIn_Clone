@@ -64,7 +64,7 @@ const Lcard1 = () => {
         <div className="border-b border-gray-300" />
         {/* MY ITEMS */}
         <div className="text-left flex items-center gap-2 px-4 py-3 hover:bg-gray-300">
-          <FontAwesomeIcon icon={faBookmark} />
+          <FontAwesomeIcon className="text-gray-500" icon={faBookmark} />
           <span className="text-sm">My items</span>
         </div>
       </div>

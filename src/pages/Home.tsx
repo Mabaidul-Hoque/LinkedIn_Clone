@@ -45,8 +45,8 @@ const Home = () => {
   console.log("posts", posts);
 
   const leftColumnCards = [
-    { title: "Card 1", content: <Lcard1 /> },
-    { title: "Card 2", content: <Lcard2 /> },
+    { title: "Left col profile card", content: <Lcard1 /> },
+    { title: "Left col events card", content: <Lcard2 /> },
   ];
   const rightColumnCards = [
     { title: "Card 1", content: <RCard1 /> },
