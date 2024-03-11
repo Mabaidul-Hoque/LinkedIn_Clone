@@ -19,7 +19,7 @@ const Layout = () => {
         <Navbar handleMenu={handleMenu} />
       </nav>
       {/* MAIN  */}
-      <main className="text-center w-full m-auto min-h-[calc(100vh-3.5rem)] bg-[#FFFFFF] relative">
+      <main className="text-center w-full m-auto min-h-[calc(100vh-3.5rem)] relative">
         <ResponsiveMenu menu={menu} />
         {pathname === "/" ? <Home /> : <Outlet />}
       </main>
