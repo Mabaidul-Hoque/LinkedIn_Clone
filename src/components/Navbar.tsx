@@ -39,7 +39,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
           alt="LinedIn_logo"
         />
         {/* SEARCH SECTION */}
-        <div className="flex items-center z-50">
+        <div className="flex items-center">
           <input
             className={`bg-[#EDF3F8] w-64 xl:focus:w-80 h-9 pl-10 rounded focus:outline-blue-500 ${
               isSearchClick ? "block" : "hidden"
