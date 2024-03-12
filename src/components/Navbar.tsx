@@ -15,11 +15,13 @@ import AutocompleteModal from "../ui/AutocompleteModal";
 import ProfileDropdown from "../ui/ProfileDropdown";
 import { Link, useLocation } from "react-router-dom";
 import { toast } from "react-toastify";
+import ResponsiveMenu from "../ui/ResponsiveMenu";
 
 interface NavabrProps {
   handleMenu: () => void;
+  menu: boolean;
 }
-const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
+const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
   const [isSearchClick, setIsSearchClick] = useState(false);
   const { pathname } = useLocation();
 
@@ -28,7 +30,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
   };
 
   return (
-    <div className="w-[95%] xl:w-[82%] m-auto h-full py-2 flex items-center justify-between">
+    <div className="w-[95%] xl:w-[82%] m-auto h-full py-2 flex items-center justify-between relative">
       {/* LOGO/SEARCH CONTAINER */}
       <div className="flex items-center gap-4 relative">
         <img
@@ -170,6 +172,9 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
         <div onClick={handleMenu} className="cursor-pointer min-[550px]:hidden">
           <FontAwesomeIcon className="text-3xl" icon={faEllipsis} />
         </div>
+      </div>
+      <div className="min-[550px]:hidden">
+        <ResponsiveMenu menu={menu} handleMenu={handleMenu} />
       </div>
     </div>
   );

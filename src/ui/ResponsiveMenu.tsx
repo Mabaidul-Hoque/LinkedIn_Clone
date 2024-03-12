@@ -3,53 +3,73 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faBell,
   faCaretDown,
-  faCircleUser,
   faCommentDots,
   faGripVertical,
   faRectangleAd,
 } from "@fortawesome/free-solid-svg-icons";
+import { Link } from "react-router-dom";
+import ProfileDropdown from "./ProfileDropdown";
 
 interface ResponsiveMenuProps {
   menu: boolean;
+  handleMenu: () => void;
 }
 
-const ResponsiveMenu: React.FC<ResponsiveMenuProps> = ({ menu }) => {
+const ResponsiveMenu: React.FC<ResponsiveMenuProps> = ({
+  menu,
+  handleMenu,
+}) => {
   return (
     <div>
       {menu && (
-        <div className="flex absolute right-0 top-0 bg-white border border-gray-300 rounded shadow-lg">
+        <div className="flex absolute right-0 top-16 bg-white border border-gray-300 rounded shadow-lg">
           {/* MESSAGING ROUTE */}
           <div
             className={`
                 text-gray-600
               hover:text-black p-4 pb-2 pt-2 min-[350px]:hidden`}
           >
-            <a className="flex flex-col justify-center items-center" href="#">
+            <Link
+              to="/messaging"
+              onClick={handleMenu}
+              className="flex flex-col justify-center items-center"
+            >
               <FontAwesomeIcon className="w-6 h-6" icon={faCommentDots} />
               <span className="text-[12px] max-[800px]:hidden">Messaging</span>
-            </a>
+            </Link>
           </div>
           {/* NOTIFICATIONS ROUTE */}
           <div
             className={`text-gray-600  hover:text-black p-4 pb-2 pt-2 min-[410px]:hidden`}
           >
-            <a className="flex flex-col justify-center items-center" href="#">
+            <Link
+              to="/notifications"
+              onClick={handleMenu}
+              className="flex flex-col justify-center items-center"
+            >
               <FontAwesomeIcon className="w-6 h-6" icon={faBell} />
               <span className="text-[12px] max-[800px]:hidden">
                 Notifications
               </span>
-            </a>
+            </Link>
           </div>
 
           {/* PROFILE SECTION */}
-          <div className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer  p-4 pb-2 pt-2 min-[550px]:hidden">
-            <FontAwesomeIcon className="w-6 h-6" icon={faCircleUser} />
+          <div
+            onClick={handleMenu}
+            className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer  p-4 pb-2 pt-2 min-[550px]:hidden"
+          >
+            {/* <FontAwesomeIcon className="w-6 h-6" icon={faCircleUser} />
             <span className="text-[12px] max-[800px]:hidden">
               Me <FontAwesomeIcon className="w-3 h-3" icon={faCaretDown} />
-            </span>
+            </span> */}
+            <ProfileDropdown />
           </div>
           {/*  FOR BUSSINESS  */}
-          <div className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer  p-4 pb-2 pt-2 min-[550px]:hidden">
+          <div
+            onClick={handleMenu}
+            className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer  p-4 pb-2 pt-2 min-[550px]:hidden"
+          >
             <FontAwesomeIcon className="w-6 h-6" icon={faGripVertical} />
             <span className="text-[12px] max-[800px]:hidden">
               For Bussiness{" "}
@@ -57,7 +77,10 @@ const ResponsiveMenu: React.FC<ResponsiveMenuProps> = ({ menu }) => {
             </span>
           </div>
           {/* ADVERTISE */}
-          <div className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer  p-4 pb-2 pt-2 min-[550px]:hidden">
+          <div
+            onClick={handleMenu}
+            className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer  p-4 pb-2 pt-2 min-[550px]:hidden"
+          >
             <FontAwesomeIcon className="w-6 h-6" icon={faRectangleAd} />
             <span className="text-[12px] max-[800px]:hidden">Advertise</span>
           </div>

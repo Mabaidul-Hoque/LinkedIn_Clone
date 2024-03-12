@@ -1,11 +1,12 @@
 import { faKey } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+
 import RCFooter from "./RCFooter";
 
 const RCard2 = () => {
   return (
     <>
-      <div className="bg-white shadow-md rounded-md px-4 py-8 mb-4 cursor-pointer relative ">
+      <div className="bg-white shadow-md rounded-md px-4 py-4 xlpy-8 mb-4 cursor-pointer relative ">
         <p className="text-sm">
           Mabaidul, unlock your full potential with linkedin Premium
         </p>

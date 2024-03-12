@@ -35,7 +35,7 @@ const MTopCard = () => {
   return (
     <div className="bg-white shadow-md rounded-md p-4 mb-4">
       {/* CREATE POST HEADER */}
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-2 xl:gap-4">
         <img
           src="https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png"
           alt="User Profile"
@@ -44,11 +44,11 @@ const MTopCard = () => {
         <input
           type="text"
           placeholder="Start a post"
-          className="flex-grow px-2 py-1 pl-8 border rounded-full h-12 focus:outline-blue-500 hover:bg-gray-100"
+          className="flex-grow px-2 py-1 pl-8 border rounded-full min-w-20 h-12 focus:outline-blue-500 hover:bg-gray-100"
         />
       </div>
       {/* UPLOADED OPTIONS */}
-      <div className="flex items-center justify-between mt-2 px-6">
+      <div className="flex items-center justify-center gap-4 sm:justify-between flex-wrap mt-6 xl:mt-2 px-0 sm:px-6">
         {/* IMAGE FILE */}
         <label className="cursor-pointer">
           <input type="file" className="hidden" />

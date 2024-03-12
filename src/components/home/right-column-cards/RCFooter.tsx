@@ -51,7 +51,7 @@ const lists = [
 const RCFooter = () => {
   return (
     <div className="">
-      <ul className="text-sm flex flex-wrap gap-2 items-center justify-center text-gray-500 p-8">
+      <ul className="text-sm flex flex-wrap gap-2 items-center justify-center text-gray-500 p-2 lg:p-4 xl:p-8">
         {lists.map((listItem) => (
           <li key={listItem.id} className="hover:underline hover:text-blue-500">
             <Link to={listItem.link}>{listItem.title}</Link>
@@ -59,7 +59,7 @@ const RCFooter = () => {
         ))}
       </ul>
       {/* ON CLICK OF MORE BOTTOM FOOTER WILL APPEAR IN MODAL TRY LATER */}
-      <div className="flex items-center justify-between px-3">
+      <div className="flex items-center justify-between px-0 xl:px-3">
         <img
           className="w-16"
           src="/LinkedIn_logo_footer.svg"

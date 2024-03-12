@@ -86,23 +86,23 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
         </div>
         <div className="w-[95%] mx-auto border-b border-gray-300"></div>
         {/* LIKE/COMMENT/POST/SHARE CONATINER */}
-        <div className="px-8 pt-2 pb-4 flex items-center justify-between">
+        <div className="px-1 xl:px-8 pt-2 pb-4 flex items-center justify-between">
           <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md ">
             {/* <FontAwesomeIcon className="size-5" icon={faThumbsUp} /> */}
             <ThumbUpAltOutlinedIcon />
-            <p>Like</p>
+            <p className="hidden">Like</p>
           </div>
           <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md">
             <FontAwesomeIcon className="size-5" icon={faCommentDots} />
-            <p>Comment</p>
+            <p className="hidden">Comment</p>
           </div>
           <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md">
             <FontAwesomeIcon className="size-5" icon={faRetweet} />
-            <p>Repost</p>
+            <p className="hidden">Repost</p>
           </div>
           <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md">
             <FontAwesomeIcon className="size-5" icon={faPaperPlane} />
-            <p>Send</p>
+            <p className="hidden">Send</p>
           </div>
         </div>
       </div>
@@ -126,7 +126,7 @@ const ExpandingCards: React.FC<ExpandingCardsProps> = ({ images }) => {
               activePanel === index
                 ? "w-[32rem] transition-width duration-500"
                 : "w-[5rem] transition-width duration-500"
-            } h-96 relative`}
+            } h-96`}
           >
             <img
               className={`${

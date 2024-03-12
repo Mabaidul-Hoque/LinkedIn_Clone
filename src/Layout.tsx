@@ -1,6 +1,5 @@
 import { useState } from "react";
 import Navbar from "./components/Navbar";
-import ResponsiveMenu from "./ui/ResponsiveMenu";
 import { Outlet, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import { ToastContainer } from "react-toastify";
@@ -17,11 +16,10 @@ const Layout = () => {
     <div className="">
       {/* NAVBAR */}
       <nav className="text-center w-full h-14 flex items-center justify-between mb-4 bg-[#FFFFFF] sticky top-0">
-        <Navbar handleMenu={handleMenu} />
+        <Navbar handleMenu={handleMenu} menu={menu} />
       </nav>
       {/* MAIN  */}
-      <main className="text-center w-full m-auto min-h-[calc(100vh-3.5rem)] ">
-        <ResponsiveMenu menu={menu} />
+      <main className="text-center w-full m-auto min-h-[calc(100vh-3.5rem)]">
         {pathname === "/" ? <Home /> : <Outlet />}
       </main>
       {/* Footer */}
