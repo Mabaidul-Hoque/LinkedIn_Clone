@@ -2,7 +2,14 @@
 export default {
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      backgroundImage: {
+        "profile-logo": "url('/frontend_dev_logo.jpeg')",
+      },
+      backgroundSize: {
+        custom: "200px 100px",
+      },
+    },
   },
   plugins: [],
 };

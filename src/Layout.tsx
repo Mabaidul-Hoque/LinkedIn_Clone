@@ -16,11 +16,11 @@ const Layout = () => {
   return (
     <div className="">
       {/* NAVBAR */}
-      <nav className="text-center w-full h-14 flex items-center justify-between mb-4 bg-[#FFFFFF]">
+      <nav className="text-center w-full h-14 flex items-center justify-between mb-4 bg-[#FFFFFF] sticky top-0">
         <Navbar handleMenu={handleMenu} />
       </nav>
       {/* MAIN  */}
-      <main className="text-center w-full m-auto min-h-[calc(100vh-3.5rem)] relative">
+      <main className="text-center w-full m-auto min-h-[calc(100vh-3.5rem)] ">
         <ResponsiveMenu menu={menu} />
         {pathname === "/" ? <Home /> : <Outlet />}
       </main>

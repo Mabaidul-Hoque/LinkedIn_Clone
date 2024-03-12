@@ -1,6 +1,6 @@
-export async function fetchPosts() {
+export async function fetchPosts(limit = 20, page = 1) {
   try {
-    const url = "https://academics.newtonschool.co/api/v1/linkedin/post";
+    const url = `https://academics.newtonschool.co/api/v1/linkedin/post?limit=${limit}&page=${page}`;
     const res = await fetch(url, {
       method: "GET",
       headers: {

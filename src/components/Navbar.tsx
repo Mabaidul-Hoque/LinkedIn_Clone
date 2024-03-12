@@ -60,14 +60,14 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu }) => {
           {/* HOME ROUTE */}
           <li
             className={`${
-              pathname === "/" || pathname === "/home"
+              pathname === "/" || pathname === "/feed"
                 ? "text-black border-b-2 border-black"
                 : "text-gray-600"
             } hover:text-black p-4 pb-2 pt-2`}
           >
             <Link
               className="flex flex-col justify-center items-center"
-              to="/home"
+              to="/feed"
             >
               <FontAwesomeIcon className="w-6 h-6" icon={faHouse} />
               <span className="text-[12px] max-[800px]:hidden">Home</span>

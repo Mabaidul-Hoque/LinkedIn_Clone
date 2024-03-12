@@ -4,23 +4,14 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 const Lcard1 = () => {
   return (
     <>
-      <div className="bg-white shadow-md rounded-md mb-4">
+      <div className="bg-white shadow-md rounded-md mb-4  z-10">
         {/* CARD1 HEADER */}
-        <div className="relative">
-          {/* BACKGROUND IMAGE */}
+        <div className="flex items-center justify-center bg-profile-logo bg-custom bg-center h-20 rounded-t-lg">
           <img
-            className="h-20 w-full bg-cover bg-center rounded-t-md"
-            src="/frontend_dev_logo.jpeg"
-            alt="background-image"
+            className="w-16 h-16 rounded-full cursor-pointer mt-20"
+            src="https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png"
+            alt="profile-image"
           />
-          {/* PROFILE IMAGE */}
-          <div className="flex items-center justify-center absolute top-12 left-[40%]">
-            <img
-              className="w-16 h-16 rounded-full cursor-pointer"
-              src="https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png"
-              alt="profile-image"
-            />
-          </div>
         </div>
         {/* CARD PROFILE DETAILS */}
         <div className="mt-12 px-2">
