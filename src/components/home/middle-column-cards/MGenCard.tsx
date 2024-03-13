@@ -9,7 +9,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PublicIcon from "@mui/icons-material/Public";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import { likePost } from "../../../apis/postLikeApi";
-import { useAuth0 } from "@auth0/auth0-react";
+
 
 interface MGenCardProps {
   post: Post;
@@ -23,26 +23,13 @@ function toCapitalized(str: string): string {
 
 const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
   ({ post }, ref) => {
-    const [accessToken, setAccessToken] = useState<string | undefined>();
-    const { getAccessTokenSilently } = useAuth0();
-    useEffect(() => {
-      const getToken = async () => {
-        try {
-          const token = await getAccessTokenSilently();
-          setAccessToken(token);
-          console.log("token", token);
-        } catch (e) {
-          console.error(e);
-        }
-      };
-      getToken();
-    }, [getAccessTokenSilently]);
+
 
     useEffect(() => {
       likeAPost();
     }, []);
     const likeAPost = async () => {
-      const res = await likePost(post._id, accessToken);
+      const res = await likePost(post._id);
       console.log("res from likeAPost", res);
     };
     const calculateDaysAgo = (createdAt: string): number => {

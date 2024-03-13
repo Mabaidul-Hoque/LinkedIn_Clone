@@ -1,37 +1,63 @@
-// import { useEffect, useState, useContext } from "react";
-// import { useAuth0 } from "@auth0/auth0-react";
-// import { createContext } from "vm";
+import React, {
+  ReactNode,
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+} from "react";
 
-// const AuthContext = createContext();
-// export const useAuth = () => {
-//   const context = useContext(AuthContext);
-//   if (!context) {
-//     throw new Error("AuthContext is undefined");
-//   }
-//   return context;
-// };
+interface AuthContextValue {
+  isAuthenticated: boolean;
+  login: (token: string) => void;
+  logout: () => void;
+}
 
-// const AuthProvider = ({ children }) => {
-//   const { getAccessTokenSilently } = useAuth0();
-//   const [accessToken, setAccessToken] = useState<string | undefined>();
+const AuthContext = createContext<AuthContextValue>({
+  isAuthenticated: false,
+  login: () => {},
+  logout: () => {},
+});
 
-//   useEffect(() => {
-//     const getToken = async () => {
-//       try {
-//         const token = await getAccessTokenSilently();
-//         setAccessToken(token);
-//       } catch (e) {
-//         console.error(e);
-//       }
-//     };
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthProvider");
+  }
+  return context;
+};
 
-//     getToken();
-//   }, [getAccessTokenSilently]);
-//   return (
-//     <AuthContext.Provider value={{ accessToken }}>
-//       {children}
-//     </AuthContext.Provider>
-//   );
-// };
+interface AuthProviderProps {
+  children: ReactNode;
+}
 
-// export default AuthProvider;
+const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+
+  const login = (token: string) => {
+    if (token) {
+      localStorage.setItem("token", token);
+      setIsAuthenticated(true);
+    }
+  };
+
+  const logout = () => {
+    localStorage.removeItem("token");
+    setIsAuthenticated(false);
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    console.log("token in useeffect", token);
+    setIsAuthenticated(!!token);
+  }, []);
+
+  const value = {
+    isAuthenticated,
+    login,
+    logout,
+  };
+
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
+};
+
+export default AuthProvider;

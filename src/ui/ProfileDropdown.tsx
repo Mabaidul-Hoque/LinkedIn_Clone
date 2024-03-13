@@ -3,14 +3,14 @@ import { Menu, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { Divider } from "@mui/material";
-import { useAuth0 } from "@auth0/auth0-react";
+import { useAuth } from "../contexts/AuthProvider";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function ProfileDropdown() {
-  const { logout, isAuthenticated } = useAuth0();
+  const { logout } = useAuth();
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -89,22 +89,20 @@ export default function ProfileDropdown() {
             </Menu.Item>
             {/* DIVIDER */}
             <Divider sx={{ mt: 1, mb: 1 }} />
-            {isAuthenticated && (
-              <Menu.Item>
-                {({ active }) => (
-                  <button
-                    onClick={() => logout()}
-                    type="submit"
-                    className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block w-full px-4 py-2 text-left text-sm"
-                    )}
-                  >
-                    Sign out
-                  </button>
-                )}
-              </Menu.Item>
-            )}
+            <Menu.Item>
+              {({ active }) => (
+                <button
+                  type="submit"
+                  onClick={logout}
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block w-full px-4 py-2 text-left text-sm"
+                  )}
+                >
+                  Sign out
+                </button>
+              )}
+            </Menu.Item>
           </div>
         </Menu.Items>
       </Transition>

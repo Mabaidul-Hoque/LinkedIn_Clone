@@ -12,19 +12,19 @@ interface PostModalProps {
 }
 const PostModal: React.FC<PostModalProps> = ({ isOpen, onClose }) => {
   const [postContent, setPostContent] = useState("");
-  const [postSettings, setPostSettings] = useState("anyone");
+  //   const [postSettings, setPostSettings] = useState("anyone");
   const [emojiInput, setEmojiInput] = useState("");
-  const [mediaFile, setMediaFile] = useState<File | null>(null);
+  //   const [mediaFile, setMediaFile] = useState<File | null>(null);
 
   const handleEmojiInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setEmojiInput(e.target.value);
   };
 
-  const handleMediaFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.files && e.target.files.length > 0) {
-      setMediaFile(e.target.files[0]);
-    }
-  };
+  //   const handleMediaFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //     if (e.target.files && e.target.files.length > 0) {
+  //       setMediaFile(e.target.files[0]);
+  //     }
+  //   };
 
   const handlePostContentChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
@@ -32,14 +32,14 @@ const PostModal: React.FC<PostModalProps> = ({ isOpen, onClose }) => {
     setPostContent(e.target.value);
   };
 
-  const handlePostSettingsChange = (
-    e: React.ChangeEvent<HTMLTextAreaElement>
-  ) => {
-    setPostSettings(e.target.value);
-  };
+  //   const handlePostSettingsChange = (
+  //     e: React.ChangeEvent<HTMLTextAreaElement>
+  //   ) => {
+  //     setPostSettings(e.target.value);
+  //   };
 
   const handlePost = () => {
-    console.log("Posting:", postContent, postSettings);
+    // console.log("Posting:", postContent, postSettings);
     onClose();
   };
 
@@ -124,7 +124,7 @@ const PostModal: React.FC<PostModalProps> = ({ isOpen, onClose }) => {
                   <input
                     type="file"
                     accept="image/*" // Accept only image files
-                    onChange={handleMediaFileChange}
+                    // onChange={handleMediaFileChange}
                   />
                 </div>
               </div>
