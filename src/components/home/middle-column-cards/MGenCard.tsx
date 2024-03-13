@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Post } from "../../../pages/Home";
 import {
   faRetweet,
@@ -8,6 +8,9 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PublicIcon from "@mui/icons-material/Public";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
+import { likePost } from "../../../apis/postLikeApi";
+import { useAuth0 } from "@auth0/auth0-react";
+
 interface MGenCardProps {
   post: Post;
 }
@@ -20,6 +23,28 @@ function toCapitalized(str: string): string {
 
 const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
   ({ post }, ref) => {
+    const [accessToken, setAccessToken] = useState<string | undefined>();
+    const { getAccessTokenSilently } = useAuth0();
+    useEffect(() => {
+      const getToken = async () => {
+        try {
+          const token = await getAccessTokenSilently();
+          setAccessToken(token);
+          console.log("token", token);
+        } catch (e) {
+          console.error(e);
+        }
+      };
+      getToken();
+    }, [getAccessTokenSilently]);
+
+    useEffect(() => {
+      likeAPost();
+    }, []);
+    const likeAPost = async () => {
+      const res = await likePost(post._id, accessToken);
+      console.log("res from likeAPost", res);
+    };
     const calculateDaysAgo = (createdAt: string): number => {
       const currentDate = new Date();
       const postDate = new Date(createdAt);
@@ -29,13 +54,13 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     };
 
     return (
-      <div ref={ref} className="bg-white shadow-md rounded-md mb-4">
+      <div ref={ref} className="bg-white  shadow-md rounded-md mb-4">
         {/* AUTHOR SECTION */}
         <div className="flex px-4 pt-2 mb-2">
           <div className="flex items-center gap-2">
             {/* AUTHOR IMage */}
             <img
-              className="w-12 h-12 object-fill"
+              className="w-12 h-12 object-cover"
               src="https://static.vecteezy.com/system/resources/previews/010/056/184/original/people-icon-sign-symbol-design-free-png.png"
               alt="author_image"
             />
@@ -90,19 +115,19 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
           <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md ">
             {/* <FontAwesomeIcon className="size-5" icon={faThumbsUp} /> */}
             <ThumbUpAltOutlinedIcon />
-            <p className="hidden">Like</p>
+            <p className="hidden min-[450px]:block">Like</p>
           </div>
           <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md">
             <FontAwesomeIcon className="size-5" icon={faCommentDots} />
-            <p className="hidden">Comment</p>
+            <p className="hidden min-[450px]:block">Comment</p>
           </div>
           <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md">
             <FontAwesomeIcon className="size-5" icon={faRetweet} />
-            <p className="hidden">Repost</p>
+            <p className="hidden min-[450px]:block">Repost</p>
           </div>
           <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md">
             <FontAwesomeIcon className="size-5" icon={faPaperPlane} />
-            <p className="hidden">Send</p>
+            <p className="hidden min-[450px]:block">Send</p>
           </div>
         </div>
       </div>

@@ -15,7 +15,7 @@ const Layout = () => {
   return (
     <div className="">
       {/* NAVBAR */}
-      <nav className="text-center w-full h-14 flex items-center justify-between mb-4 bg-[#FFFFFF] sticky top-0">
+      <nav className="text-center w-full h-14 flex items-center justify-between mb-4 bg-[#FFFFFF] sticky top-0 dark:bg-black">
         <Navbar handleMenu={handleMenu} menu={menu} />
       </nav>
       {/* MAIN  */}
