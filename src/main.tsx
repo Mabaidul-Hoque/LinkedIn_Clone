@@ -22,9 +22,9 @@ const auth0ClientOptions = {
 };
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
-  <React.StrictMode>
-    <Auth0Provider domain={domain} clientId={clientId} {...auth0ClientOptions}>
-      <RouterProvider router={router} />
-    </Auth0Provider>
-  </React.StrictMode>
+  // <React.StrictMode>
+  <Auth0Provider domain={domain} clientId={clientId} {...auth0ClientOptions}>
+    <RouterProvider router={router} />
+  </Auth0Provider>
+  // </React.StrictMode>
 );

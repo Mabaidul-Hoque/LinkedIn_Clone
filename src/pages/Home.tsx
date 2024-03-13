@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { fetchPosts } from "../apis/postsApi";
 import Lcard2 from "../components/home/left-column-cards/LCard2";
 import Lcard1 from "../components/home/left-column-cards/Lcard1";
@@ -32,36 +32,39 @@ export interface Post {
 const Home = () => {
   const [posts, setPosts] = useState<Post[]>([]);
   const [page, setPage] = useState(1);
-  // const observer = useRef<IntersectionObserver | null>(null);
-  // const [hasMore, setHasMore] = useState(true);
+  const observer = useRef<IntersectionObserver | null>(null);
+  const [hasMore, setHasMore] = useState(true);
+  const [stopData, setStopData] = useState(false);
   useEffect(() => {
     getPosts();
-  }, []);
+  }, [page]);
   const getPosts = async () => {
-    const res = await fetchPosts(20, page);
+    const res = await fetchPosts(page);
     console.log("res from posts", res);
     if (res?.status === "success") {
-      console.log("inside if");
+      setStopData(true);
+      // console.log("inside if");
+      // console.log("data from posts" + page + "" + res?.data);
       setPosts((prevPosts) => [...prevPosts, ...res?.data]);
+    } else {
+      setHasMore(false);
     }
-    // else {
-    //   setHasMore(false);
-    // }
   };
 
-  // const lastPostElementRef = (node: HTMLElement | null) => {
-  //   if (observer.current) observer.current.disconnect();
-  //   observer.current = new IntersectionObserver((entries) => {
-  //     if (entries[0].isIntersecting && hasMore) {
-  //       setPage((prevPageNumber) => prevPageNumber + 1);
-  //     }
-  //   });
-  //   if (node) observer.current.observe(node);
-  // };
-  const handleLoadMore = () => {
-    setPage((prev) => prev + 1);
+  const lastPostElementRef = (node: HTMLElement | null) => {
+    if (observer.current) observer.current.disconnect();
+    observer.current = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting && hasMore && stopData) {
+        setStopData(false);
+        setPage((prevPageNumber) => prevPageNumber + 1);
+      }
+    });
+    if (node) observer.current.observe(node);
   };
-  console.log("posts", posts);
+  // const handleLoadMore = () => {
+  //   setPage((prev) => prev + 1);
+  // };
+  console.log("posts" + page + "", posts);
 
   const leftColumnCards = [
     { title: "Left col profile card", content: <Lcard1 /> },
@@ -88,19 +91,19 @@ const Home = () => {
         {posts?.map((post, index) => (
           <div key={post._id}>
             {posts.length === index + 1 ? (
-              <MGenCard post={post} />
+              <MGenCard post={post} ref={lastPostElementRef} />
             ) : (
-              <MGenCard post={post} />
+              <MGenCard post={post} ref={lastPostElementRef} />
             )}
           </div>
         ))}
         {/* LOAD MORE POSTS */}
-        <button
+        {/* <button
           onClick={handleLoadMore}
           className="border border-green-500 rounded-full px-4 py-1 hover:bg-green-400 hover:text-white w-[50%] mt-5"
         >
           Load more posts
-        </button>
+        </button> */}
       </div>
       {/* RIGHT COLUMN CONTAINER */}
       <div className="hidden  lg:block lg:col-span-1">
