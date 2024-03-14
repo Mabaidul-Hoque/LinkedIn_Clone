@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { fetchSignup } from "../apis/login_signupApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+// import { useAuth } from "../contexts/AuthProvider";
 
 interface RegistrationCardProps {
   openSignin: () => void;

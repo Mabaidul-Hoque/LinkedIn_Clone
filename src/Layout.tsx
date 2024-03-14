@@ -5,6 +5,7 @@ import Home from "./pages/Home";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Footer from "./components/Footer";
+// import { useAuth } from "./contexts/AuthProvider";
 
 const Layout = () => {
   const [menu, setMenu] = useState(false);
@@ -12,6 +13,14 @@ const Layout = () => {
   const handleMenu = () => {
     setMenu((prev) => !prev);
   };
+
+  // useEffect(() => {
+  //   if () {
+  //     toast.success(`Welcome back`, {
+  //       theme: "colored",
+  //     });
+  //   }
+  // }, []);
   return (
     <div className="">
       {/* NAVBAR */}

@@ -10,7 +10,6 @@ import PublicIcon from "@mui/icons-material/Public";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import { likePost } from "../../../apis/postLikeApi";
 
-
 interface MGenCardProps {
   post: Post;
 }
@@ -23,14 +22,12 @@ function toCapitalized(str: string): string {
 
 const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
   ({ post }, ref) => {
-
-
     useEffect(() => {
       likeAPost();
     }, []);
     const likeAPost = async () => {
       const res = await likePost(post._id);
-      console.log("res from likeAPost", res);
+      // console.log("res from likeAPost", res);
     };
     const calculateDaysAgo = (createdAt: string): number => {
       const currentDate = new Date();

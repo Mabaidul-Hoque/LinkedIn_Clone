@@ -10,7 +10,7 @@ const Login = () => {
   const [showRegistration, setShowRegistration] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login } = useAuth(); // Use the login function from your AuthProvider
+  const { login, loadingTrue, loadingFalse } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -22,11 +22,13 @@ const Login = () => {
     const res = await fetchSignin(body);
     console.log("res from login", res.token);
     if (res.status === "success") {
+      loadingTrue();
       login(res.token);
-      // navigate("/");
+      navigate("/");
       toast.success(`Welcome back ${res?.data?.user?.name}`, {
         theme: "colored",
       });
+      loadingFalse();
     }
   };
 

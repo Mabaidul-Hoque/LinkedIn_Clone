@@ -1,21 +1,23 @@
-import React, {
-  ReactNode,
-  createContext,
-  useContext,
-  useState,
-  useEffect,
-} from "react";
+import React, { ReactNode, createContext, useContext, useState } from "react";
 
 interface AuthContextValue {
   isAuthenticated: boolean;
+  setIsAuthenticated: (value: boolean) => void;
   login: (token: string) => void;
   logout: () => void;
+  isLoading: boolean;
+  loadingTrue: () => void;
+  loadingFalse: () => void;
 }
 
 const AuthContext = createContext<AuthContextValue>({
   isAuthenticated: false,
+  setIsAuthenticated: () => {},
   login: () => {},
   logout: () => {},
+  isLoading: false,
+  loadingTrue: () => {},
+  loadingFalse: () => {},
 });
 
 export const useAuth = () => {
@@ -32,6 +34,14 @@ interface AuthProviderProps {
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const loadingTrue = () => {
+    setIsLoading(true);
+  };
+  const loadingFalse = () => {
+    setIsLoading(false);
+  };
 
   const login = (token: string) => {
     if (token) {
@@ -45,16 +55,14 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     setIsAuthenticated(false);
   };
 
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    console.log("token in useeffect", token);
-    setIsAuthenticated(!!token);
-  }, []);
-
   const value = {
     isAuthenticated,
+    setIsAuthenticated,
     login,
     logout,
+    isLoading,
+    loadingTrue,
+    loadingFalse,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

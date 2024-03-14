@@ -4,6 +4,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { Divider } from "@mui/material";
 import { useAuth } from "../contexts/AuthProvider";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -11,6 +13,13 @@ function classNames(...classes: string[]) {
 
 export default function ProfileDropdown() {
   const { logout } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    logout();
+    navigate("/signin");
+    toast.success("logged out successfully", { theme: "colored" });
+  };
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -93,7 +102,7 @@ export default function ProfileDropdown() {
               {({ active }) => (
                 <button
                   type="submit"
-                  onClick={logout}
+                  onClick={handleLogout}
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block w-full px-4 py-2 text-left text-sm"
