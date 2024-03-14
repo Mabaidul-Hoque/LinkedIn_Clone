@@ -43,8 +43,6 @@ const Home = () => {
     console.log("res from posts", res);
     if (res?.status === "success") {
       setStopData(true);
-      // console.log("inside if");
-      // console.log("data from posts" + page + "" + res?.data);
       setPosts((prevPosts) => [...prevPosts, ...res?.data]);
     } else {
       setHasMore(false);
@@ -61,10 +59,6 @@ const Home = () => {
     });
     if (node) observer.current.observe(node);
   };
-  // const handleLoadMore = () => {
-  //   setPage((prev) => prev + 1);
-  // };
-  console.log("posts" + page + "", posts);
 
   const leftColumnCards = [
     { title: "Left col profile card", content: <Lcard1 /> },
@@ -97,13 +91,6 @@ const Home = () => {
             )}
           </div>
         ))}
-        {/* LOAD MORE POSTS */}
-        {/* <button
-          onClick={handleLoadMore}
-          className="border border-green-500 rounded-full px-4 py-1 hover:bg-green-400 hover:text-white w-[50%] mt-5"
-        >
-          Load more posts
-        </button> */}
       </div>
       {/* RIGHT COLUMN CONTAINER */}
       <div className="hidden  lg:block lg:col-span-1">

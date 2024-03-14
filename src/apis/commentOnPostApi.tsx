@@ -1,6 +1,6 @@
-export async function likePost(postId = "") {
+export async function createAComment(postId: string, content: string) {
   try {
-    const url = `https://academics.newtonschool.co/api/v1/linkedin/like/${postId}`;
+    const url = `https://academics.newtonschool.co/api/v1/linkedin/comment/${postId}`;
     const token = localStorage.getItem("token");
 
     const res = await fetch(url, {
@@ -8,7 +8,11 @@ export async function likePost(postId = "") {
       headers: {
         Authorization: `Bearer ${token}`,
         projectID: "i1dieevrt9g1",
+        "Content-Type": "application/json",
       },
+      body: JSON.stringify({
+        content: content,
+      }),
     });
     return await res.json();
   } catch (error) {
