@@ -14,9 +14,16 @@ import { likePost } from "../../../apis/postLikeApi";
 import { toast } from "react-toastify";
 import { createAComment } from "../../../apis/commentOnPostApi";
 import Comment from "../comment/Comment";
+import { fetchComments } from "../../../apis/displayCommentsApi";
+import { calculateTimeAgo } from "../../../util/createdAt";
 
 interface MGenCardProps {
   post: Post;
+}
+
+export interface PostComment {
+  content: string;
+  createdAt: string;
 }
 
 function toCapitalized(str: string): string {
@@ -28,13 +35,17 @@ function toCapitalized(str: string): string {
 const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
   ({ post }, ref) => {
     const [isLiked, setIsLiked] = useState(false);
-    const [content, setContent] = useState("you are very handsome");
+    const [content, setContent] = useState("");
+    const [comments, setComments] = useState<PostComment[]>([]);
+    const [isCommentBtn, setIsCommentBtn] = useState(false);
 
-    console.log("content in MGencard", content);
-
-    const commentOnPost = async () => {
-      const res = await createAComment(post._id, content);
-      console.log("res from create a comment", res);
+    const handleComment = async () => {
+      setIsCommentBtn((prev) => !prev);
+      const res = await fetchComments(post._id);
+      console.log("res from fetch comments", res);
+      if (res.status === "success") {
+        setComments(res?.data);
+      }
     };
 
     console.log("isLiked", isLiked);
@@ -64,13 +75,6 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     const handleLike = () => {
       likeAPost();
     };
-    const calculateDaysAgo = (createdAt: string): number => {
-      const currentDate = new Date();
-      const postDate = new Date(createdAt);
-      const diffInTime = currentDate.getTime() - postDate.getTime();
-      const diffInDays = diffInTime / (1000 * 3600 * 24);
-      return Math.abs(Math.round(diffInDays));
-    };
 
     return (
       <div ref={ref} className="bg-white  shadow-md rounded-md mb-4">
@@ -91,7 +95,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
               <p className="text-sm">150,000 followers</p>
               {/* AUTHOR CREATED AT */}
               <p className="text-sm">
-                {calculateDaysAgo(post.createdAt)}d.
+                {calculateTimeAgo(post.createdAt)} .
                 <span className="pl-1">
                   {/* POST - VISIBILITY */}
                   <PublicIcon fontSize="inherit" htmlColor="gray" />
@@ -117,12 +121,12 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
             <ExpandingCards images={post?.images} />
           ))}
 
-        {/* LIKE/COMMENT DISPLAY SECTION */}
+        {/* LIKE/COMMENT COUNT DISPLAY SECTION */}
         <div className="px-4 pt-2 mb-2 flex items-center justify-between">
           <div className="flex"> 3,952 likes</div>
           <div className="flex items-center gap-2">
             {/* NUMBER OF COMMENTS */}
-            <p className="">32 comments</p>
+            <p className="">{comments.length} comments</p>
             <div className="w-1 h-1 bg-gray-600 rounded-3xl"></div>
             {/* NUMBER SHARE */}
             <p className="">7 reposts</p>
@@ -150,7 +154,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
           </div>
           {/* COMMENT */}
           <div
-            onClick={commentOnPost}
+            onClick={handleComment}
             className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md"
           >
             <FontAwesomeIcon
@@ -169,7 +173,15 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
           </div>
         </div>
         {/* COMMENTS CREATION AND DISPLAY CONTANINER */}
-        <Comment setContent={setContent} content={content} />
+        <div className={`${isCommentBtn ? "block" : "hidden"}`}>
+          <Comment
+            setContent={setContent}
+            content={content}
+            postId={post._id}
+            comments={comments}
+            setComments={setComments}
+          />
+        </div>
       </div>
     );
   }

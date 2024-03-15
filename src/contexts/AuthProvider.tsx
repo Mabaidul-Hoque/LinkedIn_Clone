@@ -8,6 +8,7 @@ interface AuthContextValue {
   isLoading: boolean;
   loadingTrue: () => void;
   loadingFalse: () => void;
+  setUsers: (users: UserType[]) => void;
 }
 
 const AuthContext = createContext<AuthContextValue>({
@@ -18,6 +19,7 @@ const AuthContext = createContext<AuthContextValue>({
   isLoading: false,
   loadingTrue: () => {},
   loadingFalse: () => {},
+  setUsers: () => {},
 });
 
 export const useAuth = () => {
@@ -31,10 +33,15 @@ export const useAuth = () => {
 interface AuthProviderProps {
   children: ReactNode;
 }
+interface UserType {
+  name: string;
+  email: string;
+}
 
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [users, setUsers] = useState<UserType[]>([]);
 
   const loadingTrue = () => {
     setIsLoading(true);
@@ -63,6 +70,8 @@ const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
     isLoading,
     loadingTrue,
     loadingFalse,
+    setUsers,
+    users,
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

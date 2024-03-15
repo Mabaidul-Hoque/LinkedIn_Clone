@@ -10,7 +10,7 @@ const Login = () => {
   const [showRegistration, setShowRegistration] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const { login, loadingTrue, loadingFalse } = useAuth();
+  const { login, loadingTrue, loadingFalse, setUsers } = useAuth();
   const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -20,8 +20,9 @@ const Login = () => {
       password,
     };
     const res = await fetchSignin(body);
-    console.log("res from login", res.token);
+    console.log("res from login", res);
     if (res.status === "success") {
+      setUsers(res?.data);
       loadingTrue();
       login(res.token);
       navigate("/");
