@@ -6,6 +6,7 @@ import { createAComment } from "../../../apis/commentOnPostApi";
 import { PostComment } from "../middle-column-cards/MGenCard";
 import { calculateTimeAgo } from "../../../util/createdAt";
 import { customUsers } from "../../../data/userInfo";
+import { useAuth } from "../../../contexts/AuthProvider";
 interface CommentProps {
   setContent: (content: string | ((prev: string) => string)) => void;
   content: string;
@@ -26,6 +27,25 @@ const Comment: React.FC<CommentProps> = ({
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [isPosted, setIsPosted] = useState(false);
   const [visibleComments, setVisibleComments] = useState<PostComment[]>([]);
+  const { user } = useAuth();
+  const [isCommentText, setIsCommentText] = useState(true);
+  const [expandedCommentId, setExpandedCommentId] = useState<string | null>(
+    null
+  );
+  // const commentContentRef = useRef<HTMLParagraphElement>(null);
+  // useEffect(() => {
+  //   if (commentContentRef.current) {
+  //     const contentHeight = commentContentRef.current.scrollHeight;
+
+  //     const maxHeight = 100; // Assuming 1 unit of height is 4px, adjust as needed
+  //     console.log("contentHeight", {
+  //       contentHeight,
+  //       maxHeight,
+  //       commentContentRef,
+  //     });
+  //     setIsCommentText(contentHeight <= maxHeight);
+  //   }
+  // }, [content, commentContentRef, isCommentText]);
 
   useEffect(() => {
     setVisibleComments(comments.slice(0, 4));
@@ -89,7 +109,7 @@ const Comment: React.FC<CommentProps> = ({
   };
 
   return (
-    <div className="px-1 xl:px-6 pt-2 pb-4">
+    <div className="px-2 min-[450px]:px-4  xl:px-6 pt-2 pb-4">
       {/* CREATE A COMMENT */}
       <div className="flex gap-2 xl:gap-4 relative">
         {/* PROFILE IMAGE */}
@@ -99,7 +119,7 @@ const Comment: React.FC<CommentProps> = ({
           className="w-10 h-10 rounded-full cursor-pointer"
         />
         {/* CREATE A COMMENT INPUT */}
-        <div className="flex flex-col gap-2 w-full">
+        <div className="flex flex-col gap-2 w-11/12 sm:w-full">
           <textarea
             ref={textAreaRef}
             value={content}
@@ -168,7 +188,7 @@ const Comment: React.FC<CommentProps> = ({
                   <div className="flex flex-col ">
                     <div className="flex justify-between">
                       <div className="flex items-center">
-                        <h2 className="font-semibold mr-2">Nuzhat Wase</h2>
+                        <h2 className="font-semibold mr-2">{user.name}</h2>
                         <p className="text-gray-600">• 3rd+</p>
                       </div>
                       {/* POSTED TIME */}
@@ -180,23 +200,31 @@ const Comment: React.FC<CommentProps> = ({
                     </p>
                   </div>
                   <div className="">
-                    <p className={`text-[15px] `}>
-                      {/* isCommentHide
-                        ? "overflow-y-hidden max-h-24"
-                        : "overflow-visible" */}
+                    <p
+                      className={`text-[15px] ${
+                        isCommentText || comment._id !== expandedCommentId
+                          ? "overflow-y-hidden max-h-24"
+                          : "overflow-visible"
+                      }`}
+                    >
                       {comment.content}
                     </p>
-                    {/* <div
-                    className={`flex justify-end 
-                    `}
-                  > */}
-                    {/* isCommentHide ? "" : "hidden" */}
-                    {/* <button */}
-                    {/* onClick={() => setIsCommentHide(false)} */}
-                    {/* > */}
-                    {/* see more */}
-                    {/* </button> */}
-                    {/* </div> */}
+                    <div
+                      className={`flex justify-end ${
+                        isCommentText || comment._id !== expandedCommentId
+                          ? ""
+                          : "hidden"
+                      }`}
+                    >
+                      <button
+                        onClick={() => {
+                          setIsCommentText(false);
+                          setExpandedCommentId(comment._id);
+                        }}
+                      >
+                        see more
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>

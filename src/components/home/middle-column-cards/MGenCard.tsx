@@ -5,14 +5,14 @@ import {
   faCommentDots,
   faPaperPlane,
   faThumbsUp,
-  faComments,
+  // faComments,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PublicIcon from "@mui/icons-material/Public";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import { likePost } from "../../../apis/postLikeApi";
 import { toast } from "react-toastify";
-import { createAComment } from "../../../apis/commentOnPostApi";
+// import { createAComment } from "../../../apis/commentOnPostApi";
 import Comment from "../comment/Comment";
 import { fetchComments } from "../../../apis/displayCommentsApi";
 import { calculateTimeAgo } from "../../../util/createdAt";
@@ -24,6 +24,7 @@ interface MGenCardProps {
 export interface PostComment {
   content: string;
   createdAt: string;
+  _id: string;
 }
 
 function toCapitalized(str: string): string {
@@ -39,8 +40,10 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     const [comments, setComments] = useState<PostComment[]>([]);
     const [isCommentBtn, setIsCommentBtn] = useState(false);
 
-    const handleComment = async () => {
-      setIsCommentBtn((prev) => !prev);
+    useEffect(() => {
+      getComments();
+    }, []);
+    const getComments = async () => {
       const res = await fetchComments(post._id);
       console.log("res from fetch comments", res);
       if (res.status === "success") {
@@ -154,7 +157,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
           </div>
           {/* COMMENT */}
           <div
-            onClick={handleComment}
+            onClick={() => setIsCommentBtn((prev) => !prev)}
             className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md"
           >
             <FontAwesomeIcon

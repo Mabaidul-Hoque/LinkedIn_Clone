@@ -31,7 +31,7 @@ const EmojiSelector: React.FC<EmojiSelectorProps> = ({ addEmoji }) => {
       >
         <FontAwesomeIcon className="size-6 text-gray-500" icon={faFaceSmile} />
       </button>
-      <div className="flex items-center justify-center z-50 mt-10">
+      <div className="flex items-center justify-center z-50 mt-10 left-0 max-w-full sticky inset-0">
         {emojiPickerVisible && (
           <Picker
             onEmojiSelect={handleEmojiSelect}
@@ -41,6 +41,7 @@ const EmojiSelector: React.FC<EmojiSelectorProps> = ({ addEmoji }) => {
               position: "absolute",
               bottom: "100%",
               marginBottom: "10px",
+              left: "0",
             }}
           />
         )}

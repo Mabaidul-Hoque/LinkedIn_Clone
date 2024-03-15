@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { fetchSignup } from "../apis/login_signupApi";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../contexts/AuthProvider";
 // import { useAuth } from "../contexts/AuthProvider";
 
 interface RegistrationCardProps {
@@ -15,6 +16,7 @@ const RegistrationCard: React.FC<RegistrationCardProps> = ({ openSignin }) => {
   const [errorMessage, setErrorMessage] = useState("");
   const [passwordVisible, setPasswordVisible] = useState(false);
   const navigate = useNavigate();
+  const { setUser } = useAuth();
 
   const signup = async () => {
     const body = {
@@ -24,6 +26,7 @@ const RegistrationCard: React.FC<RegistrationCardProps> = ({ openSignin }) => {
     };
     const res = await fetchSignup(body);
     if (res.status === "success") {
+      setUser(res.data.user);
       localStorage.setItem("token", res.token);
       toast.success(`Welcome ${res?.data?.user?.name}`, { theme: "colored" });
       navigate("/");
@@ -32,7 +35,7 @@ const RegistrationCard: React.FC<RegistrationCardProps> = ({ openSignin }) => {
         toast.error("You have already an account", { theme: "colored" });
       }
     }
-    console.log("signup res", res);
+    // console.log("signup res", res);
   };
 
   const handleNameChange = (e: React.ChangeEvent<HTMLInputElement>) => {
