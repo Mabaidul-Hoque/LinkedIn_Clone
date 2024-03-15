@@ -8,6 +8,7 @@ import { calculateTimeAgo } from "../../../util/createdAt";
 import { customUsers } from "../../../data/userInfo";
 import { useAuth } from "../../../contexts/AuthProvider";
 import { deleteCommnetByID } from "../../../apis/deleteACommentApi";
+import CreateAComment from "./CreateAComment";
 interface CommentProps {
   setContent: (content: string | ((prev: string) => string)) => void;
   content: string;
@@ -24,15 +25,14 @@ const Comment: React.FC<CommentProps> = ({
   comments,
   setComments,
 }) => {
-  const [textAreaHeight, setTextAreaHeight] = useState("auto");
-  const textAreaRef = useRef<HTMLTextAreaElement>(null);
-  const [isPosted, setIsPosted] = useState(false);
   const [visibleComments, setVisibleComments] = useState<PostComment[]>([]);
   const { user } = useAuth();
   const [isCommentText, setIsCommentText] = useState(true);
   const [expandedCommentId, setExpandedCommentId] = useState<string | null>(
     null
   );
+  const [createChildComment, setCreateChildComment] = useState(false);
+  const [childrenComments, setChildrenComments] = useState([]);
   // const [isDeleted, setIsDeleted] = useState(false);
   // const commentContentRef = useRef<HTMLParagraphElement>(null);
   // useEffect(() => {
@@ -59,49 +59,6 @@ const Comment: React.FC<CommentProps> = ({
     setVisibleComments(comments.slice(0, nextVisibleCount));
   };
 
-  useEffect(() => {
-    if (textAreaRef.current) {
-      const scrollHeight = textAreaRef.current.scrollHeight;
-      setTextAreaHeight(`${scrollHeight}px`);
-    }
-  }, [content]);
-
-  const handleCommentChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    setContent(e.target.value);
-    if (textAreaRef.current) {
-      setTextAreaHeight("auto");
-      const scrollHeight = textAreaRef.current.scrollHeight;
-      setTextAreaHeight(`${scrollHeight}px`);
-    }
-  };
-
-  const addEmoji = (emoji: string) => {
-    setContent((prev) => prev + emoji);
-  };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        if (typeof reader.result === "string") {
-          setContent((prev) => prev + `\n![Image](${reader.result})`);
-        }
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  useEffect(() => {
-    if (isPosted) {
-      setContent("");
-    }
-  }, [isPosted]);
-
-  const handleCreatePost = () => {
-    createAPost();
-    setIsPosted(true);
-  };
   const createAPost = async () => {
     const res = await createAComment(postId, content);
     console.log("res from create post", res);
@@ -109,6 +66,23 @@ const Comment: React.FC<CommentProps> = ({
       setComments((prevData: PostComment[]) => [res.data, ...prevData]);
     }
   };
+
+  // const createAChildComment = async () => {
+  //   const res = await createAComment(postId, content);
+  //   console.log("res from create post", res);
+  //   if (res.status === "success") {
+  //     const commentData = comments.find(
+  //       (comment) => comment._id === res.data._id
+  //     );
+  //     if (commentData) {
+  //       commentData.children.push(res.data.content);
+  //     }
+  //   }
+
+  //   if (comments.length > 0) {
+  //     console.log("children data of first comment", comments[0].children);
+  //   }
+  // };
 
   // TRY LATER
   // const deleteAComment = async (commentID: string) => {
@@ -148,44 +122,11 @@ const Comment: React.FC<CommentProps> = ({
   return (
     <div className="px-2 min-[450px]:px-4  xl:px-6 pt-2 pb-4">
       {/* CREATE A COMMENT */}
-      <div className="flex gap-2 xl:gap-4 relative">
-        {/* PROFILE IMAGE */}
-        <img
-          src="https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png"
-          alt="User Profile"
-          className="w-10 h-10 rounded-full cursor-pointer"
-        />
-        {/* CREATE A COMMENT INPUT */}
-        <div className="flex flex-col gap-2 w-11/12 sm:w-full">
-          <textarea
-            ref={textAreaRef}
-            value={content}
-            onChange={handleCommentChange}
-            onFocus={() => setIsPosted(false)}
-            placeholder="Add a comment"
-            className={`flex-grow px-2 py-1 pl-4 pr-24 border border-gray-500 rounded-2xl min-w-20 min-h-10 overflow-hidden focus:outline-blue-500 hover:bg-gray-100 ${textAreaHeight}`}
-            style={{ height: textAreaHeight }}
-          />
-          <button
-            onClick={handleCreatePost}
-            className={`w-12 bg-blue-500 px-2 py-1 text-white rounded-md hover:bg-blue-600 ${
-              content.length >= 1 && !isPosted ? "block" : "hidden"
-            }`}
-          >
-            Post
-          </button>
-        </div>
-        {/* EMOJI SELECTOR */}
-        <div className="absolute top-0 right-6 flex items-center">
-          <EmojiSelector addEmoji={addEmoji} />
-        </div>
-        {/* IMAGE FILE */}
-        <label className="cursor-pointer absolute top-2 right-6">
-          <input type="file" className="hidden" onChange={handleFileChange} />
-          <FontAwesomeIcon className="text-[#378FE9] size-6" icon={faImage} />
-        </label>
-      </div>
-
+      <CreateAComment
+        content={content}
+        setContent={setContent}
+        createAPost={createAPost}
+      />
       {/* DISPLAY COMMENTS */}
       <div className="mt-4">
         {/* COMMENTS */}
@@ -267,18 +208,39 @@ const Comment: React.FC<CommentProps> = ({
                     </div>
                   </div>
                 </div>
-                {/* DELETE COMMENT */}
-                <div className="flex justify-start ml-16 mt-1">
-                  <button
-                    onClick={() => {
-                      deleteAComment(comment._id);
-                      // setIsDeleted(true);
-                    }}
-                    className="text-[12px] hover:bg-gray-200 rounded-md px-1 py-0.5"
-                  >
-                    Delete
-                  </button>
+                {/* DELETE/REPLY CONTAINER START --> */}
+                <div className="flex items-center gap-2">
+                  {/* DELETE COMMENT */}
+                  <div className="flex justify-start ml-16 mt-1">
+                    <button
+                      onClick={() => {
+                        deleteAComment(comment._id);
+                        // setIsDeleted(true);
+                      }}
+                      className="text-[12px] hover:bg-gray-200 rounded-md px-1 py-0.5"
+                    >
+                      Delete
+                    </button>
+                  </div>
+                  {/* REPLY TO A COMMENT */}
+                  <div className="flex justify-start mt-1">
+                    <button
+                      onClick={() => setCreateChildComment(true)}
+                      className="text-[12px] hover:bg-gray-200 rounded-md px-1 py-0.5"
+                    >
+                      Reply
+                    </button>
+                  </div>
                 </div>
+                {/* DELETE/REPLY CONTAINER END */}
+                {/* {createChildComment && (
+                  <CreateAComment
+                    content={content}
+                    setContent={setContent}
+                    createAPost={createAChildComment}
+                    parentId={comment._id}
+                  />
+                )} */}
               </div>
             ))}
           </div>

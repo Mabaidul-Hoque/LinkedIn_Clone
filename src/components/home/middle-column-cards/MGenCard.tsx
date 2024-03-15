@@ -25,6 +25,7 @@ export interface PostComment {
   content: string;
   createdAt: string;
   _id: string;
+  children: PostComment[];
 }
 
 function toCapitalized(str: string): string {
