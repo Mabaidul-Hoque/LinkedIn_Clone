@@ -7,6 +7,7 @@ import { PostComment } from "../middle-column-cards/MGenCard";
 import { calculateTimeAgo } from "../../../util/createdAt";
 import { customUsers } from "../../../data/userInfo";
 import { useAuth } from "../../../contexts/AuthProvider";
+import { deleteCommnetByID } from "../../../apis/deleteACommentApi";
 interface CommentProps {
   setContent: (content: string | ((prev: string) => string)) => void;
   content: string;
@@ -32,6 +33,7 @@ const Comment: React.FC<CommentProps> = ({
   const [expandedCommentId, setExpandedCommentId] = useState<string | null>(
     null
   );
+  // const [isDeleted, setIsDeleted] = useState(false);
   // const commentContentRef = useRef<HTMLParagraphElement>(null);
   // useEffect(() => {
   //   if (commentContentRef.current) {
@@ -108,6 +110,41 @@ const Comment: React.FC<CommentProps> = ({
     }
   };
 
+  // TRY LATER
+  // const deleteAComment = async (commentID: string) => {
+  //   console.log("commentID in delete a comment", commentID);
+  //   const res = await deleteCommnetByID(commentID);
+  //   if (res) {
+  //     const data = JSON.parse(res);
+  //     console.log("res from delete", res);
+  //     return data;
+  //   } else {
+  //     console.error("JSON string is empty");
+  //   }
+  // };
+  const deleteAComment = async (commentID: string) => {
+    console.log("commentID in delete a comment", commentID);
+    const res = await deleteCommnetByID(commentID);
+    console.log(res);
+    setComments((prevComments) =>
+      prevComments.filter((comment) => comment._id !== commentID)
+    );
+    // if (res) {
+    //   const data = JSON.parse(res);
+    //   console.log("res from delete", res);
+    //   // Assuming the response indicates success with a 'status' property
+    //   if (data.status === "success") {
+    //     // Update the comments state to remove the deleted comment
+    //     setComments((prevComments) =>
+    //       prevComments.filter((comment) => comment._id !== commentID)
+    //     );
+    //   }
+    //   return data;
+    // } else {
+    //   console.error("JSON string is empty");
+    // }
+  };
+
   return (
     <div className="px-2 min-[450px]:px-4  xl:px-6 pt-2 pb-4">
       {/* CREATE A COMMENT */}
@@ -155,77 +192,92 @@ const Comment: React.FC<CommentProps> = ({
         <div>
           <div className="flex flex-col gap-6">
             {visibleComments.map((comment, index) => (
-              <div key={index} className="flex gap-4">
-                {/* PROFILE IMAGE */}
-                <img
-                  src={`${
-                    index === 0
-                      ? customUsers[0].imageUrl
-                      : index === 1
-                      ? customUsers[1].imageUrl
-                      : index === 2
-                      ? customUsers[2].imageUrl
-                      : index === 3
-                      ? customUsers[3].imageUrl
-                      : index === 4
-                      ? customUsers[4].imageUrl
-                      : index === 5
-                      ? customUsers[5].imageUrl
-                      : index === 6
-                      ? customUsers[6].imageUrl
-                      : index === 7
-                      ? customUsers[7].imageUrl
-                      : index === 8
-                      ? customUsers[8].imageUrl
-                      : index === 9
-                      ? customUsers[9].imageUrl
-                      : customUsers[10].imageUrl
-                  }`}
-                  alt="User Profile"
-                  className="w-10 h-10 rounded-full cursor-pointer"
-                />
-                <div className="w-full text-left bg-gray-100 p-3 rounded-md">
-                  <div className="flex flex-col ">
-                    <div className="flex justify-between">
-                      <div className="flex items-center">
-                        <h2 className="font-semibold mr-2">{user.name}</h2>
-                        <p className="text-gray-600">• 3rd+</p>
+              <div key={index}>
+                {/* COMMENT BOX */}
+                <div className="flex gap-4">
+                  {/* PROFILE IMAGE */}
+                  <img
+                    src={`${
+                      index === 0
+                        ? customUsers[0].imageUrl
+                        : index === 1
+                        ? customUsers[1].imageUrl
+                        : index === 2
+                        ? customUsers[2].imageUrl
+                        : index === 3
+                        ? customUsers[3].imageUrl
+                        : index === 4
+                        ? customUsers[4].imageUrl
+                        : index === 5
+                        ? customUsers[5].imageUrl
+                        : index === 6
+                        ? customUsers[6].imageUrl
+                        : index === 7
+                        ? customUsers[7].imageUrl
+                        : index === 8
+                        ? customUsers[8].imageUrl
+                        : index === 9
+                        ? customUsers[9].imageUrl
+                        : customUsers[10].imageUrl
+                    }`}
+                    alt="User Profile"
+                    className="w-10 h-10 rounded-full cursor-pointer"
+                  />
+                  <div className="w-full text-left bg-gray-100 p-3 rounded-md">
+                    <div className="flex flex-col ">
+                      <div className="flex justify-between">
+                        <div className="flex items-center">
+                          <h2 className="font-semibold mr-2">{user.name}</h2>
+                          <p className="text-gray-600">• 3rd+</p>
+                        </div>
+                        {/* POSTED TIME */}
+                        <p>{calculateTimeAgo(comment.createdAt)}</p>
                       </div>
-                      {/* POSTED TIME */}
-                      <p>{calculateTimeAgo(comment.createdAt)}</p>
+                      <p className="text-[12px]">
+                        Digital Marketer & Researcher Empowering young
+                        individuals to harness
+                      </p>
                     </div>
-                    <p className="text-[12px]">
-                      Digital Marketer & Researcher Empowering young individuals
-                      to harness
-                    </p>
-                  </div>
-                  <div className="">
-                    <p
-                      className={`text-[15px] ${
-                        isCommentText || comment._id !== expandedCommentId
-                          ? "overflow-y-hidden max-h-24"
-                          : "overflow-visible"
-                      }`}
-                    >
-                      {comment.content}
-                    </p>
-                    <div
-                      className={`flex justify-end ${
-                        isCommentText || comment._id !== expandedCommentId
-                          ? ""
-                          : "hidden"
-                      }`}
-                    >
-                      <button
-                        onClick={() => {
-                          setIsCommentText(false);
-                          setExpandedCommentId(comment._id);
-                        }}
+                    <div className="">
+                      <p
+                        className={`text-[15px] ${
+                          isCommentText || comment._id !== expandedCommentId
+                            ? "overflow-y-hidden max-h-24"
+                            : "overflow-visible"
+                        }`}
                       >
-                        see more
-                      </button>
+                        {comment.content}
+                      </p>
+                      <div
+                        className={`flex justify-end ${
+                          isCommentText || comment._id !== expandedCommentId
+                            ? ""
+                            : "hidden"
+                        }`}
+                      >
+                        <button
+                          onClick={() => {
+                            setIsCommentText(false);
+                            setExpandedCommentId(comment._id);
+                          }}
+                        >
+                          see more
+                        </button>
+                      </div>
                     </div>
                   </div>
+                </div>
+                {/* DELETE COMMENT */}
+                <div className="flex justify-start ml-16 mt-1">
+                  <button
+                    onClick={() => {
+                      deleteAComment(comment._id);
+                      // setIsDeleted(true);
+                    }}
+                    className="text-[12px] hover:bg-gray-200 rounded-md px-1 py-0.5"
+                  >
+                    Delete
+                  </button>
                 </div>
               </div>
             ))}
