@@ -18,6 +18,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ResponsiveMenu from "../ui/ResponsiveMenu";
 import { searchContent } from "../apis/searchApi";
+import { useSearchData } from "../contexts/SearchDataProvider";
 
 interface NavabrProps {
   handleMenu: () => void;
@@ -26,11 +27,11 @@ interface NavabrProps {
 const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
   const { pathname } = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
-  const [searchItems, setSearchItems] = useState({});
-  // const [results, setResults] = useState([]);
+  const { setResults, searchItems, setSearchItems } = useSearchData();
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
+
   const toggleModal = () => {
     setOpen(!open);
   };
@@ -38,6 +39,9 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
   const onSearch = async (searchItems: {}) => {
     const res = await searchContent(searchItems);
     console.log("res from search ", res);
+    if (res.status === "success") {
+      setResults(res.data);
+    }
     navigate("/search/results/");
   };
 

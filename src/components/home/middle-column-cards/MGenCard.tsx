@@ -5,14 +5,12 @@ import {
   faCommentDots,
   faPaperPlane,
   faThumbsUp,
-  // faComments,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PublicIcon from "@mui/icons-material/Public";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import { likePost } from "../../../apis/postLikeApi";
 import { toast } from "react-toastify";
-// import { createAComment } from "../../../apis/commentOnPostApi";
 import Comment from "../comment/Comment";
 import { fetchComments } from "../../../apis/displayCommentsApi";
 import { calculateTimeAgo } from "../../../util/createdAt";

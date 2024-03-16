@@ -8,6 +8,7 @@ import Notifications from "./pages/Notifications.tsx";
 import Login from "./pages/Login.tsx";
 import { RouterProvider } from "react-router-dom";
 import SearchResults from "./pages/SearchResults.tsx";
+import SearchDataProvider from "./contexts/SearchDataProvider.tsx";
 
 const PageRoutes = () => {
   const router = createBrowserRouter([
@@ -46,7 +47,11 @@ const PageRoutes = () => {
       element: <Login />,
     },
   ]);
-  return <RouterProvider router={router} />;
+  return (
+    <SearchDataProvider>
+      <RouterProvider router={router} />
+    </SearchDataProvider>
+  );
 };
 
 export default PageRoutes;

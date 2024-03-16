@@ -4,12 +4,14 @@ import "./index.css";
 // import { RouterProvider } from "react-router-dom";
 import AuthProvider from "./contexts/AuthProvider.tsx";
 import PageRoutes from "./PageRoutes.tsx";
+// import SearchDataProvider from "./contexts/SearchDataProvider.tsx";
 
 ReactDOM.createRoot(document.getElementById("root")!).render(
   // <React.StrictMode>
   <AuthProvider>
-    {/* <RouterProvider router={router} /> */}
+    {/* <SearchDataProvider> */}
     <PageRoutes />
+    {/* </SearchDataProvider> */}
   </AuthProvider>
   // </React.StrictMode>
 );
