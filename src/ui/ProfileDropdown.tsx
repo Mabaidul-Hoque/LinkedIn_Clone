@@ -2,7 +2,6 @@ import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCircleUser } from "@fortawesome/free-solid-svg-icons";
-import { Divider } from "@mui/material";
 import { useAuth } from "../contexts/AuthProvider";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
@@ -64,13 +63,13 @@ export default function ProfileDropdown() {
               </div>
               {/* VIEW PROFILE BTN */}
               <Menu.Item>
-                <button className="border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors duration-200 ease-in-out w-full rounded-xl ">
+                <button className="border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors duration-200 ease-in-out w-[90%] mx-auto rounded-xl ">
                   View Profile
                 </button>
               </Menu.Item>
             </div>
             {/* DIVIDER */}
-            <Divider sx={{ mb: 1, mt: 1 }} />
+            <div className="border-b border-gray-200 mt-2 mb-2" />
             <Menu.Item>
               {({ active }) => (
                 <a
@@ -97,7 +96,7 @@ export default function ProfileDropdown() {
               )}
             </Menu.Item>
             {/* DIVIDER */}
-            <Divider sx={{ mt: 1, mb: 1 }} />
+            <div className="border-b border-gray-200 mt-2 mb-2" />
             <Menu.Item>
               {({ active }) => (
                 <button

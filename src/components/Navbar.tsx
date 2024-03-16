@@ -8,25 +8,50 @@ import {
   faHouse,
   faRectangleAd,
   faUserGroup,
+  faMagnifyingGlass,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
 import AutocompleteModal from "../ui/AutocompleteModal";
 import ProfileDropdown from "../ui/ProfileDropdown";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import ResponsiveMenu from "../ui/ResponsiveMenu";
+import { searchContent } from "../apis/searchApi";
 
 interface NavabrProps {
   handleMenu: () => void;
   menu: boolean;
 }
 const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
-  const [isSearchClick, setIsSearchClick] = useState(false);
   const { pathname } = useLocation();
+  const [searchTerm, setSearchTerm] = useState("");
+  const [searchItems, setSearchItems] = useState({});
+  // const [results, setResults] = useState([]);
+  const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
+  const handleOpen = () => setOpen(true);
+  const toggleModal = () => {
+    setOpen(!open);
+  };
 
-  const searchClick = () => {
-    setIsSearchClick((prev) => !prev);
+  const onSearch = async (searchItems: {}) => {
+    const res = await searchContent(searchItems);
+    console.log("res from search ", res);
+    navigate("/search/results/");
+  };
+
+  const handleSearch = () => {
+    onSearch(searchItems);
+    console.log("search btn");
+    setOpen(false);
+  };
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+    setSearchItems({ title: e.target.value, content: e.target.value });
+    // TRY TO IMPLEMENT SEARCH AUTOCOMPLETE
+    // onSearch({ title: e.target.value, content: e.target.value });
   };
 
   return (
@@ -41,23 +66,36 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
         {/* SEARCH SECTION */}
         <div className="flex items-center">
           <input
-            className={`bg-[#EDF3F8] w-64 xl:focus:w-80 h-9 pl-10 rounded focus:outline-blue-500 ${
-              isSearchClick ? "block" : "hidden"
-            } lg:block`}
+            className={`bg-[#EDF3F8] w-[60vw] min-[400px]:w-[70vw] sm:w-[80vw]  h-9 pl-2 rounded-s focus:outline-blue-500 ${
+              open ? "block" : "hidden"
+            } lg:block lg:w-[22vw] xl:w-[25vw]`}
             type="text"
             id="search-input"
             placeholder="Search"
+            value={searchTerm}
+            onChange={handleInputChange}
           />
-          {/* SEARCH ICON */}
-          <AutocompleteModal
-            searchClick={searchClick}
-            isSearchClick={isSearchClick}
-          />
+          <button
+            className={`${
+              open ? "block" : "hidden"
+            } lg:block text-gray-500 border border-gray-200 px-2 py-1 h-9 rounded-e-full bg-[#EDF3F8] focus:text-green-500`}
+            onClick={handleSearch}
+          >
+            <FontAwesomeIcon icon={faMagnifyingGlass} />
+          </button>
+          {/* SEARCH AUTOCOMPLETE */}
+          <div>
+            <AutocompleteModal
+              handleOpen={handleOpen}
+              open={open}
+              toggleModal={toggleModal}
+            />
+          </div>
         </div>
       </div>
 
       {/* RIGHT ITEMS CONTAINER */}
-      <div className={`flex items-center gap-4`}>
+      <div className={`flex items-center gap-4 ${open ? "hidden" : "flex"}`}>
         <ul className="flex items-center">
           {/* HOME ROUTE */}
           <li

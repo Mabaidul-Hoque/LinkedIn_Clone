@@ -7,6 +7,7 @@ import Messaging from "./pages/Messaging.tsx";
 import Notifications from "./pages/Notifications.tsx";
 import Login from "./pages/Login.tsx";
 import { RouterProvider } from "react-router-dom";
+import SearchResults from "./pages/SearchResults.tsx";
 
 const PageRoutes = () => {
   const router = createBrowserRouter([
@@ -33,6 +34,10 @@ const PageRoutes = () => {
         {
           path: "/notifications",
           element: <Notifications />,
+        },
+        {
+          path: "/search/results/",
+          element: <SearchResults />,
         },
       ],
     },
