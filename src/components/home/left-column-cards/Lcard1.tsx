@@ -1,7 +1,9 @@
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 
 const Lcard1 = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="bg-white shadow-md rounded-md mb-4  z-10">
@@ -36,7 +38,10 @@ const Lcard1 = () => {
         {/* DIVIDER */}
         <div className="border-b border-gray-300 mt-2" />
         {/* TRY PREMIUM */}
-        <div className="px-4 py-2 hover:bg-gray-300 cursor-pointer text-sm group">
+        <div
+          onClick={() => navigate("/premium")}
+          className="px-4 py-2 hover:bg-gray-300 cursor-pointer text-sm group"
+        >
           <p className="text-left">
             Strengthen your profile with an AI writing asistant
           </p>

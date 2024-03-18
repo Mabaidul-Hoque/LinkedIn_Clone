@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCaretDown, faCircleUser } from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../contexts/AuthProvider";
 import { toast } from "react-toastify";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
@@ -72,15 +72,15 @@ export default function ProfileDropdown() {
             <div className="border-b border-gray-200 mt-2 mb-2" />
             <Menu.Item>
               {({ active }) => (
-                <a
-                  href="#"
+                <Link
+                  to={"/premium"}
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm"
                   )}
                 >
                   Try Premium
-                </a>
+                </Link>
               )}
             </Menu.Item>
             <Menu.Item>

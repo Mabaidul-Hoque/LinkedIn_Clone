@@ -9,6 +9,7 @@ import Login from "./pages/Login.tsx";
 import { RouterProvider } from "react-router-dom";
 import SearchResults from "./pages/SearchResults.tsx";
 import SearchDataProvider from "./contexts/SearchDataProvider.tsx";
+import Premium from "./pages/Premium.tsx";
 
 const PageRoutes = () => {
   const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const PageRoutes = () => {
     {
       path: "/signin",
       element: <Login />,
+    },
+    {
+      path: "/premium",
+      element: <Premium />,
     },
   ]);
   return (
