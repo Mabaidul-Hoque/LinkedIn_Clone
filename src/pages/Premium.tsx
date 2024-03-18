@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { careerFeatures } from "../data/careerFeatures";
 import { moreFeatures } from "../data/careerFeatures";
