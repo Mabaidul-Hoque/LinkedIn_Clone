@@ -9,22 +9,22 @@ interface EmojiData {
 
 interface EmojiSelectorProps {
   addEmoji: (content: string) => void;
+  style: {};
 }
 
-const EmojiSelector: React.FC<EmojiSelectorProps> = ({ addEmoji }) => {
+const EmojiSelector: React.FC<EmojiSelectorProps> = ({ addEmoji, style }) => {
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
 
   const handleEmojiSelect = (emoji: EmojiData) => {
-    // Ensure the emoji object has a 'native' property
     if (emoji && emoji.native) {
       addEmoji(emoji.native);
       console.log("Selected emoji:", emoji.native);
     }
-    setEmojiPickerVisible(false); // Hide the emoji picker after selecting an emoji
+    setEmojiPickerVisible(false);
   };
 
   return (
-    <div className="flex flex-col w-5">
+    <div className="flex flex-col-reverse w-5">
       <button
         className="py-2 pr-6 absolute top-0 right-6"
         onClick={() => setEmojiPickerVisible(!emojiPickerVisible)}
@@ -37,12 +37,7 @@ const EmojiSelector: React.FC<EmojiSelectorProps> = ({ addEmoji }) => {
             onEmojiSelect={handleEmojiSelect}
             title="Pick your emoji…"
             emoji="point_up"
-            style={{
-              position: "absolute",
-              bottom: "100%",
-              marginBottom: "10px",
-              left: "0",
-            }}
+            style={style}
           />
         )}
       </div>

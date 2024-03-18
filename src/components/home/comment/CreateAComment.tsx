@@ -90,7 +90,15 @@ const CreateAComment: React.FC<CreateACommentProps> = ({
       </div>
       {/* EMOJI SELECTOR */}
       <div className="absolute top-0 right-6 flex items-center">
-        <EmojiSelector addEmoji={addEmoji} />
+        <EmojiSelector
+          addEmoji={addEmoji}
+          style={{
+            position: "absolute",
+            bottom: "100%",
+            marginBottom: "10px",
+            left: "0",
+          }}
+        />
       </div>
       {/* IMAGE FILE */}
       <label className="cursor-pointer absolute top-2 right-6">

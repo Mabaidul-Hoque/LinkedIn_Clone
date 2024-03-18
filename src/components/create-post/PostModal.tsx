@@ -2,29 +2,74 @@ import {
   faCaretDown,
   faImage,
   faXmark,
+  faFaceSmile,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
+import Picker from "@emoji-mart/react";
+
+interface EmojiData {
+  native: string;
+}
 
 interface PostModalProps {
   isOpen: boolean;
   onClose: () => void;
+  setPostContent: React.Dispatch<React.SetStateAction<string>>;
+  postContent: string;
+  createPost: () => {};
+  setSelectedFiles: React.Dispatch<React.SetStateAction<File[] | null>>;
+  selectedFiles: File[] | null;
+  setImageUrls: React.Dispatch<React.SetStateAction<string[]>>;
+  imageUrls: string[];
 }
-const PostModal: React.FC<PostModalProps> = ({ isOpen, onClose }) => {
-  const [postContent, setPostContent] = useState("");
-  //   const [postSettings, setPostSettings] = useState("anyone");
-  const [emojiInput, setEmojiInput] = useState("");
-  //   const [mediaFile, setMediaFile] = useState<File | null>(null);
-
-  const handleEmojiInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEmojiInput(e.target.value);
+const PostModal: React.FC<PostModalProps> = ({
+  isOpen,
+  onClose,
+  setPostContent,
+  postContent,
+  createPost,
+  setSelectedFiles,
+  selectedFiles,
+  setImageUrls,
+  imageUrls,
+}) => {
+  const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
+  // const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const handleEmojiSelect = (emoji: EmojiData) => {
+    if (emoji && emoji.native) {
+      addEmoji(emoji.native);
+      console.log("Selected emoji:", emoji.native);
+    }
+    setEmojiPickerVisible(false);
   };
 
-  //   const handleMediaFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //     if (e.target.files && e.target.files.length > 0) {
-  //       setMediaFile(e.target.files[0]);
-  //     }
-  //   };
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFiles((prev) => [
+        ...(prev || []),
+        ...(event.target.files ? Array.from(event.target.files) : []),
+      ]);
+      console.log("image file type", event.target.files[0]);
+      const urls = Array.from(event.target.files).map((file) =>
+        URL.createObjectURL(file)
+      );
+      setImageUrls((prev) => [
+        ...(prev || []),
+        ...(event.target.files ? Array.from(urls) : []),
+      ]);
+    }
+  };
+
+  const handleImageDelete = (url: string) => {
+    const deleteImageUrl = imageUrls?.find((imageUrl) => imageUrl === url);
+    if (deleteImageUrl) {
+      const filteredImageUrl = imageUrls?.filter(
+        (imageUrl) => imageUrl !== deleteImageUrl
+      );
+      filteredImageUrl && setImageUrls(filteredImageUrl);
+    }
+  };
 
   const handlePostContentChange = (
     e: React.ChangeEvent<HTMLTextAreaElement>
@@ -32,15 +77,12 @@ const PostModal: React.FC<PostModalProps> = ({ isOpen, onClose }) => {
     setPostContent(e.target.value);
   };
 
-  //   const handlePostSettingsChange = (
-  //     e: React.ChangeEvent<HTMLTextAreaElement>
-  //   ) => {
-  //     setPostSettings(e.target.value);
-  //   };
-
   const handlePost = () => {
-    // console.log("Posting:", postContent, postSettings);
-    onClose();
+    createPost();
+  };
+
+  const addEmoji = (emoji: string) => {
+    setPostContent((prev) => prev + emoji);
   };
 
   return (
@@ -97,22 +139,62 @@ const PostModal: React.FC<PostModalProps> = ({ isOpen, onClose }) => {
                   value={postContent}
                   onChange={handlePostContentChange}
                 ></textarea>
+                <div>
+                  {selectedFiles && selectedFiles?.length > 0 && (
+                    <div className="flex flex-wrap items-center justify-center gap-2">
+                      {/* Display the selected images */}
+                      {imageUrls?.map((url, index) => (
+                        <div key={index} className="relative">
+                          <button
+                            onClick={() => handleImageDelete(url)}
+                            className="absolute top-0 right-0"
+                          >
+                            <FontAwesomeIcon
+                              className="size-5 text-gray-900 cursor-pointer hover:text-red-500"
+                              icon={faXmark}
+                            />
+                          </button>
+                          <img width={150} src={url} alt="Selected" />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
               </div>
               {/* ADD EMOJI AND MEDIA */}
               <div className="w-full flex mt-4">
                 {/* ADD EMOJI */}
-                <div className=" ">
-                  <input
-                    type="text"
-                    placeholder="Add emoji"
-                    value={emojiInput}
-                    onChange={handleEmojiInputChange}
-                  />
+                <div className="flex flex-col-reverse">
+                  <button
+                    className="py-2 pr-6"
+                    onClick={() => setEmojiPickerVisible(!emojiPickerVisible)}
+                  >
+                    <FontAwesomeIcon
+                      className="size-6 text-gray-500"
+                      icon={faFaceSmile}
+                    />
+                  </button>
+                  {/* EMOJI SELECTOR */}
+                  <div className="ml-64 mb-64 absolute top-10 right-40">
+                    {emojiPickerVisible && (
+                      <Picker
+                        onEmojiSelect={handleEmojiSelect}
+                        title="Pick your emoji…"
+                        emoji="point_up"
+                      />
+                    )}
+                  </div>
                 </div>
                 {/* ADD MEDIA  */}
-                <div className=" ">
+                <div className="pl-20">
                   <label className="cursor-pointer">
-                    <input type="file" className="hidden" />
+                    <input
+                      type="file"
+                      className="hidden"
+                      accept="image/*" // Accept only image files
+                      multiple
+                      onChange={handleFileChange}
+                    />
                     <span className="px-4 py-2 hover:bg-gray-200 rounded-md flex items-center gap-2">
                       <FontAwesomeIcon
                         className="text-[#378FE9] size-5"
@@ -121,11 +203,11 @@ const PostModal: React.FC<PostModalProps> = ({ isOpen, onClose }) => {
                       Media
                     </span>
                   </label>
-                  <input
+                  {/* <input
                     type="file"
                     accept="image/*" // Accept only image files
                     // onChange={handleMediaFileChange}
-                  />
+                  /> */}
                 </div>
               </div>
             </div>
