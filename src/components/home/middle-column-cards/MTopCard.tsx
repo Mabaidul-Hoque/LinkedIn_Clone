@@ -4,9 +4,9 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import EventsCreation from "../../create-post/EventsCreation";
 import React, { useState } from "react";
 import PostModal from "../../create-post/PostModal";
-import { createAPost } from "../../../apis/createAPostApi";
+import { createAPost } from "../../../apis/postsApi/createAPostApi";
 import { Post } from "../../../pages/Home";
-import { fetchPosts } from "../../../apis/postsApi";
+import { fetchPosts } from "../../../apis/postsApi/postsApi";
 
 interface MTopCardProps {
   updatePosts: React.Dispatch<React.SetStateAction<Post[]>>;

@@ -1,12 +1,13 @@
 import { useEffect, useState, useRef } from "react";
-import { fetchPosts } from "../apis/postsApi";
+import { fetchPosts } from "../apis/postsApi/postsApi";
 import Lcard2 from "../components/home/left-column-cards/LCard2";
 import Lcard1 from "../components/home/left-column-cards/Lcard1";
 import MGenCard from "../components/home/middle-column-cards/MGenCard";
 import MTopCard from "../components/home/middle-column-cards/MTopCard";
 import RCard1 from "../components/home/right-column-cards/RCard1";
 import RCard2 from "../components/home/right-column-cards/RCard2";
-import { createAPost } from "../apis/createAPostApi";
+import { createAPost } from "../apis/postsApi/createAPostApi";
+import { updateCreatedPost } from "../apis/postsApi/updatePostApi";
 
 interface Author {
   name: string;
@@ -71,6 +72,23 @@ const Home = () => {
     }
   };
 
+  const updatePost = async (postId: string) => {
+    const formData = new FormData();
+
+    formData.append("content", postContent);
+    if (selectedFiles) {
+      // Append each image file to the formData
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append("images", selectedFiles[i]);
+      }
+    }
+    const res = await updateCreatedPost(postId, formData);
+
+    if (res?.status === "success") {
+      setPosts((prevPosts) => [res.data, ...prevPosts]);
+    }
+  };
+
   const lastPostElementRef = (node: HTMLElement | null) => {
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver((entries) => {
@@ -114,9 +132,17 @@ const Home = () => {
         {posts?.map((post, index) => (
           <div key={post._id}>
             {posts.length === index + 1 ? (
-              <MGenCard post={post} ref={lastPostElementRef} />
+              <MGenCard
+                post={post}
+                ref={lastPostElementRef}
+                updatePost={updatePost}
+              />
             ) : (
-              <MGenCard post={post} ref={lastPostElementRef} />
+              <MGenCard
+                post={post}
+                ref={lastPostElementRef}
+                updatePost={updatePost}
+              />
             )}
           </div>
         ))}

@@ -5,11 +5,12 @@ import {
   faCommentDots,
   faPaperPlane,
   faThumbsUp,
+  faEllipsis,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PublicIcon from "@mui/icons-material/Public";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
-import { likePost } from "../../../apis/postLikeApi";
+import { likePost } from "../../../apis/postsApi/postLikeApi";
 import { toast } from "react-toastify";
 import Comment from "../comment/Comment";
 import { fetchComments } from "../../../apis/displayCommentsApi";
@@ -17,6 +18,7 @@ import { calculateTimeAgo } from "../../../util/createdAt";
 
 interface MGenCardProps {
   post: Post;
+  updatePost: (postId: string) => Promise<void>;
 }
 
 export interface PostComment {
@@ -27,11 +29,12 @@ export interface PostComment {
 }
 
 const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
-  ({ post }, ref) => {
+  ({ post, updatePost }, ref) => {
     const [isLiked, setIsLiked] = useState(false);
     const [content, setContent] = useState("");
     const [comments, setComments] = useState<PostComment[]>([]);
     const [isCommentBtn, setIsCommentBtn] = useState(false);
+    const [showOptions, setShowOptions] = useState(false);
 
     useEffect(() => {
       getComments();
@@ -76,7 +79,8 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     return (
       <div ref={ref} className="bg-white  shadow-md rounded-md mb-4">
         {/* AUTHOR SECTION */}
-        <div className="flex px-4 pt-2 mb-2">
+        <div className="flex justify-between px-4 pt-2 mb-2">
+          {/* AUTHOR DETAILS */}
           <div className="flex items-center gap-2">
             {/* AUTHOR IMage */}
             <img
@@ -99,6 +103,25 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
                 </span>
               </p>
             </div>
+          </div>
+          {/* THREE DOT MENU */}
+          <div className="flex flex-col gap-4 relative">
+            {/* THREE DOT MENU BTN */}
+            <button onClick={() => setShowOptions((prev) => !prev)}>
+              <FontAwesomeIcon className="text-gray-500" icon={faEllipsis} />
+            </button>
+            {/* POST DELTE EDIT OPTIONS */}
+            {showOptions && (
+              <div className="absolute top-8 right-0 bg-white w-[15rem] px-4 py-2 border border-gray-200 shadow-lg rounded">
+                <div className="">
+                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
+                  Placeat voluptatum est dicta explicabo mollitia. Voluptate
+                  vero eveniet voluptatibus at! Ducimus eveniet alias
+                  repudiandae? Corrupti, eum harum! Velit praesentium dolorem
+                  laboriosam!
+                </div>
+              </div>
+            )}
           </div>
         </div>
         {/* CONTENT SECTION */}
