@@ -6,6 +6,7 @@ import MGenCard from "../components/home/middle-column-cards/MGenCard";
 import MTopCard from "../components/home/middle-column-cards/MTopCard";
 import RCard1 from "../components/home/right-column-cards/RCard1";
 import RCard2 from "../components/home/right-column-cards/RCard2";
+import { createAPost } from "../apis/createAPostApi";
 
 interface Author {
   name: string;
@@ -35,9 +36,13 @@ const Home = () => {
   const observer = useRef<IntersectionObserver | null>(null);
   const [hasMore, setHasMore] = useState(true);
   const [stopData, setStopData] = useState(false);
+  const [postContent, setPostContent] = useState<string>("");
+  const [selectedFiles, setSelectedFiles] = useState<File[] | null>([]);
+
   useEffect(() => {
     getPosts();
   }, [page]);
+
   const getPosts = async () => {
     const res = await fetchPosts(page);
     console.log("res from posts", res);
@@ -46,6 +51,23 @@ const Home = () => {
       setPosts((prevPosts) => [...prevPosts, ...res?.data]);
     } else {
       setHasMore(false);
+    }
+  };
+
+  const createPost = async () => {
+    const formData = new FormData();
+
+    formData.append("content", postContent);
+    if (selectedFiles) {
+      // Append each image file to the formData
+      for (let i = 0; i < selectedFiles.length; i++) {
+        formData.append("images", selectedFiles[i]);
+      }
+    }
+    const res = await createAPost(formData);
+
+    if (res?.status === "success") {
+      setPosts((prevPosts) => [res.data, ...prevPosts]);
     }
   };
 
@@ -80,7 +102,14 @@ const Home = () => {
       {/* MIDDLE COLUMN CONTAINER */}
       <div className="col-span-full md:col-span-2 lg:col-span-2 mb-12">
         {/* CREATE A POST */}
-        <MTopCard />
+        <MTopCard
+          updatePosts={setPosts}
+          setPostContent={setPostContent}
+          postContent={postContent}
+          setSelectedFiles={setSelectedFiles}
+          selectedFiles={selectedFiles}
+          createPost={createPost}
+        />
         {/* DISPLAY POSTS */}
         {posts?.map((post, index) => (
           <div key={post._id}>

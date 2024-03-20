@@ -35,11 +35,10 @@ const PostModal: React.FC<PostModalProps> = ({
   imageUrls,
 }) => {
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
-  // const [imageUrls, setImageUrls] = useState<string[]>([]);
   const handleEmojiSelect = (emoji: EmojiData) => {
     if (emoji && emoji.native) {
       addEmoji(emoji.native);
-      console.log("Selected emoji:", emoji.native);
+      // console.log("Selected emoji:", emoji.native);
     }
     setEmojiPickerVisible(false);
   };
@@ -79,6 +78,7 @@ const PostModal: React.FC<PostModalProps> = ({
 
   const handlePost = () => {
     createPost();
+    onClose();
   };
 
   const addEmoji = (emoji: string) => {
@@ -89,15 +89,15 @@ const PostModal: React.FC<PostModalProps> = ({
     <div
       className={`${
         isOpen ? "block" : "hidden"
-      } fixed z-10 inset-0 overflow-y-auto`}
+      } fixed  z-10 inset-0 overflow-y-auto`}
     >
       <div className="flex items-end justify-center h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
         {/* MODAL */}
         <div className="fixed inset-0 transition-opacity" aria-hidden="true">
-          <div className="absolute inset-0 bg-gray-500 opacity-75"></div>
+          <div className="absolute top-0 inset-0 bg-gray-500 opacity-75"></div>
         </div>
         {/* MODAL INSIDE CONTENT */}
-        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-[50%] sm:w-full">
+        <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-[95%] sm:max-w-[80%] lg:max-w-[50%]  sm:w-full max-[600px]:absolute  max-[600px]:top-5">
           <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
             <div className="sm:flex sm:items-start sm:flex-col">
               {/* MODAL HEADER */}
@@ -175,7 +175,7 @@ const PostModal: React.FC<PostModalProps> = ({
                     />
                   </button>
                   {/* EMOJI SELECTOR */}
-                  <div className="ml-64 mb-64 absolute top-10 right-40">
+                  <div className="ml-64 mb-64 absolute top-10 right-0">
                     {emojiPickerVisible && (
                       <Picker
                         onEmojiSelect={handleEmojiSelect}
@@ -216,8 +216,9 @@ const PostModal: React.FC<PostModalProps> = ({
           <div className="border-b border-gray-300" />
           <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
             <button
-              type="button"
-              className="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm"
+              className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 ${
+                postContent ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-300"
+              }  text-base font-medium text-white  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm`}
               onClick={handlePost}
               disabled={!postContent}
             >

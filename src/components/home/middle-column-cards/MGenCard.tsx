@@ -26,12 +26,6 @@ export interface PostComment {
   children: PostComment[];
 }
 
-function toCapitalized(str: string): string {
-  return str.replace(/\w\S*/g, function (txt) {
-    return txt.charAt(0).toUpperCase() + txt.substring(1).toLowerCase();
-  });
-}
-
 const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
   ({ post }, ref) => {
     const [isLiked, setIsLiked] = useState(false);
@@ -42,6 +36,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     useEffect(() => {
       getComments();
     }, []);
+
     const getComments = async () => {
       const res = await fetchComments(post._id);
       console.log("res from fetch comments", res);
@@ -92,7 +87,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
             {/* AUTHOR DETAILS */}
             <div className="flex flex-col text-left">
               {/* AUTHOR NAME */}
-              <p className="font-semibold">{toCapitalized(post.author.name)}</p>
+              <p className="font-semibold">{post.author.name}</p>
               {/* AUTHOR FOLLOWERS */}
               <p className="text-sm">150,000 followers</p>
               {/* AUTHOR CREATED AT */}

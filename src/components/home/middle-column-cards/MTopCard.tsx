@@ -2,40 +2,63 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import EditNoteIcon from "@mui/icons-material/EditNote";
 import EventsCreation from "../../create-post/EventsCreation";
-import { useEffect, useState } from "react";
+import React, { useState } from "react";
 import PostModal from "../../create-post/PostModal";
 import { createAPost } from "../../../apis/createAPostApi";
+import { Post } from "../../../pages/Home";
+import { fetchPosts } from "../../../apis/postsApi";
 
-interface ContentItems {
-  title: string;
-  content: string;
-  files: File[] | null;
+interface MTopCardProps {
+  updatePosts: React.Dispatch<React.SetStateAction<Post[]>>;
+  setPostContent: React.Dispatch<React.SetStateAction<string>>;
+  postContent: string;
+  setSelectedFiles: React.Dispatch<React.SetStateAction<File[] | null>>;
+  selectedFiles: File[] | null;
+  createPost: () => Promise<void>; // Adjust the return type as necessary
 }
-
-const MTopCard = () => {
+const MTopCard: React.FC<MTopCardProps> = ({
+  updatePosts,
+  setPostContent,
+  postContent,
+  setSelectedFiles,
+  selectedFiles,
+  createPost,
+}) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [contentItems, setContentItems] = useState<ContentItems>({
-    title: "",
-    content: "",
-    files: null,
-  });
-  const [postContent, setPostContent] = useState<string>("");
-  const [selectedFiles, setSelectedFiles] = useState<File[] | null>([]);
+  // const [postContent, setPostContent] = useState<string>("");
+  // const [selectedFiles, setSelectedFiles] = useState<File[] | null>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
 
-  console.log("selectedFile", selectedFiles);
-  useEffect(() => {
-    setContentItems({
-      title: "title",
-      content: postContent,
-      files: selectedFiles,
-    });
-  }, [postContent]);
+  // const getPosts = async () => {
+  //   const res = await fetchPosts(1);
+  //   console.log("res from posts", res);
+  //   if (res?.status === "success") {
+  //     updatePosts((prevPosts) => [...prevPosts, ...res?.data]);
+  //   }
+  // };
 
-  const createPost = async () => {
-    const res = await createAPost(contentItems);
-    console.log("res from create a post", res);
-  };
+  // const createPost = async () => {
+  //   const formData = new FormData();
+
+  //   formData.append("content", postContent);
+  //   if (selectedFiles) {
+  //     // Append each image file to the formData
+  //     for (let i = 0; i < selectedFiles.length; i++) {
+  //       formData.append("images", selectedFiles[i]);
+  //     }
+  //   }
+  //   const res = await createAPost(formData);
+  //   console.log("res from create a post", res);
+  //   getPosts();
+  //   // updatePosts((prev) => [res.data, ...prev]);
+  //   // if (res?.status === "success") {
+  //   //   console.log("res from post created");
+  //   //   getPosts();
+  //   //   // Assuming res.data contains the new post data
+  //   //   // updatePosts((prevPosts) => [res.data, ...prevPosts]);
+  //   // }
+  // };
+
   const openModal = () => {
     setIsModalOpen(true);
   };
