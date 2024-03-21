@@ -4,8 +4,7 @@ import {
   faRetweet,
   faCommentDots,
   faPaperPlane,
-  faThumbsUp,
-  faEllipsis,
+  faThumbsUp
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PublicIcon from "@mui/icons-material/Public";
@@ -15,10 +14,12 @@ import { toast } from "react-toastify";
 import Comment from "../comment/Comment";
 import { fetchComments } from "../../../apis/displayCommentsApi";
 import { calculateTimeAgo } from "../../../util/createdAt";
+import PostEditOptions from "../../../ui/PostEditOptions";
+import PostModal from "../../create-post/PostModal";
+import { updateCreatedPost } from "../../../apis/postsApi/updatePostApi";
 
 interface MGenCardProps {
   post: Post;
-  updatePost: (postId: string) => Promise<void>;
 }
 
 export interface PostComment {
@@ -29,12 +30,16 @@ export interface PostComment {
 }
 
 const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
-  ({ post, updatePost }, ref) => {
+  ({ post }, ref) => {
     const [isLiked, setIsLiked] = useState(false);
     const [content, setContent] = useState("");
     const [comments, setComments] = useState<PostComment[]>([]);
     const [isCommentBtn, setIsCommentBtn] = useState(false);
-    const [showOptions, setShowOptions] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [imageUrls, setImageUrls] = useState<string[]>([]);
+    const [newPostContent, setNewPostContent] = useState<string>("");
+    const [newSelectedFiles, setNewSelectedFiles] = useState<File[] | null>([]);
+    // const [editOption, setEditOption] = useState(false);
 
     useEffect(() => {
       getComments();
@@ -75,6 +80,30 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     const handleLike = () => {
       likeAPost();
     };
+    const openModal = () => {
+      setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+      setIsModalOpen(false);
+    };
+
+    const updatePost = async () => {
+      const formData = new FormData();
+
+      formData.append("content", newPostContent);
+      if (newSelectedFiles) {
+        // Append each image file to the formData
+        for (let i = 0; i < newSelectedFiles.length; i++) {
+          formData.append("images", newSelectedFiles[i]);
+        }
+      }
+      const res = await updateCreatedPost(post._id, formData);
+      console.log("res from update post", res);
+      if (res?.status === "success") {
+        toast.success(res?.message, { theme: "colored" });
+      }
+    };
 
     return (
       <div ref={ref} className="bg-white  shadow-md rounded-md mb-4">
@@ -105,25 +134,24 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
             </div>
           </div>
           {/* THREE DOT MENU */}
-          <div className="flex flex-col gap-4 relative">
-            {/* THREE DOT MENU BTN */}
-            <button onClick={() => setShowOptions((prev) => !prev)}>
-              <FontAwesomeIcon className="text-gray-500" icon={faEllipsis} />
-            </button>
-            {/* POST DELTE EDIT OPTIONS */}
-            {showOptions && (
-              <div className="absolute top-8 right-0 bg-white w-[15rem] px-4 py-2 border border-gray-200 shadow-lg rounded">
-                <div className="">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit.
-                  Placeat voluptatum est dicta explicabo mollitia. Voluptate
-                  vero eveniet voluptatibus at! Ducimus eveniet alias
-                  repudiandae? Corrupti, eum harum! Velit praesentium dolorem
-                  laboriosam!
-                </div>
-              </div>
-            )}
-          </div>
+          <PostEditOptions onOpen={openModal} />
+          {/* DISPLAY OPTION RESULTS */}
+
+          <PostModal
+            isOpen={isModalOpen}
+            onClose={closeModal}
+            setPostContent={setNewPostContent}
+            postContent={newPostContent}
+            createOrUpdatePost={updatePost}
+            setSelectedFiles={setNewSelectedFiles}
+            selectedFiles={newSelectedFiles}
+            imageUrls={imageUrls}
+            setImageUrls={setImageUrls}
+            postBtn="Save"
+            updatedContent={post.content}
+          />
         </div>
+
         {/* CONTENT SECTION */}
         <div className="text-left px-4 pt-2 mb-2">
           {/* POST TITLE */}

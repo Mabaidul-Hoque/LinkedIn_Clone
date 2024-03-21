@@ -7,7 +7,7 @@ import MTopCard from "../components/home/middle-column-cards/MTopCard";
 import RCard1 from "../components/home/right-column-cards/RCard1";
 import RCard2 from "../components/home/right-column-cards/RCard2";
 import { createAPost } from "../apis/postsApi/createAPostApi";
-import { updateCreatedPost } from "../apis/postsApi/updatePostApi";
+import { toast } from "react-toastify";
 
 interface Author {
   name: string;
@@ -69,23 +69,7 @@ const Home = () => {
 
     if (res?.status === "success") {
       setPosts((prevPosts) => [res.data, ...prevPosts]);
-    }
-  };
-
-  const updatePost = async (postId: string) => {
-    const formData = new FormData();
-
-    formData.append("content", postContent);
-    if (selectedFiles) {
-      // Append each image file to the formData
-      for (let i = 0; i < selectedFiles.length; i++) {
-        formData.append("images", selectedFiles[i]);
-      }
-    }
-    const res = await updateCreatedPost(postId, formData);
-
-    if (res?.status === "success") {
-      setPosts((prevPosts) => [res.data, ...prevPosts]);
+      toast.success(res?.message, { theme: "colored" });
     }
   };
 
@@ -132,17 +116,9 @@ const Home = () => {
         {posts?.map((post, index) => (
           <div key={post._id}>
             {posts.length === index + 1 ? (
-              <MGenCard
-                post={post}
-                ref={lastPostElementRef}
-                updatePost={updatePost}
-              />
+              <MGenCard post={post} ref={lastPostElementRef} />
             ) : (
-              <MGenCard
-                post={post}
-                ref={lastPostElementRef}
-                updatePost={updatePost}
-              />
+              <MGenCard post={post} ref={lastPostElementRef} />
             )}
           </div>
         ))}

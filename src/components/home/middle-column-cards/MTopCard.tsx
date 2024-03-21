@@ -4,9 +4,7 @@ import EditNoteIcon from "@mui/icons-material/EditNote";
 import EventsCreation from "../../create-post/EventsCreation";
 import React, { useState } from "react";
 import PostModal from "../../create-post/PostModal";
-import { createAPost } from "../../../apis/postsApi/createAPostApi";
 import { Post } from "../../../pages/Home";
-import { fetchPosts } from "../../../apis/postsApi/postsApi";
 
 interface MTopCardProps {
   updatePosts: React.Dispatch<React.SetStateAction<Post[]>>;
@@ -17,7 +15,6 @@ interface MTopCardProps {
   createPost: () => Promise<void>; // Adjust the return type as necessary
 }
 const MTopCard: React.FC<MTopCardProps> = ({
-  updatePosts,
   setPostContent,
   postContent,
   setSelectedFiles,
@@ -86,11 +83,13 @@ const MTopCard: React.FC<MTopCardProps> = ({
           onClose={closeModal}
           setPostContent={setPostContent}
           postContent={postContent}
-          createPost={createPost}
+          createOrUpdatePost={createPost}
           setSelectedFiles={setSelectedFiles}
           selectedFiles={selectedFiles}
           imageUrls={imageUrls}
           setImageUrls={setImageUrls}
+          postBtn="Post"
+          updatedContent={""}
         />
       </div>
       {/* UPLOADED OPTIONS */}

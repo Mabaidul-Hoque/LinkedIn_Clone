@@ -15,24 +15,29 @@ interface EmojiData {
 interface PostModalProps {
   isOpen: boolean;
   onClose: () => void;
+
   setPostContent: React.Dispatch<React.SetStateAction<string>>;
   postContent: string;
-  createPost: () => {};
+  createOrUpdatePost: () => {};
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[] | null>>;
   selectedFiles: File[] | null;
   setImageUrls: React.Dispatch<React.SetStateAction<string[]>>;
   imageUrls: string[];
+  postBtn: string;
+  updatedContent: string;
 }
 const PostModal: React.FC<PostModalProps> = ({
   isOpen,
   onClose,
   setPostContent,
   postContent,
-  createPost,
+  createOrUpdatePost,
   setSelectedFiles,
   selectedFiles,
   setImageUrls,
   imageUrls,
+  postBtn,
+  updatedContent,
 }) => {
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
   const handleEmojiSelect = (emoji: EmojiData) => {
@@ -77,7 +82,7 @@ const PostModal: React.FC<PostModalProps> = ({
   };
 
   const handlePost = () => {
-    createPost();
+    createOrUpdatePost();
     onClose();
   };
 
@@ -136,7 +141,7 @@ const PostModal: React.FC<PostModalProps> = ({
                   className="w-full min-h-64 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
                   rows={4}
                   placeholder="What do you want to talk about?"
-                  value={postContent}
+                  value={postContent || updatedContent}
                   onChange={handlePostContentChange}
                 ></textarea>
                 <div>
@@ -203,11 +208,6 @@ const PostModal: React.FC<PostModalProps> = ({
                       Media
                     </span>
                   </label>
-                  {/* <input
-                    type="file"
-                    accept="image/*" // Accept only image files
-                    // onChange={handleMediaFileChange}
-                  /> */}
                 </div>
               </div>
             </div>
@@ -222,7 +222,7 @@ const PostModal: React.FC<PostModalProps> = ({
               onClick={handlePost}
               disabled={!postContent}
             >
-              Post
+              {postBtn}
             </button>
           </div>
         </div>

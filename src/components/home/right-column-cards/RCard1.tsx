@@ -27,7 +27,9 @@ const RCard1 = () => {
     <>
       <div className="bg-white shadow-md rounded-md mb-4">
         {/* LINKEDIN NEWS HEADER */}
-        <h2 className="font-semibold text-left mb-2 px-4 pt-4">Linked News</h2>
+        <h2 className="font-semibold text-left mb-2 px-4 pt-4">
+          LinkedIn News
+        </h2>
         {/* LIST OF NEWS */}
         <ul
           className={`${

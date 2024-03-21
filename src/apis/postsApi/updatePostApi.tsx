@@ -4,7 +4,7 @@ export async function updateCreatedPost(postId: string, formData: FormData) {
     const url = `https://academics.newtonschool.co/api/v1/linkedIn/post/${postId}`;
 
     const res = await fetch(url, {
-      method: "POST",
+      method: "PATCH",
       headers: {
         Authorization: `Bearer ${token}`,
         projectID: "i1dieevrt9g1",
