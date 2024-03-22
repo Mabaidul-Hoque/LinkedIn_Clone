@@ -5,9 +5,11 @@ export default {
     extend: {
       backgroundImage: {
         "profile-logo": "url('/frontend_dev_logo.jpeg')",
+        "grp-profile-bg-logo": "url('/profile-background-logo.webp')",
       },
       backgroundSize: {
         custom: "200px 100px",
+        grpBG: "800px",
       },
     },
   },

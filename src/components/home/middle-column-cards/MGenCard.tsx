@@ -4,7 +4,7 @@ import {
   faRetweet,
   faCommentDots,
   faPaperPlane,
-  faThumbsUp
+  faThumbsUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import PublicIcon from "@mui/icons-material/Public";
@@ -17,6 +17,7 @@ import { calculateTimeAgo } from "../../../util/createdAt";
 import PostEditOptions from "../../../ui/PostEditOptions";
 import PostModal from "../../create-post/PostModal";
 import { updateCreatedPost } from "../../../apis/postsApi/updatePostApi";
+import { deleteAPost } from "../../../apis/postsApi/DeleteAPost";
 
 interface MGenCardProps {
   post: Post;
@@ -105,6 +106,14 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
       }
     };
 
+    const deletePost = async () => {
+      const res = await deleteAPost(post._id);
+      if (res) {
+        console.log("res from delete post", res);
+      }
+      toast.success("Post deleted successfully", { theme: "colored" });
+    };
+
     return (
       <div ref={ref} className="bg-white  shadow-md rounded-md mb-4">
         {/* AUTHOR SECTION */}
@@ -134,7 +143,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
             </div>
           </div>
           {/* THREE DOT MENU */}
-          <PostEditOptions onOpen={openModal} />
+          <PostEditOptions onOpen={openModal} onDelete={deletePost} />
           {/* DISPLAY OPTION RESULTS */}
 
           <PostModal

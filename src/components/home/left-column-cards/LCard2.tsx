@@ -1,5 +1,10 @@
-import { faHashtag, faPeopleGroup } from "@fortawesome/free-solid-svg-icons";
+import {
+  faHashtag,
+  faPeopleGroup,
+  faPlus,
+} from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useNavigate } from "react-router-dom";
 
 const groups = [
   {
@@ -50,16 +55,28 @@ const events = [
 ];
 
 const Lcard2 = () => {
+  const navigate = useNavigate();
   return (
     <>
       <div className="bg-white shadow-md rounded-md mb-4 flex flex-col gap-4">
         {/* RECENT EVENTS/GROUP VIEWED  */}
-        <div className="px-4 pt-4">
+        {/* <div className="px-4 pt-4">
           <h2 className="font-semibold text-left">Recent</h2>
-        </div>
+        </div> */}
         {/* GROUPS */}
-        <div className="flex flex-col gap-2 px-4">
-          <h2 className="font-semibold text-left text-blue-500">Groups</h2>
+        <div className="flex flex-col gap-2 px-4 mt-4">
+          <div className="flex items-center justify-between">
+            {/* GROUP BTN */}
+            <button onClick={() => navigate("/groups")}>
+              <h2 className="font-semibold text-left text-blue-500 hover:underline">
+                Groups
+              </h2>
+            </button>
+            {/* PLUS SIGN */}
+            <button onClick={() => navigate("/groups")}>
+              <FontAwesomeIcon className="text-gray-600" icon={faPlus} />
+            </button>
+          </div>
           {groups.map((group) => (
             <div key={group.id} className="flex items-center gap-2 text-sm">
               <FontAwesomeIcon className="text-gray-800" icon={faPeopleGroup} />
@@ -71,7 +88,18 @@ const Lcard2 = () => {
         </div>
         {/* EVENTS */}
         <div className="flex flex-col gap-2 px-4">
-          <h2 className="font-semibold text-left text-blue-500">Events</h2>
+          <div className="flex items-center justify-between">
+            {/* EBENT BTN */}
+            <button>
+              <h2 className="font-semibold text-left text-blue-500 hover:underline">
+                Events
+              </h2>
+            </button>
+            {/* PLUS SIGN */}
+            <button>
+              <FontAwesomeIcon className="text-gray-600" icon={faPlus} />
+            </button>
+          </div>
           {events.map((event) => (
             <div key={event.id} className="flex items-center gap-2 text-sm">
               <FontAwesomeIcon icon={faHashtag} />

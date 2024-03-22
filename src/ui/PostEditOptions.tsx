@@ -13,12 +13,12 @@ function classNames(...classes: string[]) {
 
 interface PostEditOptionsProps {
   onOpen: () => void;
-  //   setEditOption: () => void;
+  onDelete: () => void;
 }
 
 const PostEditOptions: React.FC<PostEditOptionsProps> = ({
   onOpen,
-  //   setEditOption,
+  onDelete,
 }) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -43,10 +43,7 @@ const PostEditOptions: React.FC<PostEditOptionsProps> = ({
             <Menu.Item>
               {({ active }) => (
                 <button
-                  onClick={() => {
-                    onOpen();
-                    // setEditOption(true);
-                  }}
+                  onClick={onOpen}
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block p-4 text-lg w-full text-left"
@@ -63,6 +60,7 @@ const PostEditOptions: React.FC<PostEditOptionsProps> = ({
             <Menu.Item>
               {({ active }) => (
                 <button
+                  onClick={onDelete}
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block p-4 text-lg w-full text-left"
