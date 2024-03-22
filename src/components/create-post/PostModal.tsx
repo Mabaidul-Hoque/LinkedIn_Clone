@@ -54,7 +54,7 @@ const PostModal: React.FC<PostModalProps> = ({
         ...(prev || []),
         ...(event.target.files ? Array.from(event.target.files) : []),
       ]);
-      console.log("image file type", event.target.files[0]);
+      // console.log("image file type", event.target.files[0]);
       const urls = Array.from(event.target.files).map((file) =>
         URL.createObjectURL(file)
       );

@@ -1,12 +1,20 @@
 // import React from 'react'
-
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import RCFooter from "../components/home/right-column-cards/RCFooter";
 import { Button, Modal, Tooltip } from "antd";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { createAGroup } from "../apis/groupApis/createGroup";
+import { toast } from "react-toastify";
+import { fetchAllgroups } from "../apis/groupApis/fetchAllGroups";
 
+interface Group {
+  _id: string;
+  name: string;
+  description: string;
+  image: string;
+}
 const Groups = () => {
   const [activeTab, setActiveTab] = useState("yourGroups");
   const navigate = useNavigate();
@@ -14,10 +22,44 @@ const Groups = () => {
   const [groupName, setGroupName] = useState("");
   const [description, setDescription] = useState("");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
+  const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
+  const [groups, setGroups] = useState<Group[]>([]);
 
-  // Function to handle file input changes
+  console.log("groups", groups);
+
+  useEffect(
+    () => () => {
+      getGroups();
+    },
+    []
+  );
+
+  const createGroup = async () => {
+    console.log("selectedImageFile", selectedImageFile);
+    const formData = new FormData();
+    formData.append("name", groupName);
+    formData.append("description", description);
+    if (selectedImageFile) {
+      formData.append("image", selectedImageFile);
+    }
+    const res = await createAGroup(formData);
+    console.log("res from creatagroup", res);
+    if (res.status === "success") {
+      toast.success(res.message, { theme: "colored" });
+    }
+  };
+
+  const getGroups = async () => {
+    const res = await fetchAllgroups();
+    console.log("res from fetchallgroups", res);
+    if (res.status === "success") {
+      setGroups(res.data);
+    }
+  };
+
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
+      setSelectedImageFile(event.target.files[0]);
       const file = event.target.files[0];
       const reader = new FileReader();
 
@@ -52,8 +94,9 @@ const Groups = () => {
 
   const handleOk = () => {
     setIsModalOpen(false);
+    createGroup();
+    getGroups();
   };
-
   const handleCancel = () => {
     setIsModalOpen(false);
   };
@@ -100,8 +143,8 @@ const Groups = () => {
             <Modal
               title="Create group"
               open={isModalOpen}
-              onOk={handleOk}
               onCancel={handleCancel}
+              onOk={handleOk}
               okText="Create" // Set custom text for the OK button
               okButtonProps={{ style: { color: "black" } }}
               cancelButtonProps={{ style: { display: "none" } }}
@@ -190,7 +233,29 @@ const Groups = () => {
           {activeTab === "yourGroups" && (
             <div className="px-10">
               {/* use map to all groups */}
-              <div className="flex items-center gap-4 py-2">
+              {groups.map((group, index) => (
+                <div key={group._id}>
+                  <div className="flex items-center gap-4 py-2">
+                    <img
+                      width={50}
+                      src={group.image || "/LinkedIn_icon.svg.png"}
+                      alt=""
+                    />
+                    <div className="w-full text-left ">
+                      <h2 className="font-semibold text-gray-800 hover:underline cursor-pointer hover:text-blue-500">
+                        {group.name}
+                      </h2>
+                      <p className="text-sm">99,776 members</p>
+                    </div>
+                  </div>
+                  {/* DIVIDER */}
+                  {index < groups.length - 1 && (
+                    <div className="border-b border-gray-200 w-11/12 ml-auto my-2" />
+                  )}
+                </div>
+              ))}
+
+              {/* <div className="flex items-center gap-4 py-2">
                 <img width={50} src="/LinkedIn_icon.svg.png" alt="" />
                 <div className="w-full text-left ">
                   <h2 className="font-semibold text-gray-800">
@@ -198,18 +263,7 @@ const Groups = () => {
                   </h2>
                   <p className="text-sm">99,776 members</p>
                 </div>
-              </div>
-              {/* DIVIDER */}
-              <div className="border-b border-gray-200 w-11/12 ml-auto my-2" />
-              <div className="flex items-center gap-4 py-2">
-                <img width={50} src="/LinkedIn_icon.svg.png" alt="" />
-                <div className="w-full text-left ">
-                  <h2 className="font-semibold text-gray-800">
-                    Frontend Developer and Web Developers
-                  </h2>
-                  <p className="text-sm">99,776 members</p>
-                </div>
-              </div>
+              </div> */}
             </div>
           )}
 
