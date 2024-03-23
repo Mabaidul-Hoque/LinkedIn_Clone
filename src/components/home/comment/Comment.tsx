@@ -1,7 +1,5 @@
-import React, { useState, useEffect, useRef } from "react";
-import EmojiSelector from "../../../ui/EmojiSelector";
-import { faImage } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import React, { useState, useEffect } from "react";
+
 import { createAComment } from "../../../apis/commentOnPostApi";
 import { PostComment } from "../middle-column-cards/MGenCard";
 import { calculateTimeAgo } from "../../../util/createdAt";
@@ -31,8 +29,8 @@ const Comment: React.FC<CommentProps> = ({
   const [expandedCommentId, setExpandedCommentId] = useState<string | null>(
     null
   );
-  const [createChildComment, setCreateChildComment] = useState(false);
-  const [childrenComments, setChildrenComments] = useState([]);
+  // const [createChildComment, setCreateChildComment] = useState(false);
+  // const [childrenComments, setChildrenComments] = useState([]);
   // const [isDeleted, setIsDeleted] = useState(false);
   // const commentContentRef = useRef<HTMLParagraphElement>(null);
   // useEffect(() => {
@@ -225,7 +223,7 @@ const Comment: React.FC<CommentProps> = ({
                   {/* REPLY TO A COMMENT */}
                   <div className="flex justify-start mt-1">
                     <button
-                      onClick={() => setCreateChildComment(true)}
+                      // onClick={() => setCreateChildComment(true)}
                       className="text-[12px] hover:bg-gray-200 rounded-md px-1 py-0.5"
                     >
                       Reply
