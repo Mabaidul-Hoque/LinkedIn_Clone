@@ -119,6 +119,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           </li>
           {/* MY NETWORK ROUTE */}
           <li
+            onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
             className={`${
               pathname === "/mynetwork"
                 ? "text-black border-b-2 border-black"
@@ -127,7 +128,8 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           >
             <Link
               className="flex flex-col justify-center items-center"
-              to="/mynetwork"
+              // to="/mynetwork"
+              to="#"
             >
               <FontAwesomeIcon className="w-6 h-6" icon={faUserGroup} />
               <span className="text-[12px] max-[800px]:hidden">My Network</span>
@@ -135,6 +137,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           </li>
           {/* JOBS ROUTE */}
           <li
+            onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
             className={`${
               pathname === "/jobs"
                 ? "text-black border-b-2 border-black "
@@ -143,7 +146,8 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           >
             <Link
               className="flex flex-col justify-center items-center"
-              to="/jobs"
+              // to="/jobs"
+              to="#"
             >
               <FontAwesomeIcon className="w-6 h-6" icon={faBriefcase} />
               <span className="text-[12px] max-[800px]:hidden">Jobs</span>
@@ -151,6 +155,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           </li>
           {/* MESSAGING ROUTE */}
           <li
+            onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
             className={`${
               pathname === "/messaging"
                 ? "text-black border-b-2 border-black "
@@ -159,7 +164,8 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           >
             <Link
               className="flex flex-col justify-center items-center"
-              to="/messaging"
+              // to="/messaging"
+              to="#"
             >
               <FontAwesomeIcon className="w-6 h-6" icon={faCommentDots} />
               <span className="text-[12px] max-[800px]:hidden">Messaging</span>
@@ -167,6 +173,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           </li>
           {/* NOTIFICATIONS ROUTE */}
           <li
+            onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
             className={`${
               pathname === "/notifications"
                 ? "text-black border-b-2 border-black  "
@@ -175,7 +182,8 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           >
             <Link
               className="flex flex-col justify-center items-center"
-              to="/notifications"
+              // to="/notifications"
+              to="#"
             >
               <FontAwesomeIcon className="w-6 h-6" icon={faBell} />
               <span className="text-[12px] max-[800px]:hidden">

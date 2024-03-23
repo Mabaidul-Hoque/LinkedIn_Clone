@@ -8,12 +8,19 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createAGroup } from "../apis/groupApis/createGroup";
 import { toast } from "react-toastify";
 import { fetchAllgroups } from "../apis/groupApis/fetchAllGroups";
+import GroupSuggestion from "../components/group/GroupSuggestion";
 
-interface Group {
+export interface Owner {
+  name: string;
+  profileImage: string;
+  education: string;
+}
+export interface Group {
   _id: string;
   name: string;
   description: string;
   image: string;
+  owner: Owner;
 }
 const Groups = () => {
   const [activeTab, setActiveTab] = useState("yourGroups");
@@ -23,16 +30,17 @@ const Groups = () => {
   const [description, setDescription] = useState("");
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
-  const [groups, setGroups] = useState<Group[]>([]);
+  // const [groups, setGroups] = useState<Group[]>([]);
+  const [groups, setGroups] = useState<Group[]>(() => {
+    const savedGroups = localStorage.getItem("groups");
+    return savedGroups ? JSON.parse(savedGroups) : [];
+  });
 
   console.log("groups", groups);
 
-  useEffect(
-    () => () => {
-      getGroups();
-    },
-    []
-  );
+  useEffect(() => {
+    localStorage.setItem("groups", JSON.stringify(groups));
+  }, [groups]);
 
   const createGroup = async () => {
     console.log("selectedImageFile", selectedImageFile);
@@ -46,6 +54,10 @@ const Groups = () => {
     console.log("res from creatagroup", res);
     if (res.status === "success") {
       toast.success(res.message, { theme: "colored" });
+    } else {
+      if (res.message === "Channel with this name already exists") {
+        toast.error(res.message, { theme: "colored" });
+      }
     }
   };
 
@@ -54,6 +66,7 @@ const Groups = () => {
     console.log("res from fetchallgroups", res);
     if (res.status === "success") {
       setGroups(res.data);
+      localStorage.setItem("groups", JSON.stringify(res.data));
     }
   };
 
@@ -99,6 +112,10 @@ const Groups = () => {
   };
   const handleCancel = () => {
     setIsModalOpen(false);
+  };
+
+  const groupDetailsNavigation = (groupId: string) => {
+    navigate(`/groups/${groupId}`);
   };
 
   return (
@@ -242,7 +259,10 @@ const Groups = () => {
                       alt=""
                     />
                     <div className="w-full text-left ">
-                      <h2 className="font-semibold text-gray-800 hover:underline cursor-pointer hover:text-blue-500">
+                      <h2
+                        onClick={() => groupDetailsNavigation(group._id)}
+                        className="font-semibold text-gray-800 hover:underline cursor-pointer hover:text-blue-500"
+                      >
                         {group.name}
                       </h2>
                       <p className="text-sm">99,776 members</p>
@@ -254,16 +274,6 @@ const Groups = () => {
                   )}
                 </div>
               ))}
-
-              {/* <div className="flex items-center gap-4 py-2">
-                <img width={50} src="/LinkedIn_icon.svg.png" alt="" />
-                <div className="w-full text-left ">
-                  <h2 className="font-semibold text-gray-800">
-                    Frontend Developer and Web Developers
-                  </h2>
-                  <p className="text-sm">99,776 members</p>
-                </div>
-              </div> */}
             </div>
           )}
 
@@ -279,56 +289,24 @@ const Groups = () => {
       </div>
       {/*  GROUP SUGGESTION COLUMN */}
       <div className="hidden md:block md:col-span-1 lg:block lg:col-span-1">
-        <div className="bg-white  shadow-md rounded-md mb-4  py-4 px-1 w-[17rem]">
-          <h1 className="font-semibold text-gray-800">
-            Groups you might be interested in
-          </h1>
-          {/* SHOW INTEREST GROUPS IN MAP */}
-          <div className="">
-            <div className="flex items-center  gap-4 px-4">
-              <img width={50} src="/LinkedIn_icon.svg.png" alt="group-icon" />
-              <div className="pt-4 text-left">
-                <h2 className=" font-semibold hover:underline cursor-pointer">
-                  Title of the group 1
-                </h2>
-                <p className="text-sm">300000 memebrs</p>
-                <button className="border border-gray-500 rounded-full px-4 py-1 hover:bg-gray-200 text-gray-600 font-semibold mt-2">
-                  Join
-                </button>
-              </div>
-            </div>
-            {/* DIVIER */}
-            <div className="border-b border-gray-200 my-4" />
+        <GroupSuggestion />
 
-            <div className="flex items-center  gap-4 px-4">
-              <img width={50} src="/LinkedIn_icon.svg.png" alt="group-icon" />
-              <div className="pt-4 text-left">
-                <h2 className=" font-semibold hover:underline cursor-pointer">
-                  Title of the group 2
-                </h2>
-                <p className="text-sm">300000 memebrs</p>
-                <button className="border border-gray-500 rounded-full px-4 py-1 hover:bg-gray-200 text-gray-600 font-semibold mt-2">
-                  Join
-                </button>
-              </div>
-            </div>
+        <div className="sticky top-20 mb-8">
+          {/* PREMIUM NAGIVATION */}
+          <div
+            onClick={() => navigate("/premium")}
+            className="w-[17rem] cursor-pointer"
+          >
+            <img
+              className="w-full rounded-md"
+              src="/premium_logo.png"
+              alt="premium-logo"
+            />
           </div>
-        </div>
-
-        {/* PREMIUM NAGIVATION */}
-        <div
-          onClick={() => navigate("/premium")}
-          className="w-[17rem] cursor-pointer"
-        >
-          <img
-            className="w-full rounded-md"
-            src="/premium_logo.png"
-            alt="premium-logo"
-          />
-        </div>
-        {/* RIGHT COLUMN FOOTER */}
-        <div className="mb-8 w-[17rem]">
-          <RCFooter />
+          {/* RIGHT COLUMN FOOTER */}
+          <div className="mb-8 w-[17rem]">
+            <RCFooter />
+          </div>
         </div>
       </div>
     </div>

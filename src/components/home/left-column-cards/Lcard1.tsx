@@ -11,7 +11,7 @@ const Lcard1 = () => {
         <div className="flex items-center justify-center bg-profile-logo bg-custom bg-center h-20 rounded-t-lg">
           <img
             className="w-16 h-16 rounded-full cursor-pointer mt-20"
-            src="https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png"
+            src="/profile-logo.png"
             alt="profile-image"
           />
         </div>

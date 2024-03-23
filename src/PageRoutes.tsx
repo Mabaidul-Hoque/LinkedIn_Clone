@@ -11,6 +11,7 @@ import SearchResults from "./pages/SearchResults.tsx";
 import SearchDataProvider from "./contexts/SearchDataProvider.tsx";
 import Premium from "./pages/Premium.tsx";
 import Groups from "./pages/Groups.tsx";
+import GroupDetails from "./pages/GroupDetails.tsx";
 
 const PageRoutes = () => {
   const router = createBrowserRouter([
@@ -45,6 +46,10 @@ const PageRoutes = () => {
         {
           path: "/groups",
           element: <Groups />,
+        },
+        {
+          path: "/groups/:groupId",
+          element: <GroupDetails />,
         },
       ],
     },
