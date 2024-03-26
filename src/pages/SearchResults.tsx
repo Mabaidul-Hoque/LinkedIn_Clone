@@ -3,6 +3,7 @@ import { useSearchData } from "../contexts/SearchDataProvider";
 import { searchContent } from "../apis/searchApi";
 import RCard2 from "../components/home/right-column-cards/RCard2";
 import MGenCard from "../components/home/middle-column-cards/MGenCard";
+import { toast } from "react-toastify";
 
 const searchCatBtns = [
   "Post",
@@ -16,7 +17,6 @@ const SearchResults = () => {
   const { results, setResults, searchItems } = useSearchData();
   const [activeIndex, setActiveIndex] = useState(0);
   const observer = useRef<IntersectionObserver | null>(null);
-  //   const [hasMore, setHasMore] = useState(true);
   const [stopData, setStopData] = useState(false);
   const [page, setPage] = useState(1);
 
@@ -48,7 +48,7 @@ const SearchResults = () => {
   return (
     <div className="max-[760px]:max-w-[600px] w-[95%] xl:w-[82%] mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {/* LEFT COL */}
-      <div className="hidden md:block md:col-span-1 lg:block lg:col-span-1">
+      <div className="hidden md:block md:col-span-1 lg:block lg:col-span-1 pt-5">
         <div className="bg-white shadow-md rounded-md  py-4 mb-4 text-left ">
           <p className="mb-4 px-4 text-gray-500">On this page</p>
           <div className="flex flex-col items-start gap-2">
@@ -58,7 +58,11 @@ const SearchResults = () => {
                   activeIndex === index && "border-l-2 border-green-800"
                 } `}
                 key={index}
-                onClick={() => setActiveIndex(index)}
+                onClick={() => {
+                  setActiveIndex(index);
+                  index > 0 &&
+                    toast.info("Coming Soon....!", { theme: "colored" });
+                }}
               >
                 {catBtn}
               </button>
@@ -67,13 +71,16 @@ const SearchResults = () => {
         </div>
       </div>
       {/* MIDDLE COL: MAIN CONTENT CARDS */}
-      <div className="col-span-full md:col-span-2 lg:col-span-2 mb-12">
+      <div className="col-span-full md:col-span-2 lg:col-span-2 mb-12 pt-5">
         {results.length > 0 ? (
           results.map((result, index) => (
             <div key={result._id}>
               <MGenCard
                 post={result}
                 ref={index === results.length - 1 ? lastPostElementRef : null}
+                onDelete={(value) => {
+                  console.log(value);
+                }}
               />
             </div>
           ))
@@ -84,8 +91,12 @@ const SearchResults = () => {
         )}
       </div>
       {/* RIGHT COL */}
-      <div className="hidden lg:block lg:col-span-1 sticky top-0">
-        <RCard2 />
+      <div className="hidden lg:block lg:col-span-1">
+        <div className="h-5"></div>
+        <div className="sticky top-20">
+          {" "}
+          <RCard2 />
+        </div>
       </div>
     </div>
   );

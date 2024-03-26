@@ -39,7 +39,7 @@ const EventsCreation = () => {
       {/* Modal */}
       {isModalOpen && (
         <div
-          className="fixed z-10 inset-0 overflow-y-auto"
+          className="modal fixed inset-0 overflow-y-auto"
           aria-labelledby="modal-title"
           role="dialog"
           aria-modal="true"

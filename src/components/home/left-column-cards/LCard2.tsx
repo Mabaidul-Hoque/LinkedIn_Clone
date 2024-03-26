@@ -59,10 +59,6 @@ const Lcard2 = () => {
   return (
     <>
       <div className="bg-white shadow-md rounded-md mb-4 flex flex-col gap-4">
-        {/* RECENT EVENTS/GROUP VIEWED  */}
-        {/* <div className="px-4 pt-4">
-          <h2 className="font-semibold text-left">Recent</h2>
-        </div> */}
         {/* GROUPS */}
         <div className="flex flex-col gap-2 px-4 mt-4">
           <div className="flex items-center justify-between">
@@ -89,16 +85,7 @@ const Lcard2 = () => {
         {/* EVENTS */}
         <div className="flex flex-col gap-2 px-4">
           <div className="flex items-center justify-between">
-            {/* EBENT BTN */}
-            <button>
-              <h2 className="font-semibold text-left text-blue-500 hover:underline">
-                Events
-              </h2>
-            </button>
-            {/* PLUS SIGN */}
-            <button>
-              <FontAwesomeIcon className="text-gray-600" icon={faPlus} />
-            </button>
+            <h2 className="font-semibold text-left text-blue-500">Events</h2>
           </div>
           {events.map((event) => (
             <div key={event.id} className="flex items-center gap-2 text-sm">
@@ -113,9 +100,7 @@ const Lcard2 = () => {
           {/* DIVIDER */}
           <div className="border-b border-gray-300" />
           {/* DISCOVER MORE */}
-          <div className="hover:bg-gray-300 cursor-pointer py-2">
-            Discover more
-          </div>
+          <div className="py-2">Discover more</div>
         </div>
       </div>
     </>

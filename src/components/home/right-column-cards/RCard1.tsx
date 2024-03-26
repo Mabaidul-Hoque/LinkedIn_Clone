@@ -39,7 +39,10 @@ const RCard1 = () => {
           } flex flex-col gap-2 text-left list-disc px-8 text-sm font-semibold `}
         >
           {totalNews.map((news, indx) => (
-            <li key={indx} className="hover:underline hover:text-blue-500">
+            <li
+              key={indx}
+              className="hover:underline hover:text-blue-500 text-gray-700"
+            >
               <Link to={news.url} target="_blank">
                 {news.title}
               </Link>

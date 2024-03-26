@@ -8,6 +8,7 @@ import RCard1 from "../components/home/right-column-cards/RCard1";
 import RCard2 from "../components/home/right-column-cards/RCard2";
 import { createAPost } from "../apis/postsApi/createAPostApi";
 import { toast } from "react-toastify";
+import { deleteAPost } from "../apis/postsApi/DeleteAPost";
 
 interface Author {
   name: string;
@@ -73,6 +74,15 @@ const Home = () => {
     }
   };
 
+  const deletePost = async (postId: string) => {
+    const res = await deleteAPost(postId);
+    if (res) {
+      console.log("res from delete post", res);
+    }
+    setPosts(posts.filter((item) => item._id !== postId));
+    toast.success("Post deleted successfully", { theme: "colored" });
+  };
+
   const lastPostElementRef = (node: HTMLElement | null) => {
     if (observer.current) observer.current.disconnect();
     observer.current = new IntersectionObserver((entries) => {
@@ -116,9 +126,17 @@ const Home = () => {
         {posts?.map((post, index) => (
           <div key={post._id}>
             {posts.length === index + 1 ? (
-              <MGenCard post={post} ref={lastPostElementRef} />
+              <MGenCard
+                post={post}
+                onDelete={deletePost}
+                ref={lastPostElementRef}
+              />
             ) : (
-              <MGenCard post={post} ref={lastPostElementRef} />
+              <MGenCard
+                post={post}
+                onDelete={deletePost}
+                ref={lastPostElementRef}
+              />
             )}
           </div>
         ))}

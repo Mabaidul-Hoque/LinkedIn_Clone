@@ -7,18 +7,21 @@ import {
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Post } from "../pages/Home";
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
 interface PostEditOptionsProps {
   onOpen: () => void;
-  onDelete: () => void;
+  onDelete: (value: string) => void;
+  post: Post;
 }
 
 const PostEditOptions: React.FC<PostEditOptionsProps> = ({
   onOpen,
   onDelete,
+  post,
 }) => {
   return (
     <Menu as="div" className="relative inline-block text-left">
@@ -60,7 +63,7 @@ const PostEditOptions: React.FC<PostEditOptionsProps> = ({
             <Menu.Item>
               {({ active }) => (
                 <button
-                  onClick={onDelete}
+                  onClick={() => onDelete(post._id)}
                   className={classNames(
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block p-4 text-lg w-full text-left"
@@ -79,12 +82,12 @@ const PostEditOptions: React.FC<PostEditOptionsProps> = ({
               {({ active }) => (
                 <button
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                    "block w-full p-4 text-left text-lg"
+                    active ? "bg-gray-100 text-gray-300" : "text-gray-300",
+                    "block w-full p-4 text-left text-lg cursor-no-drop"
                   )}
                 >
                   <FontAwesomeIcon
-                    className="mr-2 text-gray-500"
+                    className="mr-2 text-gray-300"
                     icon={faBookmark}
                   />
                   Save

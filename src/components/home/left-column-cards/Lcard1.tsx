@@ -1,9 +1,11 @@
 import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthProvider";
 
 const Lcard1 = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   return (
     <>
       <div className="bg-white shadow-md rounded-md mb-4  z-10">
@@ -18,7 +20,7 @@ const Lcard1 = () => {
         {/* CARD PROFILE DETAILS */}
         <div className="mt-12 px-2">
           {/* USER NAME */}
-          <h2 className="font-semibold">Mabaidul Hoque</h2>
+          <h2 className="font-semibold">{user.name}</h2>
           <p className="text-sm">
             Passionate Full Stack Developer | Expertise in Frontend Technologies
             | Continuous Learner & Problem Solver
@@ -28,11 +30,15 @@ const Lcard1 = () => {
         <div className="border-b border-gray-300 mt-2 mb-2" />
         {/* PROFILE VIEWERS */}
         <div className="flex flex-col text-left ">
-          <div className="px-4 py-1 hover:bg-gray-300 cursor-pointer text-sm">
-            <button>Profile viewers</button>
+          <div className="px-4 py-1 text-sm">
+            <button className="cursor-text text-gray-400">
+              Profile viewers
+            </button>
           </div>
-          <div className="px-4 py-1 hover:bg-gray-300 cursor-pointer text-sm">
-            <button>View all analytics</button>
+          <div className="px-4 py-1 text-sm">
+            <button className="cursor-text text-gray-400">
+              View all analytics
+            </button>
           </div>
         </div>
         {/* DIVIDER */}
@@ -59,8 +65,8 @@ const Lcard1 = () => {
         {/* DIVIDER */}
         <div className="border-b border-gray-300" />
         {/* MY ITEMS */}
-        <div className="text-left flex items-center gap-2 px-4 py-3 hover:bg-gray-300">
-          <FontAwesomeIcon className="text-gray-500" icon={faBookmark} />
+        <div className="text-left flex items-center gap-2 px-4 py-3 text-gray-300">
+          <FontAwesomeIcon className="text-gray-300" icon={faBookmark} />
           <span className="text-sm">My items</span>
         </div>
       </div>

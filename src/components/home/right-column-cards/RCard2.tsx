@@ -2,14 +2,16 @@ import { faKey } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RCFooter from "./RCFooter";
 import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthProvider";
 
 const RCard2 = () => {
   const navigate = useNavigate();
+  const { user } = useAuth();
   return (
     <>
       <div className="bg-white shadow-md rounded-md px-4 py-4 xlpy-8 mb-4 cursor-pointer relative ">
         <p className="text-sm">
-          Mabaidul, unlock your full potential with linkedin Premium
+          {user.name}, unlock your full potential with linkedin Premium
         </p>
         <div className="px-4 py-2 flex items-center justify-center gap-6">
           <div className="relative group">

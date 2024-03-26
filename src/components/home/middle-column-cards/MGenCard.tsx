@@ -17,10 +17,11 @@ import { calculateTimeAgo } from "../../../util/createdAt";
 import PostEditOptions from "../../../ui/PostEditOptions";
 import PostModal from "../../create-post/PostModal";
 import { updateCreatedPost } from "../../../apis/postsApi/updatePostApi";
-import { deleteAPost } from "../../../apis/postsApi/DeleteAPost";
+import { useLocation } from "react-router-dom";
 
 interface MGenCardProps {
   post: Post;
+  onDelete: (value: string) => void;
 }
 
 export interface PostComment {
@@ -31,7 +32,7 @@ export interface PostComment {
 }
 
 const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
-  ({ post }, ref) => {
+  ({ post, onDelete }, ref) => {
     const [isLiked, setIsLiked] = useState(false);
     const [content, setContent] = useState("");
     const [comments, setComments] = useState<PostComment[]>([]);
@@ -40,7 +41,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     const [imageUrls, setImageUrls] = useState<string[]>([]);
     const [newPostContent, setNewPostContent] = useState<string>("");
     const [newSelectedFiles, setNewSelectedFiles] = useState<File[] | null>([]);
-    // const [editOption, setEditOption] = useState(false);
+    const { pathname } = useLocation();
 
     useEffect(() => {
       getComments();
@@ -103,15 +104,9 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
       console.log("res from update post", res);
       if (res?.status === "success") {
         toast.success(res?.message, { theme: "colored" });
+      } else {
+        toast.error(res?.message, { theme: "colored" });
       }
-    };
-
-    const deletePost = async () => {
-      const res = await deleteAPost(post._id);
-      if (res) {
-        console.log("res from delete post", res);
-      }
-      toast.success("Post deleted successfully", { theme: "colored" });
     };
 
     return (
@@ -131,7 +126,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
               {/* AUTHOR NAME */}
               <p className="font-semibold">{post.author.name}</p>
               {/* AUTHOR FOLLOWERS */}
-              <p className="text-sm">150,000 followers</p>
+              <p className="text-sm">0 followers</p>
               {/* AUTHOR CREATED AT */}
               <p className="text-sm">
                 {calculateTimeAgo(post.createdAt)} .
@@ -143,9 +138,16 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
             </div>
           </div>
           {/* THREE DOT MENU */}
-          <PostEditOptions onOpen={openModal} onDelete={deletePost} />
+          {pathname === "/search/results/" ? (
+            ""
+          ) : (
+            <PostEditOptions
+              post={post}
+              onOpen={openModal}
+              onDelete={onDelete}
+            />
+          )}
           {/* DISPLAY OPTION RESULTS */}
-
           <PostModal
             isOpen={isModalOpen}
             onClose={closeModal}
@@ -180,13 +182,13 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
 
         {/* LIKE/COMMENT COUNT DISPLAY SECTION */}
         <div className="px-4 pt-2 mb-2 flex items-center justify-between">
-          <div className="flex"> 3,952 likes</div>
+          <div className="flex"> 0 likes</div>
           <div className="flex items-center gap-2">
             {/* NUMBER OF COMMENTS */}
             <p className="">{comments.length} comments</p>
             <div className="w-1 h-1 bg-gray-600 rounded-3xl"></div>
             {/* NUMBER SHARE */}
-            <p className="">7 reposts</p>
+            <p className="">0 reposts</p>
           </div>
         </div>
         <div className="w-[95%] mx-auto border-b border-gray-300"></div>
@@ -205,7 +207,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
                 icon={faThumbsUp}
               />
             ) : (
-              <ThumbUpAltOutlinedIcon />
+              <ThumbUpAltOutlinedIcon className="text-gray-500" />
             )}
             <p className="hidden min-[450px]:block">Like</p>
           </div>
@@ -220,12 +222,20 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
             />
             <p className="hidden min-[450px]:block">Comment</p>
           </div>
-          <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md">
-            <FontAwesomeIcon className="size-5" icon={faRetweet} />
+          {/* REPOST */}
+          <div className="flex items-center gap-2 hover:bg-gray-200 px-4 py-2 rounded-md cursor-no-drop text-gray-300">
+            <FontAwesomeIcon
+              className="size-5 text-gray-300"
+              icon={faRetweet}
+            />
             <p className="hidden min-[450px]:block">Repost</p>
           </div>
-          <div className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md">
-            <FontAwesomeIcon className="size-5" icon={faPaperPlane} />
+          {/* SEND */}
+          <div className="flex items-center gap-2 cursor-no-drop hover:bg-gray-200 px-4 py-2 rounded-md text-gray-300">
+            <FontAwesomeIcon
+              className="size-5 text-gray-300"
+              icon={faPaperPlane}
+            />
             <p className="hidden min-[450px]:block">Send</p>
           </div>
         </div>

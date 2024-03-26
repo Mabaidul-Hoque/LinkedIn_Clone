@@ -11,7 +11,7 @@ function classNames(...classes: string[]) {
 }
 
 export default function ProfileDropdown() {
-  const { logout } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -39,21 +39,21 @@ export default function ProfileDropdown() {
         leaveFrom="transform opacity-100 scale-100"
         leaveTo="transform opacity-0 scale-95"
       >
-        <Menu.Items className="absolute right-0 z-10 mt-2 w-64 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
+        <Menu.Items className="absolute right-0 z-10 mt-2 w-72 origin-top-right rounded-md bg-white shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
           {/* MENU HEADER */}
           <div className="py-1">
-            <div className="flex flex-col gap-4">
-              <div className="flex items-center">
+            <div className="flex flex-col gap-4 py-2">
+              <div className="flex items-center px-2 gap-4">
                 {/* PROFILE IMAGE */}
                 <img
-                  className="w-20 h-20"
-                  src="/user-profile-icon.webp"
+                  width={50}
+                  src="https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png"
                   alt="profile_logo"
                 />
                 {/* PROFILE HEADINGS */}
                 <div className="">
                   {/* NAME */}
-                  <h4 className="font-semibold">MABAIDUL HOQUE</h4>
+                  <h4 className="font-semibold">{user.name}</h4>
                   {/* DESCRIPTION */}
                   <p className="text-sm">
                     Passionate Full Stack Developer | Expertise in Frontend
