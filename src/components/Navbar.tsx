@@ -60,11 +60,13 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
     <div className="w-[95%] xl:w-[82%] m-auto h-full py-2 flex items-center justify-between relative">
       {/* LOGO/SEARCH CONTAINER */}
       <div className="flex items-center gap-4 relative">
-        <img
-          className="w-9 h-9"
-          src="/LinkedIn_icon.svg.png"
-          alt="LinedIn_logo"
-        />
+        <Link to={"/feed"}>
+          <img
+            className="w-9 h-9"
+            src="/LinkedIn_icon.svg.png"
+            alt="LinedIn_logo"
+          />
+        </Link>
         {/* SEARCH SECTION */}
         <div className="flex items-center">
           <input

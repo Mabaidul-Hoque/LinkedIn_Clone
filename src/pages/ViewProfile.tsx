@@ -1,5 +1,6 @@
 // import React from 'react'
 
+import { Divider } from "antd";
 import { ProfileDetails } from "../components/view-profile";
 
 const ViewProfile = () => {
@@ -8,19 +9,32 @@ const ViewProfile = () => {
       {/* LEFT COLUMN CONTAINER */}
       <div className="md:block md:col-span-5 lg:block lg:col-span-5">
         <div className="bg-white  shadow-md rounded-md mb-4">
-            <ProfileDetails />
+          <ProfileDetails />
         </div>
       </div>
 
       {/* RIGHT COLUMN CONTAINER */}
       <div className="hidden  md:block md:col-span-2">
-        <div className="bg-white  shadow-md rounded-md mb-4">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Praesentium
-          fugit illum culpa eaque natus consequuntur impedit voluptatum deserunt
-          cumque doloribus asperiores ea ad excepturi eum qui nesciunt quis
-          omnis, officiis fuga optio a error! Aut, labore libero, provident, sit
-          tempora incidunt harum recusandae cumque explicabo fugit accusantium
-          totam cupiditate adipisci!
+        <div className="bg-white  shadow-md rounded-md mb-4 p-4 text-left">
+          <h2 className="text-xl font-semibold text-gray-700">
+            Profile language
+          </h2>
+          <p className="text-gray-500">English</p>
+          <Divider />
+          <h2 className="text-xl font-semibold text-gray-700">
+            Public profile & URL
+          </h2>
+          <p className="text-gray-500">www.linkedin.com/in/userID</p>
+        </div>
+
+        <div className="bg-white  shadow-md rounded-md mb-4 text-left">
+          <div className="p-4">
+            <p className="text-right">Ad</p>
+            <p>
+              Unlock new design layouts for floors & walls with Vitero Tiles
+            </p>
+          </div>
+          <img src="/vitero.png" alt="ad-image" />
         </div>
       </div>
     </div>
