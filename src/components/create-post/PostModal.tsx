@@ -108,12 +108,12 @@ const PostModal: React.FC<PostModalProps> = ({
               {/* MODAL HEADER */}
               <div className="w-full flex justify-between">
                 {/* LEFT HEADER */}
-                <div className="flex items-center gap-2 hover:bg-gray-200 p-2 hover:rounded-md cursor-pointer">
+                <div className="flex items-center gap-2 p-2 hover:rounded-md">
                   {/* USER IMAGE*/}
                   <img
                     src="https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png"
                     alt="User Profile"
-                    className="w-14 h-14 rounded-full cursor-pointer"
+                    className="w-14 h-14 rounded-full"
                   />
                   <div className="flex flex-col text-left">
                     {/* USER NAME */}

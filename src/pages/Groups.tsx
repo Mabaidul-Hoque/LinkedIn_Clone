@@ -1,14 +1,14 @@
 // import React from 'react'
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import RCFooter from "../components/home/right-column-cards/RCFooter";
 import { Button, Modal, Tooltip } from "antd";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { createAGroup } from "../apis/groupApis/createGroup";
 import { toast } from "react-toastify";
 import { fetchAllgroups } from "../apis/groupApis/fetchAllGroups";
-import GroupSuggestion from "../components/group/GroupSuggestion";
+import { GroupSuggestion } from "../components/group";
+import { RCFooter } from "../components/home/right-column-cards";
 
 export interface Owner {
   name: string;

@@ -11,13 +11,13 @@ import PublicIcon from "@mui/icons-material/Public";
 import ThumbUpAltOutlinedIcon from "@mui/icons-material/ThumbUpAltOutlined";
 import { likePost } from "../../../apis/postsApi/postLikeApi";
 import { toast } from "react-toastify";
-import Comment from "../comment/Comment";
 import { fetchComments } from "../../../apis/displayCommentsApi";
 import { calculateTimeAgo } from "../../../util/createdAt";
-import PostEditOptions from "../../../ui/PostEditOptions";
-import PostModal from "../../create-post/PostModal";
+import { PostEditOptions } from "../../../ui";
 import { updateCreatedPost } from "../../../apis/postsApi/updatePostApi";
 import { useLocation } from "react-router-dom";
+import { PostModal } from "../../create-post";
+import { Comment } from "../comment";
 
 interface MGenCardProps {
   post: Post;

@@ -1,14 +1,11 @@
 import { useEffect, useState, useRef } from "react";
 import { fetchPosts } from "../apis/postsApi/postsApi";
-import Lcard2 from "../components/home/left-column-cards/LCard2";
-import Lcard1 from "../components/home/left-column-cards/Lcard1";
-import MGenCard from "../components/home/middle-column-cards/MGenCard";
-import MTopCard from "../components/home/middle-column-cards/MTopCard";
-import RCard1 from "../components/home/right-column-cards/RCard1";
-import RCard2 from "../components/home/right-column-cards/RCard2";
 import { createAPost } from "../apis/postsApi/createAPostApi";
 import { toast } from "react-toastify";
 import { deleteAPost } from "../apis/postsApi/DeleteAPost";
+import { LCard2, Lcard1 } from "../components/home/left-column-cards";
+import { MGenCard, MTopCard } from "../components/home/middle-column-cards";
+import { RCard1, RCard2 } from "../components/home/right-column-cards";
 
 interface Author {
   name: string;
@@ -96,7 +93,7 @@ const Home = () => {
 
   const leftColumnCards = [
     { title: "Left col profile card", content: <Lcard1 /> },
-    { title: "Left col events card", content: <Lcard2 /> },
+    { title: "Left col events card", content: <LCard2 /> },
   ];
   const rightColumnCards = [
     { title: "Right col linkedin news", content: <RCard1 /> },

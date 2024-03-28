@@ -1,10 +1,9 @@
 import { useState } from "react";
-import Navbar from "./components/Navbar";
 import { Outlet, useLocation } from "react-router-dom";
 import Home from "./pages/Home";
 import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
-import Footer from "./components/Footer";
+import { Footer, Navbar } from "./components";
 // import { useAuth } from "./contexts/AuthProvider";
 
 const Layout = () => {

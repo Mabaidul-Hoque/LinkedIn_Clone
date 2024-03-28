@@ -12,13 +12,11 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useState } from "react";
-import AutocompleteModal from "../ui/AutocompleteModal";
-import ProfileDropdown from "../ui/ProfileDropdown";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
-import ResponsiveMenu from "../ui/ResponsiveMenu";
 import { searchContent } from "../apis/searchApi";
 import { useSearchData } from "../contexts/SearchDataProvider";
+import { AutocompleteModal, ProfileDropdown, ResponsiveMenu } from "../ui";
 
 interface NavabrProps {
   handleMenu: () => void;

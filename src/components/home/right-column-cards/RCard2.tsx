@@ -7,6 +7,10 @@ import { useAuth } from "../../../contexts/AuthProvider";
 const RCard2 = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  const handleNavigation = () => {
+    navigate(`/in/${user._id}`);
+  };
   return (
     <>
       <div className="bg-white shadow-md rounded-md px-4 py-4 xlpy-8 mb-4 cursor-pointer relative ">
@@ -20,6 +24,7 @@ const RCard2 = () => {
               className="w-16 h-16 rounded-full cursor-pointer"
               src="https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png"
               alt="profile-image"
+              onClick={handleNavigation}
             />
             <div className="absolute left-0 mt-2 w-32 font-semibold text-center text-xs border border-gray-500 bg-white rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out">
               LinkedIn Profile

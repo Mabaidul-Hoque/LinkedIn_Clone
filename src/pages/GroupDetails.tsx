@@ -3,10 +3,8 @@ import { useParams } from "react-router-dom";
 import { fetchSingleGroup } from "../apis/groupApis/fetchSingleGroup";
 import { useEffect, useState } from "react";
 import Lcard2 from "../components/home/left-column-cards/LCard2";
-import GroupInfo from "../components/group/GroupInfo";
-import GDLcard1 from "../components/group/GDLcard1";
 import { Group } from "./Groups";
-import GroupSuggestion from "../components/group/GroupSuggestion";
+import { GDLcard1, GroupInfo, GroupSuggestion } from "../components/group";
 
 const GroupDetails = () => {
   const { groupId } = useParams<{ groupId: string }>();

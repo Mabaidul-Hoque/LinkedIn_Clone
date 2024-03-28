@@ -19,6 +19,11 @@ export default function ProfileDropdown() {
     navigate("/signin");
     toast.success("logged out successfully", { theme: "colored" });
   };
+
+  const handleNavigation = () => {
+    navigate(`/in/${user._id}`);
+  };
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -63,7 +68,10 @@ export default function ProfileDropdown() {
               </div>
               {/* VIEW PROFILE BTN */}
               <Menu.Item>
-                <button className="border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors duration-200 ease-in-out w-[90%] mx-auto rounded-xl ">
+                <button
+                  onClick={handleNavigation}
+                  className="border-2 border-blue-500 text-blue-500 hover:bg-blue-500 hover:text-white transition-colors duration-200 ease-in-out w-[90%] mx-auto rounded-xl "
+                >
                   View Profile
                 </button>
               </Menu.Item>

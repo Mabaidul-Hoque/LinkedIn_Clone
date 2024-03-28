@@ -6,6 +6,11 @@ import { useAuth } from "../../../contexts/AuthProvider";
 const Lcard1 = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+
+  const handleNavigation = () => {
+    navigate(`/in/${user._id}`);
+  };
+
   return (
     <>
       <div className="bg-white shadow-md rounded-md mb-4  z-10">
@@ -15,6 +20,7 @@ const Lcard1 = () => {
             className="w-16 h-16 rounded-full cursor-pointer mt-20"
             src="/profile-logo.png"
             alt="profile-image"
+            onClick={handleNavigation}
           />
         </div>
         {/* CARD PROFILE DETAILS */}

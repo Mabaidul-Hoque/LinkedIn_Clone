@@ -1,43 +1,47 @@
-import { useState } from "react";
+// import { useState } from "react";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
+import { toast } from "react-toastify";
 
 const EventsCreation = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [eventName, setEventName] = useState("");
-  const [eventDescription, setEventDescription] = useState("");
-  const [eventStartDate, setEventStartDate] = useState("");
-  const [eventEndDate, setEventEndDate] = useState("");
-  const [backgroundImage, setBackgroundImage] = useState<File | null>(null);
-  const handleModalOpen = () => {
-    setIsModalOpen(true);
-  };
+  // const [isModalOpen, setIsModalOpen] = useState(false);
+  // const [eventName, setEventName] = useState("");
+  // const [eventDescription, setEventDescription] = useState("");
+  // const [eventStartDate, setEventStartDate] = useState("");
+  // const [eventEndDate, setEventEndDate] = useState("");
+  // const [backgroundImage, setBackgroundImage] = useState<File | null>(null);
+  // const handleModalOpen = () => {
+  //   setIsModalOpen(true);
+  // };
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
-  };
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log({
-      eventName,
-      eventDescription,
-      eventStartDate,
-      eventEndDate,
-      backgroundImage,
-    });
-    handleModalClose();
-  };
+  // const handleModalClose = () => {
+  //   setIsModalOpen(false);
+  // };
+  // const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  //   e.preventDefault();
+  //   console.log({
+  //     eventName,
+  //     eventDescription,
+  //     eventStartDate,
+  //     eventEndDate,
+  //     backgroundImage,
+  //   });
+  //   handleModalClose();
+  // };
 
   return (
-    <div>
+    <>
       <button
         className="px-4 py-2 rounded-md flex items-center gap-1 hover:bg-gray-200"
-        onClick={handleModalOpen}
+        onClick={() => {
+          // handleModalOpen();
+          toast.info("Coming soon...!", { theme: "colored" });
+        }}
       >
         <CalendarMonthOutlinedIcon htmlColor="#C37D16" />
         <span>Event</span>
       </button>
       {/* Modal */}
-      {isModalOpen && (
+      {/* {isModalOpen && (
         <div
           className="modal fixed inset-0 overflow-y-auto"
           aria-labelledby="modal-title"
@@ -171,8 +175,8 @@ const EventsCreation = () => {
             </div>
           </div>
         </div>
-      )}
-    </div>
+      )} */}
+    </>
   );
 };
 

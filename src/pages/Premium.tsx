@@ -10,8 +10,8 @@ import {
   faLock,
 } from "@fortawesome/free-solid-svg-icons";
 import { frequentlyAkedQuestions } from "../data/frequentlyAkedQuestions";
-import FrequentlyAskedQuestions from "../ui/FrequentlyAskedQuestions";
 import { bussinessFeatures } from "../data/careerFeatures";
+import { FrequentlyAskedQuestions } from "../ui";
 
 const Premium = () => {
   const [activeCat, setActiveCat] = useState(1);

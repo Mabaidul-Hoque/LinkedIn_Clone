@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
-import EmojiSelector from "../../../ui/EmojiSelector";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { EmojiSelector } from "../../../ui";
+
 interface CreateACommentProps {
   setContent: (content: string | ((prev: string) => string)) => void;
   content: string;

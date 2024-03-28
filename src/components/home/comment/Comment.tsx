@@ -6,7 +6,7 @@ import { calculateTimeAgo } from "../../../util/createdAt";
 import { customUsers } from "../../../data/userInfo";
 import { useAuth } from "../../../contexts/AuthProvider";
 import { deleteCommnetByID } from "../../../apis/deleteACommentApi";
-import CreateAComment from "./CreateAComment";
+import { CreateAComment } from "./";
 interface CommentProps {
   setContent: (content: string | ((prev: string) => string)) => void;
   content: string;

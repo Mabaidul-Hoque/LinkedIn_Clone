@@ -1,10 +1,10 @@
 import { useState } from "react";
-import RegistrationCard from "../components/RegistrationCard";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../contexts/AuthProvider";
 import { fetchSignin } from "../apis/login_signupApi";
+import { RegistrationCard } from "../components";
 
 const Login = () => {
   const [showRegistration, setShowRegistration] = useState(false);

@@ -1,10 +1,12 @@
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import EditNoteIcon from "@mui/icons-material/EditNote";
-import EventsCreation from "../../create-post/EventsCreation";
 import React, { useState } from "react";
-import PostModal from "../../create-post/PostModal";
 import { Post } from "../../../pages/Home";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../../contexts/AuthProvider";
+import { EventsCreation, PostModal } from "../../create-post";
 
 interface MTopCardProps {
   updatePosts: React.Dispatch<React.SetStateAction<Post[]>>;
@@ -25,6 +27,8 @@ const MTopCard: React.FC<MTopCardProps> = ({
   // const [postContent, setPostContent] = useState<string>("");
   // const [selectedFiles, setSelectedFiles] = useState<File[] | null>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
+  const navigate = useNavigate();
+  const { user } = useAuth();
 
   // const getPosts = async () => {
   //   const res = await fetchPosts(1);
@@ -63,6 +67,10 @@ const MTopCard: React.FC<MTopCardProps> = ({
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
+  const handleNavigation = () => {
+    navigate(`/in/${user._id}`);
+  };
   return (
     <div className="bg-white shadow-md rounded-md p-4 mb-4">
       {/* CREATE POST HEADER */}
@@ -71,6 +79,7 @@ const MTopCard: React.FC<MTopCardProps> = ({
           src="https://cdn.iconscout.com/icon/free/png-256/free-avatar-370-456322.png"
           alt="User Profile"
           className="w-14 h-14 rounded-full cursor-pointer"
+          onClick={handleNavigation}
         />
         <input
           type="text"
@@ -104,9 +113,14 @@ const MTopCard: React.FC<MTopCardProps> = ({
         </label>
 
         {/* EVENT */}
-        <EventsCreation />
+        <div>
+          <EventsCreation />
+        </div>
         {/* WRITE FILE */}
-        <button className="px-4 py-2 rounded-md flex items-center gap-1 hover:bg-gray-200">
+        <button
+          onClick={() => toast.info("Coming soon...!", { theme: "colored" })}
+          className="px-4 py-2 rounded-md flex items-center gap-1 hover:bg-gray-200"
+        >
           <EditNoteIcon htmlColor="#E06847" />
           <span>Write article</span>
         </button>

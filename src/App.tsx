@@ -2,7 +2,7 @@ import Layout from "./Layout";
 import { useAuth } from "./contexts/AuthProvider";
 import { useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
-import Loading from "./ui/Loading";
+import { Loading } from "./ui";
 
 function App() {
   const { isAuthenticated, setIsAuthenticated, isLoading } = useAuth();
