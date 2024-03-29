@@ -9,6 +9,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
 import ProfileDropdown from "./ProfileDropdown";
+import { toast } from "react-toastify";
 
 interface ResponsiveMenuProps {
   menu: boolean;
@@ -30,8 +31,12 @@ const ResponsiveMenu: React.FC<ResponsiveMenuProps> = ({
               hover:text-black p-4 pb-2 pt-2 min-[350px]:hidden`}
           >
             <Link
-              to="/messaging"
-              onClick={handleMenu}
+              // to="/messaging"
+              to="#"
+              onClick={() => {
+                handleMenu();
+                toast.info("Cooming soon...!", { theme: "colored" });
+              }}
               className="flex flex-col justify-center items-center"
             >
               <FontAwesomeIcon className="w-6 h-6" icon={faCommentDots} />
@@ -43,8 +48,12 @@ const ResponsiveMenu: React.FC<ResponsiveMenuProps> = ({
             className={`text-gray-600  hover:text-black p-4 pb-2 pt-2 min-[410px]:hidden`}
           >
             <Link
-              to="/notifications"
-              onClick={handleMenu}
+              // to="/notifications"
+              to="#"
+              onClick={() => {
+                handleMenu();
+                toast.info("Cooming soon...!", { theme: "colored" });
+              }}
               className="flex flex-col justify-center items-center"
             >
               <FontAwesomeIcon className="w-6 h-6" icon={faBell} />
@@ -56,18 +65,17 @@ const ResponsiveMenu: React.FC<ResponsiveMenuProps> = ({
 
           {/* PROFILE SECTION */}
           <div
-            onClick={handleMenu}
+            // onClick={handleMenu}
             className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer  p-4 pb-2 pt-2 min-[550px]:hidden"
           >
-            {/* <FontAwesomeIcon className="w-6 h-6" icon={faCircleUser} />
-            <span className="text-[12px] max-[800px]:hidden">
-              Me <FontAwesomeIcon className="w-3 h-3" icon={faCaretDown} />
-            </span> */}
-            <ProfileDropdown />
+            <ProfileDropdown onMenu={handleMenu} />
           </div>
           {/*  FOR BUSSINESS  */}
           <div
-            onClick={handleMenu}
+            onClick={() => {
+              handleMenu();
+              toast.info("Cooming soon...!", { theme: "colored" });
+            }}
             className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer  p-4 pb-2 pt-2 min-[550px]:hidden"
           >
             <FontAwesomeIcon className="w-6 h-6" icon={faGripVertical} />
@@ -78,7 +86,10 @@ const ResponsiveMenu: React.FC<ResponsiveMenuProps> = ({
           </div>
           {/* ADVERTISE */}
           <div
-            onClick={handleMenu}
+            onClick={() => {
+              handleMenu();
+              toast.info("Cooming soon...!", { theme: "colored" });
+            }}
             className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer  p-4 pb-2 pt-2 min-[550px]:hidden"
           >
             <FontAwesomeIcon className="w-6 h-6" icon={faRectangleAd} />

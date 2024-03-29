@@ -110,7 +110,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     };
 
     return (
-      <div ref={ref} className="bg-white  shadow-md rounded-md mb-4">
+      <div ref={ref} className="bg-white shadow-md rounded-md mb-4">
         {/* AUTHOR SECTION */}
         <div className="flex justify-between px-4 pt-2 mb-2">
           {/* AUTHOR DETAILS */}

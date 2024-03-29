@@ -195,7 +195,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
 
         <div className="flex items-center justify-center gap-4 max-[550px]:hidden">
           {/* PROFILE SECTION */}
-          <ProfileDropdown />
+          <ProfileDropdown onMenu={() => {}} />
           {/* DIVIDER */}
           <div className="border-r-1 border-gray-500"></div>
           {/*  FOR BUSSINESS  */}

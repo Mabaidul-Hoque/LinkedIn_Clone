@@ -90,9 +90,9 @@ const RegistrationCard: React.FC<RegistrationCardProps> = ({ openSignin }) => {
         Make the most of your professional life
       </h1>
       <div className="flex justify-center items-center">
-        <div className="w-1/2 max-w-sm bg-white shadow-lg rounded-lg overflow-hidden">
+        <div className="w-[95%] sm:w-2/3 md:w-1/2 max-w-sm bg-white shadow-lg rounded-lg overflow-hidden">
           {/* LOGIN FORM */}
-          <form onSubmit={handleSubmit} className="p-6">
+          <form onSubmit={handleSubmit} className="p-2 min-[400px]:p-6">
             <div className="flex flex-col gap-4">
               {/* FORM HEADER */}
               <div className="mb-4">
@@ -172,15 +172,15 @@ const RegistrationCard: React.FC<RegistrationCardProps> = ({ openSignin }) => {
                 type="submit"
                 className="w-full px-3 py-2 text-white bg-indigo-500 rounded-md focus:bg-indigo-600 focus:outline-none hover:bg-indigo-600"
               >
-                Sign up
+                Agree & Join
               </button>
             </div>
           </form>
-          <div className="mt-4 pb-8 pl-10 flex items-center gap-1">
+          <div className="mt-4 pb-8 pl-2 min-[400px]:pl-10 flex items-center gap-1">
             <p className="text-gray-600">Already you have an account?</p>
             <button
               onClick={openSignin}
-              className="font-semibold text-indigo-600 rounded-m hover:bg-blue-200 px-3 py-1 rounded-full hover:underline"
+              className="w-fit font-semibold text-indigo-600 rounded-m hover:bg-blue-200 px-3 py-1 rounded-full hover:underline"
             >
               Log in
             </button>

@@ -119,21 +119,21 @@ const Groups = () => {
   };
 
   return (
-    <div className="max-[760px]:max-w-[600px] w-[95%] xl:w-[82%] mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
+    <div className="max-[760px]:max-w-[600px] w-[95%] xl:w-[82%] mx-auto grid grid-cols-1 md:grid-cols-5 lg:grid-cols-6 gap-8">
       {/* CREATE GROUP & DISPLAY GROUPS COLUMN */}
-      <div className="col-span-full md:col-span-3 lg:col-span-3 mb-12 ">
-        <div className="bg-white  shadow-md rounded-md py-4 min-h-[50vh]">
+      <div className="col-span-1 md:col-span-3 lg:col-span-4 mb-12 ">
+        <div className="bg-white shadow-md rounded-md py-4 min-h-[50vh]">
           {/* HEADER: Your groups Requested */}
-          <div className="flex items-center justify-between px-10">
+          <div className="flex  items-center justify-between px-2 sm:px-10">
             {/* Your groups Requested tabs */}
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-1 min-[450px]:gap-4">
               <button
                 onClick={() => setActiveTab("yourGroups")}
                 className={`${
                   activeTab === "yourGroups"
                     ? "text-green-700  border-b-2 border-green-700 border shadow-md rounded-md"
                     : "text-gray-900"
-                } font-semibold pb-2 p-1`}
+                } font-semibold pb-2 p-1 text-sm min-[450px]:text-lg`}
               >
                 Your groups
               </button>
@@ -143,7 +143,7 @@ const Groups = () => {
                   activeTab === "requested"
                     ? "text-green-700  border-b-2 border-green-700 border shadow-md rounded-md"
                     : "text-gray-900"
-                } font-semibold pb-2 p-1`}
+                } font-semibold pb-2 p-1 text-sm min-[450px]:text-lg`}
               >
                 Requested
               </button>
@@ -152,7 +152,7 @@ const Groups = () => {
             <Button
               type="primary"
               onClick={showModal}
-              className="border-2 border-blue-500 rounded-full px-4 py-1 text-blue-600 font-semibold hover:bg-blue-100"
+              className="border-2 border-blue-500 rounded-full px-1 min-[450px]:px-4 py-1 text-blue-600 font-semibold hover:bg-blue-100 text-sm min-[450px]:text-md"
             >
               Create group
             </Button>
@@ -248,7 +248,7 @@ const Groups = () => {
           <div className="border-b border-gray-200 mb-4" />
           {/* LIST OF ALL GROUPS */}
           {activeTab === "yourGroups" && (
-            <div className="px-10">
+            <div className="px-2 min-[450px]:px-10">
               {/* use map to all groups */}
               {groups.map((group, index) => (
                 <div key={group._id}>
@@ -288,24 +288,26 @@ const Groups = () => {
         </div>
       </div>
       {/*  GROUP SUGGESTION COLUMN */}
-      <div className="hidden md:block md:col-span-1 lg:block lg:col-span-1">
-        <GroupSuggestion />
+      <div className="hidden md:block md:col-span-2 lg:block lg:col-span-2">
+        <div>
+          <GroupSuggestion />
 
-        <div className="sticky top-20 mb-8">
-          {/* PREMIUM NAGIVATION */}
-          <div
-            onClick={() => navigate("/premium")}
-            className="w-[17rem] cursor-pointer"
-          >
-            <img
-              className="w-full rounded-md"
-              src="/premium_logo.png"
-              alt="premium-logo"
-            />
-          </div>
-          {/* RIGHT COLUMN FOOTER */}
-          <div className="mb-8 w-[17rem]">
-            <RCFooter />
+          <div className="sticky top-20 mb-8">
+            {/* PREMIUM NAGIVATION */}
+            <div
+              onClick={() => navigate("/premium")}
+              className=" cursor-pointer"
+            >
+              <img
+                className="w-full rounded-md"
+                src="/premium_logo.png"
+                alt="premium-logo"
+              />
+            </div>
+            {/* RIGHT COLUMN FOOTER */}
+            <div className="mb-8">
+              <RCFooter />
+            </div>
           </div>
         </div>
       </div>

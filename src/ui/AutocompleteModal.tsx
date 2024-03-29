@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { Button, Modal } from "antd";
 
 interface AutocompleteModalProps {
   handleOpen: () => void;
@@ -13,11 +14,14 @@ const AutocompleteModal: React.FC<AutocompleteModalProps> = ({
   open,
   toggleModal,
 }) => {
+  // const [modal1Open, setModal1Open] = useState(false);
   return (
     <div className="">
+      {/* SEARCH ICON CONTANER */}
       <div
         onClick={() => {
           handleOpen();
+          // setModal1Open(true);
         }}
         className={`flex text-gray-500 hover:text-black cursor-pointer lg:hidden ${
           open ? "hidden" : "block"
@@ -29,8 +33,22 @@ const AutocompleteModal: React.FC<AutocompleteModalProps> = ({
         />
         <p className="mt-4  max-[800px]:hidden">Search</p>
       </div>
+      {/* <Button type="primary" onClick={() => setModal1Open(true)}>
+        Display a modal dialog at 20px to Top
+      </Button> */}
+      <Modal
+        title=""
+        style={{ top: 55 }}
+        open={open}
+        onOk={toggleModal}
+        onCancel={toggleModal}
+        zIndex={100}
+        footer={null}
+        closeIcon={null}
+        width={"90%"}
+      ></Modal>
       {/* Modal */}
-      {open && (
+      {/* {open && (
         <div
           className="fixed z-10 inset-0 overflow-y-auto border border-red-700 h-[88vh] mt-auto"
           aria-labelledby="modal-title"
@@ -44,7 +62,6 @@ const AutocompleteModal: React.FC<AutocompleteModalProps> = ({
               onClick={toggleModal}
             ></div>
 
-            {/* Modal Content */}
             <div className="fixed top-16 left-2 sm:left-16 sm:top-10 w-[95%]  min-[400px]:w-[80vw] sm:w-[80vw] inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle ">
               <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                 <div className="sm:flex sm:items-start">
@@ -69,7 +86,7 @@ const AutocompleteModal: React.FC<AutocompleteModalProps> = ({
             </div>
           </div>
         </div>
-      )}
+      )} */}
     </div>
   );
 };

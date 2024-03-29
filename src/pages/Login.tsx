@@ -53,9 +53,9 @@ const Login = () => {
         <RegistrationCard openSignin={handleLoginClick} />
       ) : (
         <div className="flex justify-center items-center">
-          <div className="w-1/2 max-w-sm bg-white shadow-lg rounded-lg overflow-hidden">
+          <div className="w-[95%] sm:w-2/3 md:w-1/2 max-w-sm bg-white shadow-lg rounded-lg overflow-hidden">
             {/* LOGIN FORM */}
-            <form onSubmit={handleSubmit} className="p-6">
+            <form onSubmit={handleSubmit} className="p-2 min-[400px]:p-6">
               <div className="flex flex-col gap-4">
                 {/* FORM HEADER */}
                 <div className="mb-4">

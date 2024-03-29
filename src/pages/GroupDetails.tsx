@@ -58,7 +58,7 @@ const GroupDetails = () => {
       {/* RIGHT COLUMN CONTAINER */}
       <div className="hidden  lg:block lg:col-span-1">
         {/* ADMIN INFO CARD */}
-        <div className="bg-white shadow-md rounded-md p-4 flex flex-col gap-4 min-h-[22vh] mb-4 w-[17rem]">
+        <div className="bg-white shadow-md rounded-md p-4 flex flex-col gap-4 min-h-[22vh] mb-4">
           <h3 className="text-left text-lg font-semibold">Admin</h3>
           <div className="flex gap-4">
             <img

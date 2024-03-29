@@ -10,7 +10,11 @@ function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProfileDropdown() {
+interface ProfileDropdownProps {
+  onMenu: () => void;
+}
+
+const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onMenu }) => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
 
@@ -18,14 +22,16 @@ export default function ProfileDropdown() {
     logout();
     navigate("/signin");
     toast.success("logged out successfully", { theme: "colored" });
+    onMenu();
   };
 
   const handleNavigation = () => {
     navigate(`/in/${user._id}`);
+    onMenu();
   };
 
   return (
-    <Menu as="div" className="relative inline-block text-left">
+    <Menu as="div" className="inline-block text-left">
       <div>
         <Menu.Button className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer">
           <FontAwesomeIcon className="w-6 h-6" icon={faCircleUser} />
@@ -86,6 +92,7 @@ export default function ProfileDropdown() {
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm"
                   )}
+                  onClick={onMenu}
                 >
                   Try Premium
                 </Link>
@@ -98,6 +105,7 @@ export default function ProfileDropdown() {
                     active ? "bg-gray-100 text-gray-900" : "text-gray-700",
                     "block px-4 py-2 text-sm w-full text-left"
                   )}
+                  onClick={onMenu}
                 >
                   Dark Mode / Light Mode
                 </button>
@@ -124,4 +132,6 @@ export default function ProfileDropdown() {
       </Transition>
     </Menu>
   );
-}
+};
+
+export default ProfileDropdown;
