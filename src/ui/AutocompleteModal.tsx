@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { Button, Modal } from "antd";
+import { Modal } from "antd";
 
 interface AutocompleteModalProps {
   handleOpen: () => void;

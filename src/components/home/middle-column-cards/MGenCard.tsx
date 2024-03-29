@@ -18,6 +18,7 @@ import { updateCreatedPost } from "../../../apis/postsApi/updatePostApi";
 import { useLocation } from "react-router-dom";
 import { PostModal } from "../../create-post";
 import { Comment } from "../comment";
+import useLikesCount from "../../../hooks/localStorage";
 
 interface MGenCardProps {
   post: Post;
@@ -42,6 +43,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     const [newPostContent, setNewPostContent] = useState<string>("");
     const [newSelectedFiles, setNewSelectedFiles] = useState<File[] | null>([]);
     const { pathname } = useLocation();
+    const [likesCount, setLikesCount] = useLikesCount(post._id, 0);
 
     useEffect(() => {
       getComments();
@@ -73,6 +75,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
             "likedPosts",
             JSON.stringify([...likedPostsFromLS, post._id])
           );
+          setLikesCount((prev) => prev + 1);
         }
         toast.success(res.message, { theme: "colored" });
       } else {
@@ -82,6 +85,8 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     const handleLike = () => {
       likeAPost();
     };
+
+    console.log("likesCount", likesCount);
     const openModal = () => {
       setIsModalOpen(true);
     };
@@ -182,7 +187,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
 
         {/* LIKE/COMMENT COUNT DISPLAY SECTION */}
         <div className="px-4 pt-2 mb-2 flex items-center justify-between">
-          <div className="flex"> 0 likes</div>
+          <div className="flex"> {likesCount} likes</div>
           <div className="flex items-center gap-2">
             {/* NUMBER OF COMMENTS */}
             <p className="">{comments.length} comments</p>
