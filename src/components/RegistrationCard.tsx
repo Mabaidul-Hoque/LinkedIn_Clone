@@ -27,9 +27,9 @@ const RegistrationCard: React.FC<RegistrationCardProps> = ({ openSignin }) => {
     const res = await fetchSignup(body);
     if (res.status === "success") {
       setUser({
-        name: res.data.name,
-        email: res.data.email,
-        _id: res.data._id,
+        name: res.data.user.name,
+        email: res.data.user.email,
+        _id: res.data.user._id,
       });
       localStorage.setItem("token", res.token);
       toast.success(`Welcome ${res?.data?.user?.name}`, { theme: "colored" });
