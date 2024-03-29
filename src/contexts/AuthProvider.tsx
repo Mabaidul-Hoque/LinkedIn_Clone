@@ -1,10 +1,7 @@
 import React, { ReactNode, createContext, useContext, useState } from "react";
+import useUserData from "../hooks/useUserData";
+import { User } from "../hooks/useUserData";
 
-interface User {
-  name: string;
-  email: string;
-  _id: string;
-}
 interface AuthContextValue {
   isAuthenticated: boolean;
   setIsAuthenticated: (value: boolean) => void;
@@ -44,7 +41,11 @@ interface AuthProviderProps {
 const AuthProvider: React.FC<AuthProviderProps> = ({ children }) => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [user, setUser] = useState<User>({ name: "", email: "", _id: "" });
+  const [user, setUser] = useUserData("userData", {
+    name: "",
+    email: "",
+    _id: "",
+  });
 
   const loadingTrue = () => {
     setIsLoading(true);

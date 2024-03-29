@@ -12,6 +12,7 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const { login, loadingTrue, loadingFalse, setUser } = useAuth();
   const navigate = useNavigate();
+  const [passwordVisible, setPasswordVisible] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -20,9 +21,12 @@ const Login = () => {
       password,
     };
     const res = await fetchSignin(body);
-    // console.log("res from login", res);
     if (res.status === "success") {
-      setUser(res.data);
+      setUser({
+        name: res.data.name,
+        email: res.data.email,
+        _id: res.data._id,
+      });
       loadingTrue();
       login(res.token);
       navigate("/");
@@ -38,6 +42,10 @@ const Login = () => {
   };
   const handleLoginClick = () => {
     setShowRegistration(false);
+  };
+
+  const togglePasswordVisibility = () => {
+    setPasswordVisible(!passwordVisible);
   };
   return (
     <div className="h-screen bg-gray-100">
@@ -75,13 +83,53 @@ const Login = () => {
                     className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300"
                   />
                   {/* PASSWORD */}
-                  <input
-                    type="password"
-                    placeholder="Enter Password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 mt-2"
-                  />
+                  <div className="relative">
+                    <input
+                      type={passwordVisible ? "text" : "password"}
+                      placeholder="Enter Password"
+                      value={password}
+                      onChange={(e) => setPassword(e.target.value)}
+                      className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300 mt-2"
+                    />
+                    {/* PASSWORD VISIBILITY ICON */}
+                    <button
+                      type="button"
+                      onClick={togglePasswordVisibility}
+                      className="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer"
+                    >
+                      {passwordVisible ? (
+                        <svg
+                          className="w-5 h-5 text-gray-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-7.874m0 18c-3.721 0-6.875-2.943-7.5-7a9.97 9.97 0 011.563-7.874m0-14c-2.943 0-5.625 1.672-6.5 4.059a9.97 9.97 0 011.563-7.874m0-10a10.025 10.025 0 0113.875 18.825"
+                          />
+                        </svg>
+                      ) : (
+                        <svg
+                          className="w-5 h-5 text-gray-500"
+                          fill="none"
+                          stroke="currentColor"
+                          viewBox="0 0 24 24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            strokeWidth={2}
+                            d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"
+                          />
+                        </svg>
+                      )}
+                    </button>
+                  </div>
                 </div>
                 {/* SIGN IN BUTTON */}
                 <button

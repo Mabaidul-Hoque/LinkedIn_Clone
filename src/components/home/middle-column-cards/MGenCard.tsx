@@ -18,7 +18,7 @@ import { updateCreatedPost } from "../../../apis/postsApi/updatePostApi";
 import { useLocation } from "react-router-dom";
 import { PostModal } from "../../create-post";
 import { Comment } from "../comment";
-import useLikesCount from "../../../hooks/localStorage";
+import useLikesCount from "../../../hooks/useLikesCount";
 
 interface MGenCardProps {
   post: Post;
