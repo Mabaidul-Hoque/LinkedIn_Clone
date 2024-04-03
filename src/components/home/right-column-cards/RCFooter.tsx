@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import { useDarkMode } from "../../../contexts/DarkModeProvider";
 
 const lists = [
   {
@@ -49,6 +50,7 @@ const lists = [
 ];
 
 const RCFooter = () => {
+  const { darkMode } = useDarkMode();
   return (
     <div className="">
       <ul className="text-sm flex flex-wrap gap-2 items-center justify-center text-gray-500 p-2 lg:p-4 xl:p-8">
@@ -65,7 +67,13 @@ const RCFooter = () => {
           src="/LinkedIn_logo_footer.svg"
           alt="linkedin_footer_logo"
         />
-        <span className="text-[12px]">LinkedIn Corporation © 2024</span>
+        <span
+          className={`text-[12px] ${
+            darkMode ? "text-gray-500" : "text-gray-900"
+          }`}
+        >
+          LinkedIn Corporation © 2024
+        </span>
       </div>
     </div>
   );

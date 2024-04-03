@@ -7,6 +7,7 @@ import { customUsers } from "../../../data/userInfo";
 import { useAuth } from "../../../contexts/AuthProvider";
 import { deleteCommnetByID } from "../../../apis/deleteACommentApi";
 import { CreateAComment } from "./";
+import { useDarkMode } from "../../../contexts/DarkModeProvider";
 interface CommentProps {
   setContent: (content: string | ((prev: string) => string)) => void;
   content: string;
@@ -29,6 +30,8 @@ const Comment: React.FC<CommentProps> = ({
   const [expandedCommentId, setExpandedCommentId] = useState<string | null>(
     null
   );
+  const { darkMode } = useDarkMode();
+
   // const [createChildComment, setCreateChildComment] = useState(false);
   // const [childrenComments, setChildrenComments] = useState([]);
   // const [isDeleted, setIsDeleted] = useState(false);
@@ -138,31 +141,35 @@ const Comment: React.FC<CommentProps> = ({
                   <img
                     src={`${
                       index === 0
-                        ? customUsers[0].imageUrl
+                        ? customUsers[0]?.imageUrl
                         : index === 1
-                        ? customUsers[1].imageUrl
+                        ? customUsers[1]?.imageUrl
                         : index === 2
-                        ? customUsers[2].imageUrl
+                        ? customUsers[2]?.imageUrl
                         : index === 3
-                        ? customUsers[3].imageUrl
+                        ? customUsers[3]?.imageUrl
                         : index === 4
-                        ? customUsers[4].imageUrl
+                        ? customUsers[4]?.imageUrl
                         : index === 5
-                        ? customUsers[5].imageUrl
+                        ? customUsers[5]?.imageUrl
                         : index === 6
-                        ? customUsers[6].imageUrl
+                        ? customUsers[6]?.imageUrl
                         : index === 7
-                        ? customUsers[7].imageUrl
+                        ? customUsers[7]?.imageUrl
                         : index === 8
-                        ? customUsers[8].imageUrl
+                        ? customUsers[8]?.imageUrl
                         : index === 9
-                        ? customUsers[9].imageUrl
-                        : customUsers[10].imageUrl
+                        ? customUsers[9]?.imageUrl
+                        : customUsers[10]?.imageUrl
                     }`}
                     alt="User Profile"
                     className="w-10 h-10 rounded-full cursor-pointer"
                   />
-                  <div className="w-full text-left bg-gray-100 p-3 rounded-md">
+                  <div
+                    className={`w-full text-left p-3 rounded-md ${
+                      darkMode ? "bg-gray-800" : "bg-gray-100"
+                    }`}
+                  >
                     <div className="flex flex-col ">
                       <div className="flex justify-between">
                         <div className="flex items-center">
@@ -173,13 +180,12 @@ const Comment: React.FC<CommentProps> = ({
                         <p>{calculateTimeAgo(comment.createdAt)}</p>
                       </div>
                       <p className="text-[12px]">
-                        Digital Marketer & Researcher Empowering young
-                        individuals to harness
+                        Digital Marketer & Researcher
                       </p>
                     </div>
                     <div className="">
                       <p
-                        className={`text-[15px] ${
+                        className={`text-[15px] pt-4 ${
                           isCommentText || comment._id !== expandedCommentId
                             ? "overflow-y-hidden max-h-24"
                             : "overflow-visible"
@@ -215,20 +221,22 @@ const Comment: React.FC<CommentProps> = ({
                         deleteAComment(comment._id);
                         // setIsDeleted(true);
                       }}
-                      className="text-[12px] hover:bg-gray-200 rounded-md px-1 py-0.5"
+                      className={`text-[12px] rounded-md px-1 py-0.5 ${
+                        darkMode ? "hover:bg-gray-600" : "hover:bg-gray-200"
+                      }`}
                     >
                       Delete
                     </button>
                   </div>
                   {/* REPLY TO A COMMENT */}
-                  <div className="flex justify-start mt-1">
+                  {/* <div className="flex justify-start mt-1">
                     <button
-                      // onClick={() => setCreateChildComment(true)}
+                      onClick={() => setCreateChildComment(true)}
                       className="text-[12px] hover:bg-gray-200 rounded-md px-1 py-0.5"
                     >
                       Reply
                     </button>
-                  </div>
+                  </div> */}
                 </div>
                 {/* DELETE/REPLY CONTAINER END */}
                 {/* {createChildComment && (
@@ -247,7 +255,9 @@ const Comment: React.FC<CommentProps> = ({
         {comments.length !== visibleComments.length && (
           <div className="flex justify-start mt-4">
             <button
-              className="hover:bg-gray-200 rounded-md px-3 py-1"
+              className={`rounded-md px-3 py-1 ${
+                darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
+              }`}
               onClick={loadMoreComments}
             >
               Load more comments

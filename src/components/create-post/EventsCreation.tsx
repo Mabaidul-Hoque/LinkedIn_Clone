@@ -1,8 +1,11 @@
 // import { useState } from "react";
 import CalendarMonthOutlinedIcon from "@mui/icons-material/CalendarMonthOutlined";
 import { toast } from "react-toastify";
+import { useDarkMode } from "../../contexts/DarkModeProvider";
 
 const EventsCreation = () => {
+  const { darkMode } = useDarkMode();
+
   // const [isModalOpen, setIsModalOpen] = useState(false);
   // const [eventName, setEventName] = useState("");
   // const [eventDescription, setEventDescription] = useState("");
@@ -31,7 +34,9 @@ const EventsCreation = () => {
   return (
     <>
       <button
-        className="px-4 py-2 rounded-md flex items-center gap-1 hover:bg-gray-200"
+        className={`px-4 py-2 rounded-md flex items-center gap-1 ${
+          darkMode ? "hover:bg-gray-600 " : "hover:bg-gray-200 "
+        }`}
         onClick={() => {
           // handleModalOpen();
           toast.info("Coming soon...!", { theme: "colored" });

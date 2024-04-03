@@ -5,6 +5,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
+import { useDarkMode } from "../../../contexts/DarkModeProvider";
 
 const groups = [
   {
@@ -56,9 +57,14 @@ const events = [
 
 const Lcard2 = () => {
   const navigate = useNavigate();
+  const { darkMode } = useDarkMode();
   return (
     <>
-      <div className="bg-white shadow-md rounded-md mb-4 flex flex-col gap-4">
+      <div
+        className={`${
+          darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
+        } shadow-md rounded-md mb-4 flex flex-col gap-4`}
+      >
         {/* GROUPS */}
         <div className="flex flex-col gap-2 px-4 mt-4">
           <div className="flex items-center justify-between">

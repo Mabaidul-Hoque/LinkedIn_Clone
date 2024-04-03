@@ -19,15 +19,15 @@ const Layout = () => {
     <div className="">
       {/* NAVBAR */}
       <nav
-        className={`text-center w-full h-14 flex items-center justify-between mb-4 bg-[#FFFFFF] sticky top-0 dark:bg-black shadow-md ${
-          darkMode ? "bg-black text-white" : "white"
+        className={`text-center w-full h-14 flex items-center justify-between bg-[#FFFFFF] sticky top-0 dark:bg-black shadow-md ${
+          darkMode ? "bg-black text-white shadow-gray-900" : "white"
         }`}
       >
         <Navbar handleMenu={handleMenu} menu={menu} />
       </nav>
       {/* MAIN  */}
       <main
-        className={`text-center w-full m-auto min-h-[calc(100vh-3.5rem)] ${
+        className={`text-center w-full m-auto min-h-[calc(100vh-3.5rem)] pt-4 ${
           darkMode ? "bg-black" : "white"
         }`}
       >

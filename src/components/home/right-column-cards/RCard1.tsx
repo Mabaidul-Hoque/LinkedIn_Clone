@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchNews } from "../../../apis/newsApi";
 import { Link } from "react-router-dom";
+import { useDarkMode } from "../../../contexts/DarkModeProvider";
 
 interface News {
   author: string;
@@ -12,6 +13,7 @@ interface News {
 const RCard1 = () => {
   const [showMore, setShowMore] = useState(false);
   const [totalNews, setTotalNews] = useState<News[]>([]);
+  const { darkMode } = useDarkMode();
 
   useEffect(() => {
     getNews();
@@ -25,7 +27,11 @@ const RCard1 = () => {
   };
   return (
     <>
-      <div className="bg-white shadow-md rounded-md mb-4">
+      <div
+        className={`${
+          darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
+        } shadow-md rounded-md mb-4`}
+      >
         {/* LINKEDIN NEWS HEADER */}
         <h2 className="font-semibold text-left mb-2 px-4 pt-4">
           LinkedIn News
@@ -41,7 +47,9 @@ const RCard1 = () => {
           {totalNews.map((news, indx) => (
             <li
               key={indx}
-              className="hover:underline hover:text-blue-500 text-gray-700"
+              className={`hover:underline hover:text-blue-500  ${
+                darkMode ? "text-white" : "text-gray-700"
+              }`}
             >
               <Link to={news.url} target="_blank">
                 {news.title}

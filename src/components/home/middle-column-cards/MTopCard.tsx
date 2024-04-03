@@ -7,6 +7,7 @@ import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthProvider";
 import { EventsCreation, PostModal } from "../../create-post";
+import { useDarkMode } from "../../../contexts/DarkModeProvider";
 
 interface MTopCardProps {
   updatePosts: React.Dispatch<React.SetStateAction<Post[]>>;
@@ -14,7 +15,7 @@ interface MTopCardProps {
   postContent: string;
   setSelectedFiles: React.Dispatch<React.SetStateAction<File[] | null>>;
   selectedFiles: File[] | null;
-  createPost: () => Promise<void>; // Adjust the return type as necessary
+  createPost: () => Promise<void>;
 }
 const MTopCard: React.FC<MTopCardProps> = ({
   setPostContent,
@@ -24,41 +25,10 @@ const MTopCard: React.FC<MTopCardProps> = ({
   createPost,
 }) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  // const [postContent, setPostContent] = useState<string>("");
-  // const [selectedFiles, setSelectedFiles] = useState<File[] | null>([]);
   const [imageUrls, setImageUrls] = useState<string[]>([]);
   const navigate = useNavigate();
   const { user } = useAuth();
-
-  // const getPosts = async () => {
-  //   const res = await fetchPosts(1);
-  //   console.log("res from posts", res);
-  //   if (res?.status === "success") {
-  //     updatePosts((prevPosts) => [...prevPosts, ...res?.data]);
-  //   }
-  // };
-
-  // const createPost = async () => {
-  //   const formData = new FormData();
-
-  //   formData.append("content", postContent);
-  //   if (selectedFiles) {
-  //     // Append each image file to the formData
-  //     for (let i = 0; i < selectedFiles.length; i++) {
-  //       formData.append("images", selectedFiles[i]);
-  //     }
-  //   }
-  //   const res = await createAPost(formData);
-  //   console.log("res from create a post", res);
-  //   getPosts();
-  //   // updatePosts((prev) => [res.data, ...prev]);
-  //   // if (res?.status === "success") {
-  //   //   console.log("res from post created");
-  //   //   getPosts();
-  //   //   // Assuming res.data contains the new post data
-  //   //   // updatePosts((prevPosts) => [res.data, ...prevPosts]);
-  //   // }
-  // };
+  const { darkMode } = useDarkMode();
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -72,7 +42,11 @@ const MTopCard: React.FC<MTopCardProps> = ({
     navigate(`/in/${user._id}`);
   };
   return (
-    <div className="bg-white shadow-md rounded-md p-4 mb-4">
+    <div
+      className={`${
+        darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
+      }  shadow-md rounded-md p-4 mb-4`}
+    >
       {/* CREATE POST HEADER */}
       <div className="flex items-center gap-2 xl:gap-4">
         <img
@@ -85,7 +59,9 @@ const MTopCard: React.FC<MTopCardProps> = ({
           type="text"
           placeholder="Start a post"
           onClick={openModal}
-          className="flex-grow px-2 py-1 pl-8 border rounded-full min-w-20 h-12 focus:outline-blue-500 hover:bg-gray-100"
+          className={`flex-grow px-2 py-1 pl-8 border rounded-full min-w-20 h-12 focus:outline-blue-500 ${
+            darkMode ? "bg-gray-700 hover:bg-gray-500" : "hover:bg-gray-100"
+          }`}
         />
         <PostModal
           isOpen={isModalOpen}
@@ -106,7 +82,11 @@ const MTopCard: React.FC<MTopCardProps> = ({
         {/* IMAGE FILE */}
         <label className="cursor-pointer">
           <input type="file" className="hidden" />
-          <span className="px-4 py-2 hover:bg-gray-200 rounded-md flex items-center gap-2">
+          <span
+            className={`px-4 py-2 ${
+              darkMode ? "hover:bg-gray-600 " : "hover:bg-gray-200 "
+            } rounded-md flex items-center gap-2`}
+          >
             <FontAwesomeIcon className="text-[#378FE9] size-5" icon={faImage} />
             Media
           </span>
@@ -119,7 +99,9 @@ const MTopCard: React.FC<MTopCardProps> = ({
         {/* WRITE FILE */}
         <button
           onClick={() => toast.info("Coming soon...!", { theme: "colored" })}
-          className="px-4 py-2 rounded-md flex items-center gap-1 hover:bg-gray-200"
+          className={`px-4 py-2 rounded-md flex items-center gap-1 ${
+            darkMode ? "hover:bg-gray-600 " : "hover:bg-gray-200 "
+          }`}
         >
           <EditNoteIcon htmlColor="#E06847" />
           <span>Write article</span>

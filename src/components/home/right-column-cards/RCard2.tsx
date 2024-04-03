@@ -3,17 +3,23 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import RCFooter from "./RCFooter";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthProvider";
+import { useDarkMode } from "../../../contexts/DarkModeProvider";
 
 const RCard2 = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { darkMode } = useDarkMode();
 
   const handleNavigation = () => {
     navigate(`/in/${user._id}`);
   };
   return (
     <>
-      <div className="bg-white shadow-md rounded-md px-4 py-4 xlpy-8 mb-4 cursor-pointer relative ">
+      <div
+        className={`${
+          darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
+        } shadow-md rounded-md px-4 py-4 xlpy-8 mb-4 cursor-pointer relative`}
+      >
         <p className="text-sm">
           {user.name}, unlock your full potential with linkedin Premium
         </p>
@@ -26,7 +32,11 @@ const RCard2 = () => {
               alt="profile-image"
               onClick={handleNavigation}
             />
-            <div className="absolute left-0 mt-2 w-32 font-semibold text-center text-xs border border-gray-500 bg-white rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out">
+            <div
+              className={`absolute left-0 mt-2 w-32 font-semibold text-center text-xs border border-gray-500 ${
+                darkMode ? "text-black" : ""
+              } bg-white rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out`}
+            >
               LinkedIn Profile
             </div>
           </div>
@@ -34,7 +44,11 @@ const RCard2 = () => {
           <div onClick={() => navigate("/premium")} className="relative group">
             {/* KEY LOGO */}
             <FontAwesomeIcon className="size-12 text-blue-400" icon={faKey} />
-            <div className="absolute right-0 mt-2 w-32 font-semibold text-center text-xs border border-gray-500 bg-white rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out">
+            <div
+              className={`absolute right-0 mt-2 w-32 font-semibold text-center text-xs border border-gray-500 ${
+                darkMode ? "text-black" : ""
+              } bg-white rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out`}
+            >
               LinkedIn Premium
             </div>
           </div>
@@ -50,7 +64,11 @@ const RCard2 = () => {
           >
             Try for free
           </button>
-          <div className="absolute right-0 mt-2 w-32 text-center font-semibold text-xs border border-gray-500 bg-white rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out">
+          <div
+            className={`absolute right-0 mt-2 w-32 text-center font-semibold text-xs border border-gray-500 bg-white rounded py-1 px-2 opacity-0 group-hover:opacity-100 transition-opacity duration-200 ease-in-out ${
+              darkMode ? "text-black" : ""
+            }`}
+          >
             LinkedIn Premium
           </div>
         </div>

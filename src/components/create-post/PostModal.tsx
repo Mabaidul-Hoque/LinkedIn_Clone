@@ -7,6 +7,7 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import Picker from "@emoji-mart/react";
+import { useDarkMode } from "../../contexts/DarkModeProvider";
 
 interface EmojiData {
   native: string;
@@ -40,6 +41,8 @@ const PostModal: React.FC<PostModalProps> = ({
   updatedContent,
 }) => {
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
+  const { darkMode } = useDarkMode();
+
   const handleEmojiSelect = (emoji: EmojiData) => {
     if (emoji && emoji.native) {
       addEmoji(emoji.native);
@@ -103,7 +106,11 @@ const PostModal: React.FC<PostModalProps> = ({
         </div>
         {/* MODAL INSIDE CONTENT */}
         <div className="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle w-[95%] sm:max-w-[80%] lg:max-w-[50%]  sm:w-full max-[600px]:absolute  max-[600px]:top-5">
-          <div className="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+          <div
+            className={`px-4 pt-5 pb-4 sm:p-6 sm:pb-4 ${
+              darkMode ? "bg-black " : "bg-white "
+            }`}
+          >
             <div className="sm:flex sm:items-start sm:flex-col">
               {/* MODAL HEADER */}
               <div className="w-full flex justify-between">
@@ -138,7 +145,9 @@ const PostModal: React.FC<PostModalProps> = ({
               {/* WRITE CONTENT */}
               <div className="w-full mt-2">
                 <textarea
-                  className="w-full min-h-64 px-3 py-2 text-gray-700 border rounded-lg focus:outline-none"
+                  className={`w-full min-h-64 px-3 py-2 ${
+                    darkMode ? "text-white bg-black" : "text-gray-700"
+                  } border rounded-lg focus:outline-none`}
                   rows={4}
                   placeholder="What do you want to talk about?"
                   value={postContent || updatedContent}
@@ -171,7 +180,9 @@ const PostModal: React.FC<PostModalProps> = ({
                 {/* ADD EMOJI */}
                 <div className="flex flex-col-reverse">
                   <button
-                    className="py-2 pr-6"
+                    className={`py-2 pr-6 pl-4 rounded-md ${
+                      darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
+                    }`}
                     onClick={() => setEmojiPickerVisible(!emojiPickerVisible)}
                   >
                     <FontAwesomeIcon
@@ -200,7 +211,11 @@ const PostModal: React.FC<PostModalProps> = ({
                       multiple
                       onChange={handleFileChange}
                     />
-                    <span className="px-4 py-2 hover:bg-gray-200 rounded-md flex items-center gap-2">
+                    <span
+                      className={`px-4 py-2  rounded-md flex items-center gap-2 ${
+                        darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
+                      }`}
+                    >
                       <FontAwesomeIcon
                         className="text-[#378FE9] size-5"
                         icon={faImage}
@@ -214,7 +229,11 @@ const PostModal: React.FC<PostModalProps> = ({
           </div>
           {/* DIVIDER */}
           <div className="border-b border-gray-300" />
-          <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+          <div
+            className={`px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse ${
+              darkMode ? "bg-black" : "bg-gray-50"
+            }`}
+          >
             <button
               className={`w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 ${
                 postContent ? "bg-blue-600 hover:bg-blue-700" : "bg-gray-300"

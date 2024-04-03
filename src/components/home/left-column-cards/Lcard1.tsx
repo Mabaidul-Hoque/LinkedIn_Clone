@@ -2,10 +2,12 @@ import { faBookmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../../contexts/AuthProvider";
+import { useDarkMode } from "../../../contexts/DarkModeProvider";
 
 const Lcard1 = () => {
   const navigate = useNavigate();
   const { user } = useAuth();
+  const { darkMode } = useDarkMode();
 
   const handleNavigation = () => {
     navigate(`/in/${user._id}`);
@@ -13,7 +15,11 @@ const Lcard1 = () => {
 
   return (
     <>
-      <div className="bg-white shadow-md rounded-md mb-4  z-10">
+      <div
+        className={`${
+          darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
+        } shadow-md  rounded-md mb-4 z-10`}
+      >
         {/* CARD1 HEADER */}
         <div className="flex items-center justify-center bg-profile-logo bg-custom bg-center h-20 rounded-t-lg">
           <img
@@ -52,7 +58,9 @@ const Lcard1 = () => {
         {/* TRY PREMIUM */}
         <div
           onClick={() => navigate("/premium")}
-          className="px-4 py-2 hover:bg-gray-300 cursor-pointer text-sm group"
+          className={`px-4 py-2 ${
+            darkMode ? "hover:bg-gray-600" : "hover:bg-gray-300"
+          } cursor-pointer text-sm group`}
         >
           <p className="text-left">
             Strengthen your profile with an AI writing asistant

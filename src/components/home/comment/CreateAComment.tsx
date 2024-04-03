@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { faImage } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { EmojiSelector } from "../../../ui";
+import { useDarkMode } from "../../../contexts/DarkModeProvider";
 
 interface CreateACommentProps {
   setContent: (content: string | ((prev: string) => string)) => void;
@@ -17,6 +18,8 @@ const CreateAComment: React.FC<CreateACommentProps> = ({
   const textAreaRef = useRef<HTMLTextAreaElement>(null);
   const [isPosted, setIsPosted] = useState(false);
   const [textAreaHeight, setTextAreaHeight] = useState("auto");
+  const { darkMode } = useDarkMode();
+
   useEffect(() => {
     if (textAreaRef.current) {
       const scrollHeight = textAreaRef.current.scrollHeight;
@@ -77,7 +80,9 @@ const CreateAComment: React.FC<CreateACommentProps> = ({
           onChange={handleCommentChange}
           onFocus={() => setIsPosted(false)}
           placeholder="Add a comment"
-          className={`flex-grow px-2 py-1 pl-4 pr-24 border border-gray-500 rounded-2xl min-w-20 min-h-10 overflow-hidden focus:outline-blue-500 hover:bg-gray-100 ${textAreaHeight}`}
+          className={`flex-grow px-2 py-1 pl-4 pr-24 border border-gray-500 rounded-2xl min-w-20 min-h-10 overflow-hidden focus:outline-none focus:border-none  ${textAreaHeight} ${
+            darkMode ? "bg-gray-800 hover:bg-gray-700" : "hover:bg-gray-100"
+          }`}
           style={{ height: textAreaHeight }}
         />
         <button

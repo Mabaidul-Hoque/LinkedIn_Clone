@@ -19,6 +19,7 @@ import { useLocation } from "react-router-dom";
 import { PostModal } from "../../create-post";
 import { Comment } from "../comment";
 import useLikesCount from "../../../hooks/useLikesCount";
+import { useDarkMode } from "../../../contexts/DarkModeProvider";
 
 interface MGenCardProps {
   post: Post;
@@ -44,6 +45,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     const [newSelectedFiles, setNewSelectedFiles] = useState<File[] | null>([]);
     const { pathname } = useLocation();
     const [likesCount, setLikesCount] = useLikesCount(post._id, 0);
+    const { darkMode } = useDarkMode();
 
     useEffect(() => {
       getComments();
@@ -115,7 +117,12 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     };
 
     return (
-      <div ref={ref} className="bg-white shadow-md rounded-md mb-4">
+      <div
+        ref={ref}
+        className={` shadow-md rounded-md mb-4 ${
+          darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
+        }`}
+      >
         {/* AUTHOR SECTION */}
         <div className="flex justify-between px-4 pt-2 mb-2">
           {/* AUTHOR DETAILS */}
@@ -196,13 +203,17 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
             <p className="">0 reposts</p>
           </div>
         </div>
+        {/* DIVIDER */}
         <div className="w-[95%] mx-auto border-b border-gray-300"></div>
+
         {/* LIKE/COMMENT/POST/SHARE CONATINER */}
         <div className="px-1 xl:px-8 pt-2 pb-4 flex items-center justify-between">
           {/* LIKE */}
           <div
             onClick={handleLike}
-            className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md "
+            className={`flex items-center gap-2 cursor-pointer  px-4 py-2 rounded-md ${
+              darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
+            }`}
           >
             {JSON.parse(localStorage.getItem("likedPosts") || "[]").includes(
               post._id
@@ -219,7 +230,9 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
           {/* COMMENT */}
           <div
             onClick={() => setIsCommentBtn((prev) => !prev)}
-            className="flex items-center gap-2 cursor-pointer hover:bg-gray-200 px-4 py-2 rounded-md"
+            className={`flex items-center gap-2 cursor-pointer px-4 py-2 rounded-md ${
+              darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
+            }`}
           >
             <FontAwesomeIcon
               className="size-5 text-gray-500"
@@ -228,7 +241,11 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
             <p className="hidden min-[450px]:block">Comment</p>
           </div>
           {/* REPOST */}
-          <div className="flex items-center gap-2 hover:bg-gray-200 px-4 py-2 rounded-md cursor-no-drop text-gray-300">
+          <div
+            className={`flex items-center gap-2  px-4 py-2 rounded-md cursor-no-drop text-gray-300 ${
+              darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
+            }`}
+          >
             <FontAwesomeIcon
               className="size-5 text-gray-300"
               icon={faRetweet}
@@ -236,7 +253,11 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
             <p className="hidden min-[450px]:block">Repost</p>
           </div>
           {/* SEND */}
-          <div className="flex items-center gap-2 cursor-no-drop hover:bg-gray-200 px-4 py-2 rounded-md text-gray-300">
+          <div
+            className={`flex items-center gap-2 cursor-no-drop  px-4 py-2 rounded-md text-gray-300 ${
+              darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
+            }`}
+          >
             <FontAwesomeIcon
               className="size-5 text-gray-300"
               icon={faPaperPlane}
