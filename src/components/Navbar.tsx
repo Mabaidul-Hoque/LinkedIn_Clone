@@ -17,6 +17,7 @@ import { toast } from "react-toastify";
 import { searchContent } from "../apis/searchApi";
 import { useSearchData } from "../contexts/SearchDataProvider";
 import { AutocompleteModal, ProfileDropdown, ResponsiveMenu } from "../ui";
+import { useDarkMode } from "../contexts/DarkModeProvider";
 
 interface NavabrProps {
   handleMenu: () => void;
@@ -29,6 +30,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
   const navigate = useNavigate();
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen(true);
+  const { darkMode } = useDarkMode();
 
   const toggleModal = () => {
     setOpen(!open);
@@ -105,9 +107,15 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           <li
             className={`${
               pathname === "/" || pathname === "/feed"
-                ? "text-black border-b-2 border-black"
+                ? darkMode
+                  ? "text-blue-500 border-b-2 border-blue-500"
+                  : "text-black border-b-2 border-black"
+                : darkMode
+                ? "text-white"
                 : "text-gray-600"
-            } hover:text-black p-4 pb-2 pt-2`}
+            } ${
+              darkMode ? "hover:text-blue-300" : "hover:text-black"
+            } p-4 pb-2 pt-2`}
           >
             <Link
               className="flex flex-col justify-center items-center"
@@ -122,9 +130,15 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
             onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
             className={`${
               pathname === "/mynetwork"
-                ? "text-black border-b-2 border-black"
+                ? darkMode
+                  ? "text-blue-500 border-b-2 border-blue-500"
+                  : "text-black border-b-2 border-black"
+                : darkMode
+                ? "text-white"
                 : "text-gray-600"
-            } hover:text-black p-4 pb-2 pt-2`}
+            }  ${
+              darkMode ? "hover:text-blue-300" : "hover:text-black"
+            }  p-4 pb-2 pt-2`}
           >
             <Link
               className="flex flex-col justify-center items-center"
@@ -140,9 +154,15 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
             onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
             className={`${
               pathname === "/jobs"
-                ? "text-black border-b-2 border-black "
+                ? darkMode
+                  ? "text-blue-500 border-b-2 border-blue-500"
+                  : "text-black border-b-2 border-black"
+                : darkMode
+                ? "text-white"
                 : "text-gray-600"
-            } hover:text-black p-4 pb-2 pt-2`}
+            }  ${
+              darkMode ? "hover:text-blue-300" : "hover:text-black"
+            }  p-4 pb-2 pt-2`}
           >
             <Link
               className="flex flex-col justify-center items-center"
@@ -158,9 +178,15 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
             onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
             className={`${
               pathname === "/messaging"
-                ? "text-black border-b-2 border-black "
+                ? darkMode
+                  ? "text-blue-500 border-b-2 border-blue-500"
+                  : "text-black border-b-2 border-black"
+                : darkMode
+                ? "text-white"
                 : "text-gray-600"
-            } hover:text-black p-4 pb-2 pt-2 max-[350px]:hidden`}
+            }  ${
+              darkMode ? "hover:text-blue-300" : "hover:text-black"
+            }  p-4 pb-2 pt-2 max-[350px]:hidden`}
           >
             <Link
               className="flex flex-col justify-center items-center"
@@ -176,9 +202,15 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
             onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
             className={`${
               pathname === "/notifications"
-                ? "text-black border-b-2 border-black  "
+                ? darkMode
+                  ? "text-blue-500 border-b-2 border-blue-500"
+                  : "text-black border-b-2 border-black"
+                : darkMode
+                ? "text-white"
                 : "text-gray-600"
-            } hover:text-black p-4 pb-2 pt-2 max-[410px]:hidden`}
+            }  ${
+              darkMode ? "hover:text-blue-300" : "hover:text-black"
+            }  p-4 pb-2 pt-2 max-[410px]:hidden`}
           >
             <Link
               className="flex flex-col justify-center items-center"
@@ -201,7 +233,9 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           {/*  FOR BUSSINESS  */}
           <div
             onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
-            className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer"
+            className={`flex flex-col justify-center items-center ${
+              darkMode ? "text-white" : "text-gray-600 hover:text-black"
+            } cursor-pointer`}
           >
             <FontAwesomeIcon className="w-6 h-6" icon={faGripVertical} />
             <span className="text-[12px] max-[800px]:hidden">
@@ -212,7 +246,9 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           {/* ADVERTISE */}
           <div
             onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
-            className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer"
+            className={`flex flex-col justify-center items-center  ${
+              darkMode ? "text-white" : "text-gray-600 hover:text-black"
+            }   cursor-pointer`}
           >
             <FontAwesomeIcon className="w-6 h-6" icon={faRectangleAd} />
             <span className="text-[12px] max-[800px]:hidden">Advertise</span>

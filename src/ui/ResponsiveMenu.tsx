@@ -64,10 +64,7 @@ const ResponsiveMenu: React.FC<ResponsiveMenuProps> = ({
           </div>
 
           {/* PROFILE SECTION */}
-          <div
-            // onClick={handleMenu}
-            className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer  p-4 pb-2 pt-2 min-[550px]:hidden"
-          >
+          <div className="flex flex-col justify-center items-center text-gray-600 hover:text-black cursor-pointer  p-4 pb-2 pt-2 min-[550px]:hidden">
             <ProfileDropdown onMenu={handleMenu} />
           </div>
           {/*  FOR BUSSINESS  */}

@@ -13,6 +13,7 @@ import Premium from "./pages/Premium.tsx";
 import Groups from "./pages/Groups.tsx";
 import GroupDetails from "./pages/GroupDetails.tsx";
 import ViewProfile from "./pages/ViewProfile.tsx";
+import DarkModeProvider from "./contexts/DarkModeProvider.tsx";
 
 const PageRoutes = () => {
   const router = createBrowserRouter([
@@ -68,9 +69,11 @@ const PageRoutes = () => {
     },
   ]);
   return (
-    <SearchDataProvider>
-      <RouterProvider router={router} />
-    </SearchDataProvider>
+    <DarkModeProvider>
+      <SearchDataProvider>
+        <RouterProvider router={router} />
+      </SearchDataProvider>
+    </DarkModeProvider>
   );
 };
 

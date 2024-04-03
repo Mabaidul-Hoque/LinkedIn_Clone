@@ -51,7 +51,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
 
     const getComments = async () => {
       const res = await fetchComments(post._id);
-      console.log("res from fetch comments", res);
+      // console.log("res from fetch comments", res);
       if (res.status === "success") {
         setComments(res?.data);
       }
@@ -66,7 +66,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
         const likedPostsFromLS = JSON.parse(
           localStorage.getItem("likedPosts") || "[]"
         );
-        console.log("likedPostsFromLS", likedPostsFromLS);
+        // console.log("likedPostsFromLS", likedPostsFromLS);
         const existedPostInLS = likedPostsFromLS.find(
           (item: string) => item === post._id
         );
@@ -86,7 +86,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
       likeAPost();
     };
 
-    console.log("likesCount", likesCount);
+    // console.log("likesCount", likesCount);
     const openModal = () => {
       setIsModalOpen(true);
     };
@@ -106,7 +106,7 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
         }
       }
       const res = await updateCreatedPost(post._id, formData);
-      console.log("res from update post", res);
+      // console.log("res from update post", res);
       if (res?.status === "success") {
         toast.success(res?.message, { theme: "colored" });
       } else {

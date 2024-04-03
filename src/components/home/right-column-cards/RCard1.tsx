@@ -18,7 +18,7 @@ const RCard1 = () => {
   }, []);
   const getNews = async () => {
     const res = await fetchNews();
-    console.log("news res", res.articles);
+    // console.log("news res", res.articles);
     if (res.status === "ok") {
       setTotalNews(res.articles);
     }

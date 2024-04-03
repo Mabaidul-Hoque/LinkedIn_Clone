@@ -44,7 +44,7 @@ const Home = () => {
 
   const getPosts = async () => {
     const res = await fetchPosts(page);
-    console.log("res from posts", res);
+    // console.log("res from posts", res);
     if (res?.status === "success") {
       setStopData(true);
       setPosts((prevPosts) => [...prevPosts, ...res?.data]);
