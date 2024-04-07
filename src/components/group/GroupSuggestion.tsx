@@ -1,9 +1,20 @@
 // import React from 'react'
 
+import { useDarkMode } from "../../contexts/DarkModeProvider";
+
 const GroupSuggestion = () => {
+  const { darkMode } = useDarkMode();
   return (
-    <div className="bg-white  shadow-md rounded-md mb-4  py-4 px-1">
-      <h1 className="font-semibold text-gray-800">
+    <div
+      className={`shadow-md rounded-md mb-4  py-4 px-1 ${
+        darkMode ? "bg-black text-white shadow-sm shadow-slate-200" : "bg-white"
+      }`}
+    >
+      <h1
+        className={`font-semibold ${
+          darkMode ? "text-gray-200" : "text-gray-800"
+        }`}
+      >
         Groups you might be interested in
       </h1>
       {/* SHOW INTEREST GROUPS IN MAP */}

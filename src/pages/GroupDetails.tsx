@@ -5,6 +5,7 @@ import { useEffect, useState } from "react";
 import Lcard2 from "../components/home/left-column-cards/LCard2";
 import { Group } from "./Groups";
 import { GDLcard1, GroupInfo, GroupSuggestion } from "../components/group";
+import { useDarkMode } from "../contexts/DarkModeProvider";
 
 const GroupDetails = () => {
   const { groupId } = useParams<{ groupId: string }>();
@@ -19,6 +20,9 @@ const GroupDetails = () => {
       education: "",
     },
   });
+
+  const { darkMode } = useDarkMode();
+
   useEffect(() => {
     getGroupDetails();
   }, []);
@@ -58,7 +62,13 @@ const GroupDetails = () => {
       {/* RIGHT COLUMN CONTAINER */}
       <div className="hidden  lg:block lg:col-span-1">
         {/* ADMIN INFO CARD */}
-        <div className="bg-white shadow-md rounded-md p-4 flex flex-col gap-4 min-h-[22vh] mb-4">
+        <div
+          className={`shadow-md rounded-md p-4 flex flex-col gap-4 min-h-[22vh] mb-4 ${
+            darkMode
+              ? "bg-black text-white shadow-sm shadow-slate-200"
+              : "bg-white"
+          }`}
+        >
           <h3 className="text-left text-lg font-semibold">Admin</h3>
           <div className="flex gap-4">
             <img

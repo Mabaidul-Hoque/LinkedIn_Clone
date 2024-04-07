@@ -1,9 +1,11 @@
 // import React from 'react'
 
 import { useAuth } from "../../contexts/AuthProvider";
+import { useDarkMode } from "../../contexts/DarkModeProvider";
 
 const ProfileDetails = () => {
   const { user } = useAuth();
+  const { darkMode } = useDarkMode();
   return (
     <div>
       {/* PROFILE HEADER */}
@@ -16,12 +18,16 @@ const ProfileDetails = () => {
         />
       </div>
       {/* PROFILE CONTENT */}
-      <div className="pt-12 text-left px-6">
+      <div className="pt-16 text-left px-6">
         {/* <div className="flex justify-end">
           <button>Edit</button>
         </div> */}
         <div className="w-[70%]">
-          <h1 className="text-2xl font-semibold text-gray-700">
+          <h1
+            className={`text-2xl font-semibold  ${
+              darkMode ? "text-white" : "text-gray-700"
+            }`}
+          >
             {user.name} <span className="text-sm font-normal">(He/Him)</span>
           </h1>
           <p>

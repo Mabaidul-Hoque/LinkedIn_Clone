@@ -58,7 +58,7 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onMenu }) => {
       >
         <Menu.Items
           className={`absolute right-0 z-10 mt-2 w-72 origin-top-right rounded-md ${
-            darkMode ? "bg-black" : "bg-white"
+            darkMode ? "bg-black shadow-sm shadow-slate-200" : "bg-white"
           } shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none`}
         >
           {/* MENU HEADER */}

@@ -1,12 +1,20 @@
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthProvider";
+import { useDarkMode } from "../../contexts/DarkModeProvider";
 
 const GDLcard1 = () => {
   const { user } = useAuth();
+  const { darkMode } = useDarkMode();
 
   return (
     <>
-      <div className="bg-white shadow-md rounded-md mb-4 min-h-[30vh] z-10">
+      <div
+        className={`shadow-md rounded-md mb-4 min-h-[30vh] z-10 ${
+          darkMode
+            ? "bg-black text-white shadow-sm shadow-slate-200"
+            : "bg-white"
+        }`}
+      >
         {/* CARD1 HEADER */}
         <div className="flex items-center justify-center bg-profile-logo bg-custom bg-center h-20 rounded-t-lg">
           <Link to={`/in/${user._id}`}>
@@ -19,8 +27,20 @@ const GDLcard1 = () => {
         </div>
         {/* USER NAME AND GROUP JOINED TIME CONATINER*/}
         <div className="mt-12">
-          <h2 className="text-lg text-gray-700 font-semibold">{user.name}</h2>
-          <p className="text-sm text-gray-600">Joined group: Dec 2023</p>
+          <h2
+            className={`text-lg font-semibold ${
+              darkMode ? "text-white" : "text-gray-700"
+            }`}
+          >
+            {user.name}
+          </h2>
+          <p
+            className={`text-sm text-gray-600 ${
+              darkMode ? "text-white" : "text-gray-700"
+            }`}
+          >
+            Joined group: Dec 2023
+          </p>
         </div>
       </div>
     </>

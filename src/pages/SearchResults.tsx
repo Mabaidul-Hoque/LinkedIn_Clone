@@ -4,6 +4,7 @@ import { searchContent } from "../apis/searchApi";
 import RCard2 from "../components/home/right-column-cards/RCard2";
 import MGenCard from "../components/home/middle-column-cards/MGenCard";
 import { toast } from "react-toastify";
+import { useDarkMode } from "../contexts/DarkModeProvider";
 
 const searchCatBtns = [
   "Post",
@@ -19,9 +20,10 @@ const SearchResults = () => {
   const observer = useRef<IntersectionObserver | null>(null);
   const [stopData, setStopData] = useState(false);
   const [page, setPage] = useState(1);
+  const { darkMode } = useDarkMode();
 
-  console.log("results", results);
-  console.log("searchItems", searchItems);
+  // console.log("results", results);
+  // console.log("searchItems", searchItems);
 
   useEffect(() => {
     getSearchData();
@@ -49,12 +51,20 @@ const SearchResults = () => {
     <div className="max-[760px]:max-w-[600px] w-[95%] xl:w-[82%] mx-auto grid grid-cols-1 md:grid-cols-3 lg:grid-cols-4 gap-8">
       {/* LEFT COL */}
       <div className="hidden md:block md:col-span-1 lg:block lg:col-span-1 pt-5">
-        <div className="bg-white shadow-md rounded-md  py-4 mb-4 text-left ">
+        <div
+          className={`shadow-md rounded-md  py-4 mb-4 text-left ${
+            darkMode
+              ? "bg-black text-white shadow-sm shadow-slate-200"
+              : "bg-white"
+          }`}
+        >
           <p className="mb-4 px-4 text-gray-500">On this page</p>
           <div className="flex flex-col items-start gap-2">
             {searchCatBtns.map((catBtn, index) => (
               <button
-                className={`w-full text-left hover:bg-gray-200 px-4 py-0.5  ${
+                className={`w-full text-left ${
+                  darkMode ? "hover:bg-gray-800" : "hover:bg-gray-200"
+                } px-4 py-0.5  ${
                   activeIndex === index && "border-l-2 border-green-800"
                 } `}
                 key={index}

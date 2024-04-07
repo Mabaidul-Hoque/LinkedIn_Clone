@@ -9,6 +9,7 @@ import { toast } from "react-toastify";
 import { fetchAllgroups } from "../apis/groupApis/fetchAllGroups";
 import { GroupSuggestion } from "../components/group";
 import { RCFooter } from "../components/home/right-column-cards";
+import { useDarkMode } from "../contexts/DarkModeProvider";
 
 export interface Owner {
   name: string;
@@ -31,6 +32,8 @@ const Groups = () => {
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const [selectedImageFile, setSelectedImageFile] = useState<File | null>(null);
   // const [groups, setGroups] = useState<Group[]>([]);
+  const { darkMode } = useDarkMode();
+
   const [groups, setGroups] = useState<Group[]>(() => {
     const savedGroups = localStorage.getItem("groups");
     return savedGroups ? JSON.parse(savedGroups) : [];
@@ -122,7 +125,13 @@ const Groups = () => {
     <div className="max-[760px]:max-w-[600px] w-[95%] xl:w-[82%] mx-auto grid grid-cols-1 md:grid-cols-5 lg:grid-cols-6 gap-8">
       {/* CREATE GROUP & DISPLAY GROUPS COLUMN */}
       <div className="col-span-1 md:col-span-3 lg:col-span-4 mb-12 ">
-        <div className="bg-white shadow-md rounded-md py-4 min-h-[50vh]">
+        <div
+          className={`shadow-md rounded-md py-4 min-h-[50vh] ${
+            darkMode
+              ? "bg-black text-white shadow-sm shadow-slate-200"
+              : "bg-white"
+          }`}
+        >
           {/* HEADER: Your groups Requested */}
           <div className="flex  items-center justify-between px-2 sm:px-10">
             {/* Your groups Requested tabs */}
@@ -132,6 +141,8 @@ const Groups = () => {
                 className={`${
                   activeTab === "yourGroups"
                     ? "text-green-700  border-b-2 border-green-700 border shadow-md rounded-md"
+                    : darkMode
+                    ? "text-white"
                     : "text-gray-900"
                 } font-semibold pb-2 p-1 text-sm min-[450px]:text-lg`}
               >
@@ -142,6 +153,8 @@ const Groups = () => {
                 className={`${
                   activeTab === "requested"
                     ? "text-green-700  border-b-2 border-green-700 border shadow-md rounded-md"
+                    : darkMode
+                    ? "text-white"
                     : "text-gray-900"
                 } font-semibold pb-2 p-1 text-sm min-[450px]:text-lg`}
               >
@@ -261,7 +274,9 @@ const Groups = () => {
                     <div className="w-full text-left ">
                       <h2
                         onClick={() => groupDetailsNavigation(group._id)}
-                        className="font-semibold text-gray-800 hover:underline cursor-pointer hover:text-blue-500"
+                        className={`font-semibold hover:underline cursor-pointer hover:text-blue-500 ${
+                          darkMode ? "text-white" : "text-gray-800"
+                        }`}
                       >
                         {group.name}
                       </h2>
@@ -280,7 +295,11 @@ const Groups = () => {
           {/* LIST OF ALL REQUESTED GROUPS */}
           {activeTab === "requested" && (
             <div className="my-[10%]">
-              <h1 className="text-2xl text-gray-800">
+              <h1
+                className={`text-2xl ${
+                  darkMode ? "text-white" : "text-gray-800"
+                }`}
+              >
                 No requested group found
               </h1>
             </div>
@@ -296,7 +315,7 @@ const Groups = () => {
             {/* PREMIUM NAGIVATION */}
             <div
               onClick={() => navigate("/premium")}
-              className=" cursor-pointer"
+              className="cursor-pointer"
             >
               <img
                 className="w-full rounded-md"

@@ -2,13 +2,19 @@ import { faUsers } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React from "react";
 import { Group } from "../../pages/Groups";
+import { useDarkMode } from "../../contexts/DarkModeProvider";
 interface GroupInfoProps {
   singleGroup: Group;
 }
 
 const GroupInfo: React.FC<GroupInfoProps> = ({ singleGroup }) => {
+  const { darkMode } = useDarkMode();
   return (
-    <div className="bg-white shadow-md rounded-md min-h-[50vh]">
+    <div
+      className={`shadow-md rounded-md min-h-[50vh] ${
+        darkMode ? "bg-black text-white shadow-sm shadow-slate-200" : "bg-white"
+      }`}
+    >
       {/* BACKGROUNG IMAGE */}
       <div className="relative min-h-[25vh] bg-grp-profile-bg-logo bg-cover rounded-t-md">
         {/* PROFILE IMAGE  */}
@@ -22,7 +28,11 @@ const GroupInfo: React.FC<GroupInfoProps> = ({ singleGroup }) => {
       </div>
       <div className="mx-6 text-left flex flex-col gap-2 pb-8 mt-16">
         {/* GROUP NAME */}
-        <h1 className="text-3xl font-semibold text-gray-800">
+        <h1
+          className={`text-3xl font-semibold ${
+            darkMode ? "text-white pt-4" : "text-gray-800"
+          }`}
+        >
           {singleGroup.name}
         </h1>
         <p>
