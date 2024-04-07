@@ -119,8 +119,10 @@ const MGenCard = React.forwardRef<HTMLDivElement, MGenCardProps>(
     return (
       <div
         ref={ref}
-        className={` shadow-md rounded-md mb-4 ${
-          darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
+        className={`rounded-md mb-4 ${
+          darkMode
+            ? "bg-black text-white shadow-slate-200 shadow-sm "
+            : "bg-white shadow-md "
         }`}
       >
         {/* AUTHOR SECTION */}

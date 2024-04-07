@@ -29,8 +29,10 @@ const RCard1 = () => {
     <>
       <div
         className={`${
-          darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
-        } shadow-md rounded-md mb-4`}
+          darkMode
+            ? "bg-black text-white shadow-slate-200 shadow-sm"
+            : "bg-white shadow-md"
+        } rounded-md mb-4`}
       >
         {/* LINKEDIN NEWS HEADER */}
         <h2 className="font-semibold text-left mb-2 px-4 pt-4">

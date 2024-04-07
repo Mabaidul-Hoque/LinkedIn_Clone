@@ -17,8 +17,10 @@ const Lcard1 = () => {
     <>
       <div
         className={`${
-          darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
-        } shadow-md  rounded-md mb-4 z-10`}
+          darkMode
+            ? "bg-black text-white shadow-slate-200 shadow-sm"
+            : "bg-white shadow-md"
+        } rounded-md mb-4 z-10`}
       >
         {/* CARD1 HEADER */}
         <div className="flex items-center justify-center bg-profile-logo bg-custom bg-center h-20 rounded-t-lg">

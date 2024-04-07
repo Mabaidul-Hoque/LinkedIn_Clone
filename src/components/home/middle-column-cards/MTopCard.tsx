@@ -44,8 +44,10 @@ const MTopCard: React.FC<MTopCardProps> = ({
   return (
     <div
       className={`${
-        darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
-      }  shadow-md rounded-md p-4 mb-4`}
+        darkMode
+          ? "bg-black text-white shadow-slate-200 shadow-sm"
+          : "bg-white shadow-md"
+      } rounded-md p-4 mb-4`}
     >
       {/* CREATE POST HEADER */}
       <div className="flex items-center gap-2 xl:gap-4">

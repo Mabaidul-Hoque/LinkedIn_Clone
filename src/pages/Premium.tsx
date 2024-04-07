@@ -12,6 +12,8 @@ import {
 import { frequentlyAkedQuestions } from "../data/frequentlyAkedQuestions";
 import { bussinessFeatures } from "../data/careerFeatures";
 import { FrequentlyAskedQuestions } from "../ui";
+import { useDarkMode } from "../contexts/DarkModeProvider";
+import { Tooltip } from "antd";
 
 const Premium = () => {
   const [activeCat, setActiveCat] = useState(1);
@@ -19,6 +21,7 @@ const Premium = () => {
   const [showQuestions, setShowQuestions] = useState(false);
   const [showFloatingSection, setShowFloatingSection] = useState(false);
   const observer = useRef<IntersectionObserver | null>(null);
+  const { darkMode } = useDarkMode();
 
   const elementRef = (node: HTMLElement | null) => {
     if (observer.current) observer.current.disconnect();
@@ -36,29 +39,41 @@ const Premium = () => {
   const firstHalf = moreFeatures.slice(0, midpoint);
   const secondHalf = moreFeatures.slice(midpoint);
   return (
-    <div>
+    <div className={`${darkMode ? "bg-black " : "bg-white"}`}>
       {/* Floating Section */}
       {showFloatingSection && (
-        <div className="fixed top-0 left-0 w-full bg-white shadow-lg p-4 flex justify-end">
-          <button className="rounded-full bg-[#0A66C2] hover:bg-[#004182] px-6 py-2 text-white text-2xl font-semibold">
+        <div
+          className={`fixed top-0 left-0 w-full  shadow-lg p-4 flex justify-end ${
+            darkMode ? "bg-gray-600" : "bg-white"
+          }`}
+        >
+          <button
+            className={`rounded-full bg-[#0A66C2] hover:bg-[#004182] px-6 py-2 text-white text-2xl font-semibold cursor-no-drop`}
+          >
             Try now for ₹0
           </button>
         </div>
       )}
       {/* NAV & HEADER */}
-      <div className="bg-white">
+      <div className={`${darkMode ? "bg-black text-white" : "bg-white"}`}>
         <nav className="flex items-center justify-between px-4 sm:px-10 md:px-20 lg:px-48 py-2">
           {/* LINKEDIN ICON */}
           <Link to={"/"}>
-            <img
-              className="w-9 h-9"
-              src="/LinkedIn_icon.svg.png"
-              alt="LinedIn_logo"
-            />
+            <Tooltip title="Home" color="blue" arrow={false}>
+              <img
+                className="w-9 h-9"
+                src="/LinkedIn_icon.svg.png"
+                alt="LinedIn_logo"
+              />
+            </Tooltip>
           </Link>
           <Link
             to={"/"}
-            className="text-gray-500 hover:text-black hover:underline"
+            className={`hover:underline ${
+              darkMode
+                ? "bg-black hover:text-gray-400"
+                : "bg-white text-gray-500 hover:text-black"
+            }`}
           >
             Back to LinkedIn.com
           </Link>
@@ -104,12 +119,13 @@ const Premium = () => {
         {/* PREMIUM CATEGORY CARDS CONATINER */}
         <div className="flex flex-col sm:flex-row items-center gap-4 py-6">
           {/* PREMIUM CAT CARD 1: CAREER */}
-
           <div
             onClick={() => setActiveCat(1)}
-            className={`${
-              activeCat === 1 ? "shadow-xl" : ""
-            } border border-gray-200 bg-white w-full sm:w-1/2 rounded-lg  hover:cursor-pointer flex flex-col min-h-[50vh] flex-grow`}
+            className={`${activeCat === 1 ? "shadow-xl" : ""} ${
+              darkMode
+                ? "bg-black text-white shadow shadow-gray-500"
+                : "bg-white border border-gray-200 "
+            } w-full sm:w-1/2 rounded-lg  hover:cursor-pointer flex flex-col min-h-[50vh] flex-grow`}
           >
             <a href={"#cat_card_description"}>
               {/* FOR ACTIVE CAT DIV bg-green */}
@@ -126,7 +142,11 @@ const Premium = () => {
                 </div>
                 <h2
                   className={`${
-                    activeCat === 1 ? "text-[#44712E]" : "text-gray-600"
+                    activeCat === 1
+                      ? "text-[#44712E]"
+                      : darkMode
+                      ? "text-white"
+                      : "text-gray-600"
                   } text-2xl font-semibold  mb-2`}
                 >
                   Career
@@ -155,12 +175,13 @@ const Premium = () => {
           </div>
 
           {/* PREMIUM CAT CARD 2: BUSSINESS */}
-
           <div
             onClick={() => setActiveCat(2)}
-            className={`${
-              activeCat === 2 ? "shadow-xl" : ""
-            } border border-gray-200 bg-white w-full sm:w-1/2 rounded-lg  hover:cursor-pointer flex flex-col min-h-[50vh] flex-grow`}
+            className={`${activeCat === 2 ? "shadow-xl" : ""} ${
+              darkMode
+                ? "bg-black text-white shadow shadow-gray-500"
+                : "bg-white border border-gray-200 "
+            } w-full sm:w-1/2 rounded-lg  hover:cursor-pointer flex flex-col min-h-[50vh] flex-grow`}
           >
             <a href={"#cat_card_description"}>
               {/* FOR ACTIVE CAT DIV bg-green */}
@@ -172,7 +193,11 @@ const Premium = () => {
               <div className="px-4 py-2">
                 <h2
                   className={`${
-                    activeCat === 2 ? "text-[#56687A]" : "text-gray-600"
+                    activeCat === 2
+                      ? "text-[#56687A]"
+                      : darkMode
+                      ? "text-white"
+                      : "text-gray-600"
                   } text-2xl font-semibold  mb-2 pt-8`}
                 >
                   Business
@@ -205,19 +230,31 @@ const Premium = () => {
           </div>
         </div>
         {/* EXPLORE ALL PLANS BTN */}
-        <button className="w-full py-1.5 border border-gray-300 rounded-lg text-[#0A66C2] font-semibold text-lg bg-white hover:bg-[#E2F0FE]">
+        <button
+          className={`w-full py-1.5 border border-gray-300 rounded-lg text-[#0A66C2] font-semibold text-lg ${
+            darkMode
+              ? "bg-black text-white hover:bg-gray-700"
+              : "bg-white hover:bg-[#E2F0FE]"
+          }`}
+        >
           Explore all plans
         </button>
         {/* PREMIMUM CAT CARD DESCRIPTION */}
         <div
           id="cat_card_description"
-          className="w-full text-center px-6 py-8 border border-gray-300 rounded-lg bg-white my-6"
+          className={`w-full text-center px-6 py-8 border border-gray-300 rounded-lg my-6 ${
+            darkMode ? "bg-black text-white" : "bg-white"
+          }`}
         >
           {/*  BENIFIT  */}
           <h1 className="text-6xl font-bold text-[#C37D16]">
             {activeCat === 1 ? "2.6x" : "4x"}{" "}
           </h1>
-          <h5 className="text-xl text-gray-700 my-2">
+          <h5
+            className={`text-xl my-2 ${
+              darkMode ? "text-gray-200 " : "text-gray-700 "
+            }`}
+          >
             Premium members{" "}
             {activeCat === 1
               ? "are 2.6x more likely to get hired on average"
@@ -227,7 +264,11 @@ const Premium = () => {
           <div className="border-b border-gray-300 my-4" />
           {/* Top Career features Conatiner */}
           <div className="w-full">
-            <h2 className="text-2xl text-gray-800 font-semibold mb-6">
+            <h2
+              className={`text-2xl font-semibold mb-6 ${
+                darkMode ? "text-gray-200 " : "text-gray-800 "
+              }`}
+            >
               Top {activeCat === 1 ? "Career" : "Bussiness"} features
             </h2>
             {/* Top Career features cards */}
@@ -244,7 +285,13 @@ const Premium = () => {
                       alt={feature.title}
                     />
                     <p className=" font-semibold">{feature.title}</p>
-                    <p className="text-sm text-gray-500">{feature.content}</p>
+                    <p
+                      className={`text-sm ${
+                        darkMode ? "text-gray-200 " : "text-gray-500 "
+                      }`}
+                    >
+                      {feature.content}
+                    </p>
                   </div>
                 )
               )}
@@ -273,14 +320,22 @@ const Premium = () => {
                   <div className="flex flex-col  gap-4 w-full sm:w-1/2">
                     {firstHalf.map((moreFeature) => (
                       <li className="text-left list-none" key={moreFeature.id}>
-                        <h2 className="font-semibold text-gray-700">
+                        <h2
+                          className={`font-semibold${
+                            darkMode ? "text-gray-200 " : "text-gray-700 "
+                          }`}
+                        >
                           <FontAwesomeIcon
                             className="text-green-700 mr-1"
                             icon={faCheck}
                           />
                           {moreFeature.title}
                         </h2>
-                        <p className="text-sm text-gray-500">
+                        <p
+                          className={`text-sm ${
+                            darkMode ? "text-gray-200 " : "text-gray-500 "
+                          }`}
+                        >
                           {moreFeature.content}
                         </p>
                       </li>
@@ -290,14 +345,22 @@ const Premium = () => {
                   <div className="flex flex-col gap-4 w-full sm:w-1/2">
                     {secondHalf.map((moreFeature) => (
                       <li className="text-left list-none" key={moreFeature.id}>
-                        <h2 className="font-semibold text-gray-700">
+                        <h2
+                          className={`font-semibold${
+                            darkMode ? "text-gray-200 " : "text-gray-700 "
+                          }`}
+                        >
                           <FontAwesomeIcon
                             className="text-green-700 mr-1"
                             icon={faCheck}
                           />
                           {moreFeature.title}
                         </h2>
-                        <p className="text-sm text-gray-500">
+                        <p
+                          className={`text-sm ${
+                            darkMode ? "text-gray-200 " : "text-gray-500 "
+                          }`}
+                        >
                           {moreFeature.content}
                         </p>
                       </li>
@@ -311,17 +374,23 @@ const Premium = () => {
         {/* NAVIAGTION TO CHECKOUT  */}
         <div
           ref={elementRef}
-          className="w-full text-center px-6 py-8 border border-gray-300 rounded-lg bg-white my-6"
+          className={`w-full text-center px-6 py-8 border border-gray-300 rounded-lg my-6 ${
+            darkMode ? "bg-black text-white" : "bg-white"
+          }`}
         >
           <h1 className="font-semibold text-xl">
             Price: <span className="line-through">₹1,850.00</span>* 1-month free
             trial
           </h1>
-          <p className="text-sm text-gray-600 py-4">
+          <p
+            className={`text-sm py-4 ${
+              darkMode ? "text-gray-200" : "text-gray-600"
+            }`}
+          >
             After your free month, pay as little as ₹1,850.00* / month after.
             Cancel anytime. We'll remind you 7 days before your trial ends.
           </p>
-          <button className="rounded-full bg-[#0A66C2] hover:bg-[#004182] px-6 py-2 text-white text-2xl font-semibold">
+          <button className="rounded-full bg-[#0A66C2] hover:bg-[#004182] px-6 py-2 text-white text-2xl font-semibold cursor-no-drop">
             Try now for ₹0
           </button>
           <p className="py-8">
@@ -332,7 +401,9 @@ const Premium = () => {
           <div>
             <button
               onClick={() => setShowQuestions(!showQuestions)}
-              className="text-gray-600 font-semibold hover:bg-gray-100 focus:bg-gray-200 active:bg-gray-200 px-2 py-2 rounded-md my-6"
+              className={`font-semibold hover:bg-gray-100 focus:bg-gray-200 active:bg-gray-200 px-2 py-2 rounded-md my-6 ${
+                darkMode ? "text-gray-500" : "text-gray-600"
+              }`}
             >
               Frequently asked questions
               {showQuestions ? (
@@ -349,7 +420,11 @@ const Premium = () => {
           </div>
         </div>
       </main>
-      <footer className="w-[80%] mx-auto py-8 text-sm text-gray-600">
+      <footer
+        className={`w-[80%] mx-auto py-8 text-sm ${
+          darkMode ? "text-white" : "text-gray-600"
+        }`}
+      >
         *Includes tax based on your billing country. You can update your
         information on the next page.
       </footer>

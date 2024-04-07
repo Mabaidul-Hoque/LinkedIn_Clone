@@ -62,8 +62,10 @@ const Lcard2 = () => {
     <>
       <div
         className={`${
-          darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
-        } shadow-md rounded-md mb-4 flex flex-col gap-4`}
+          darkMode
+            ? "bg-black text-white shadow-slate-200 shadow-sm"
+            : "bg-white shadow-md"
+        } rounded-md mb-4 flex flex-col gap-4`}
       >
         {/* GROUPS */}
         <div className="flex flex-col gap-2 px-4 mt-4">

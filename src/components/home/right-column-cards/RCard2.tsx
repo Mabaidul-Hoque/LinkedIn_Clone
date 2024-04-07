@@ -17,8 +17,10 @@ const RCard2 = () => {
     <>
       <div
         className={`${
-          darkMode ? "bg-black text-white shadow-slate-200" : "bg-white"
-        } shadow-md rounded-md px-4 py-4 xlpy-8 mb-4 cursor-pointer relative`}
+          darkMode
+            ? "bg-black text-white shadow-slate-200 shadow-sm"
+            : "bg-white shadow-md"
+        } rounded-md px-4 py-4 xlpy-8 mb-4 cursor-pointer relative`}
       >
         <p className="text-sm">
           {user.name}, unlock your full potential with linkedin Premium
