@@ -19,7 +19,7 @@ const Layout = () => {
     <div className="">
       {/* NAVBAR */}
       <nav
-        className={`text-center w-full h-14 flex items-center justify-between bg-[#FFFFFF] sticky top-0 dark:bg-black shadow-md ${
+        className={`text-center  h-14 flex items-center justify-between bg-[#FFFFFF] sticky top-0 dark:bg-black shadow-md ${
           darkMode ? "bg-black text-white shadow-gray-900" : "white"
         }`}
       >

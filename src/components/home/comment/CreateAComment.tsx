@@ -73,7 +73,7 @@ const CreateAComment: React.FC<CreateACommentProps> = ({
         className="w-10 h-10 rounded-full cursor-pointer"
       />
       {/* CREATE A COMMENT INPUT */}
-      <div className="flex flex-col gap-2 w-11/12 sm:w-full">
+      <div className="flex flex-col gap-2 w-10/12 min-[400px]:w-11/12 sm:w-full">
         <textarea
           ref={textAreaRef}
           value={content}
