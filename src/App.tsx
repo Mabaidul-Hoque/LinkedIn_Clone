@@ -11,7 +11,6 @@ function App() {
 
   useEffect(() => {
     const token = localStorage.getItem("token");
-    console.log("toekn in app", token);
 
     if (token) {
       setIsAuthenticated(true);
@@ -23,6 +22,7 @@ function App() {
   useEffect(() => {
     setLoading(isLoading);
   }, [isLoading]);
+  
   if (loading) {
     return <Loading />;
   }

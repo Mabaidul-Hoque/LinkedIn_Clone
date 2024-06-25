@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import React, { useState } from "react";
 import Picker from "@emoji-mart/react";
 import { useDarkMode } from "../../contexts/DarkModeProvider";
+import { useAuth } from "../../contexts/AuthProvider";
 
 interface EmojiData {
   native: string;
@@ -42,6 +43,7 @@ const PostModal: React.FC<PostModalProps> = ({
 }) => {
   const [emojiPickerVisible, setEmojiPickerVisible] = useState(false);
   const { darkMode } = useDarkMode();
+  const {user} = useAuth();
 
   const handleEmojiSelect = (emoji: EmojiData) => {
     if (emoji && emoji.native) {
@@ -125,7 +127,7 @@ const PostModal: React.FC<PostModalProps> = ({
                   <div className="flex flex-col text-left">
                     {/* USER NAME */}
                     <p className="font-semibold text-xl">
-                      Mabaidul Hoque
+                      {user.name}
                       <FontAwesomeIcon
                         className="text-gray-600 ml-2"
                         icon={faCaretDown}
@@ -153,6 +155,7 @@ const PostModal: React.FC<PostModalProps> = ({
                   value={postContent || updatedContent}
                   onChange={handlePostContentChange}
                 ></textarea>
+                {/* SHOW SELECTED FILES */}
                 <div>
                   {selectedFiles && selectedFiles?.length > 0 && (
                     <div className="flex flex-wrap items-center justify-center gap-2">
