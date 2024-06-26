@@ -14,6 +14,8 @@ import { bussinessFeatures } from "../data/careerFeatures";
 import { FrequentlyAskedQuestions } from "../ui";
 import { useDarkMode } from "../contexts/DarkModeProvider";
 import { Tooltip } from "antd";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Premium = () => {
   const [activeCat, setActiveCat] = useState(1);
@@ -48,7 +50,10 @@ const Premium = () => {
           }`}
         >
           <button
-            className={`rounded-full bg-[#0A66C2] hover:bg-[#004182] px-6 py-2 text-white text-2xl font-semibold cursor-no-drop`}
+            className={`rounded-full bg-[#0A66C2] hover:bg-[#004182] px-6 py-2 text-white text-2xl font-semibold`}
+            onClick={() =>
+              toast.info("The work is under process!", { theme: "colored" })
+            }
           >
             Try now for ₹0
           </button>
@@ -390,7 +395,12 @@ const Premium = () => {
             After your free month, pay as little as ₹1,850.00* / month after.
             Cancel anytime. We'll remind you 7 days before your trial ends.
           </p>
-          <button className="rounded-full bg-[#0A66C2] hover:bg-[#004182] px-6 py-2 text-white text-2xl font-semibold cursor-no-drop">
+          <button
+            className="rounded-full bg-[#0A66C2] hover:bg-[#004182] px-6 py-2 text-white text-2xl font-semibold "
+            onClick={() =>
+              toast.info("The work is under process!", { theme: "colored" })
+            }
+          >
             Try now for ₹0
           </button>
           <p className="py-8">
@@ -428,6 +438,8 @@ const Premium = () => {
         *Includes tax based on your billing country. You can update your
         information on the next page.
       </footer>
+
+      <ToastContainer position="top-center" />
     </div>
   );
 };
