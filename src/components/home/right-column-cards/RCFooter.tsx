@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import { useDarkMode } from "../../../contexts/DarkModeProvider";
+import { toast } from "react-toastify";
 
 const lists = [
   {
@@ -56,7 +57,14 @@ const RCFooter = () => {
       <ul className="text-sm flex flex-wrap gap-2 items-center justify-center text-gray-500 p-2 lg:p-4 xl:p-8">
         {lists.map((listItem) => (
           <li key={listItem.id} className="hover:underline hover:text-blue-500">
-            <Link to={listItem.link}>{listItem.title}</Link>
+            <Link
+              to={listItem.link}
+              onClick={() =>
+                toast.info("It's under proccess!", { theme: "colored" })
+              }
+            >
+              {listItem.title}
+            </Link>
           </li>
         ))}
       </ul>

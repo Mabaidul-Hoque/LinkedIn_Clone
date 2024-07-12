@@ -1,7 +1,12 @@
 import { Fragment } from "react";
 import { Menu, Transition } from "@headlessui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretDown, faCircleUser } from "@fortawesome/free-solid-svg-icons";
+import {
+  faCaretDown,
+  faCircleUser,
+  faToggleOff,
+  faToggleOn,
+} from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../contexts/AuthProvider";
 import { toast } from "react-toastify";
 import { Link, useNavigate } from "react-router-dom";
@@ -99,7 +104,11 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onMenu }) => {
                 <Link
                   to={"/premium"}
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : darkMode
+                      ? "text-gray-200"
+                      : "text-gray-700",
                     "block px-4 py-2 text-sm"
                   )}
                   onClick={onMenu}
@@ -112,7 +121,11 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onMenu }) => {
               {({ active }) => (
                 <button
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : darkMode
+                      ? "text-gray-200"
+                      : "text-gray-700",
                     "block px-4 py-2 text-sm w-full text-left"
                   )}
                   onClick={() => {
@@ -120,7 +133,17 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onMenu }) => {
                     onDarkMode();
                   }}
                 >
-                  {darkMode ? "Light" : "Dark"} Mode
+                  {darkMode ? (
+                    <div className="flex items-center gap-8">
+                      <span>Light Mode</span>
+                      <FontAwesomeIcon className="size-5" icon={faToggleOn} />
+                    </div>
+                  ) : (
+                    <div className="flex items-center gap-8">
+                      <span>Dark Mode</span>{" "}
+                      <FontAwesomeIcon className="size-5" icon={faToggleOff} />
+                    </div>
+                  )}
                 </button>
               )}
             </Menu.Item>
@@ -132,7 +155,11 @@ const ProfileDropdown: React.FC<ProfileDropdownProps> = ({ onMenu }) => {
                   type="submit"
                   onClick={handleLogout}
                   className={classNames(
-                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    active
+                      ? "bg-gray-100 text-gray-900"
+                      : darkMode
+                      ? "text-gray-200"
+                      : "text-gray-700",
                     "block w-full px-4 py-2 text-left text-sm"
                   )}
                 >
