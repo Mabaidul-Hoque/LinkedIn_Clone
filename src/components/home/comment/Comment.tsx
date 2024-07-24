@@ -8,6 +8,8 @@ import { useAuth } from "../../../contexts/AuthProvider";
 import { deleteCommnetByID } from "../../../apis/deleteACommentApi";
 import { CreateAComment } from "./";
 import { useDarkMode } from "../../../contexts/DarkModeProvider";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 interface CommentProps {
   setContent: (content: string | ((prev: string) => string)) => void;
   content: string;
@@ -222,10 +224,12 @@ const Comment: React.FC<CommentProps> = ({
                         // setIsDeleted(true);
                       }}
                       className={`text-[12px] rounded-md px-1 py-0.5 ${
-                        darkMode ? "hover:bg-gray-600" : "hover:bg-gray-200"
+                        darkMode
+                          ? "hover:bg-gray-600"
+                          : "hover:text-red-500 hover:scale-150 text-gray-700 transform "
                       }`}
                     >
-                      Delete
+                      <FontAwesomeIcon icon={faTrashCan} />
                     </button>
                   </div>
                   {/* REPLY TO A COMMENT */}
