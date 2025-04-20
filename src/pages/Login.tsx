@@ -9,31 +9,106 @@ import { RegistrationCard } from "../components";
 const Login = () => {
   const [showRegistration, setShowRegistration] = useState(false);
   const [email, setEmail] = useState("");
+  const [emailError, setEmailError] = useState("");
   const [password, setPassword] = useState("");
   const { login, loadingTrue, loadingFalse, setUser } = useAuth();
   const navigate = useNavigate();
   const [passwordVisible, setPasswordVisible] = useState(false);
 
+  const validateEmail = (email: string) => {
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    return emailRegex.test(email);
+  };
+
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newEmail = e.target.value;
+    setEmail(newEmail);
+
+    if (newEmail === "") {
+      setEmailError("");
+    } else if (!validateEmail(newEmail)) {
+      setEmailError("Please enter a valid email address");
+    } else {
+      setEmailError("");
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validate email before submission
+    if (!validateEmail(email)) {
+      setEmailError("Please enter a valid email address");
+      return;
+    }
+
     const body = {
       email,
       password,
     };
-    const res = await fetchSignin(body);
-    if (res.status === "success") {
-      setUser({
-        name: res.data.name,
-        email: res.data.email,
-        _id: res.data._id,
-      });
-      loadingTrue();
-      login(res.token);
-      navigate("/");
-      toast.success(`Welcome back ${res?.data?.user?.name}`, {
-        theme: "colored",
-      });
-      loadingFalse();
+
+    try {
+      const res = await fetchSignin(body);
+      if (res.status === "success") {
+        setUser({
+          name: res.data.name,
+          email: res.data.email,
+          _id: res.data._id,
+        });
+        loadingTrue();
+        login(res.token);
+        navigate("/");
+        toast.success(`Welcome back ${res?.data?.user?.name}`, {
+          theme: "colored",
+        });
+        loadingFalse();
+      }
+    } catch (error: unknown) {
+      const typedError = error as {
+        response?: { data?: { message?: string }; status?: number };
+      };
+
+      if (typedError.response?.status === 401) {
+        toast.error(
+          <div>
+            User not found. Please{" "}
+            <button
+              onClick={handleJoinNowClick}
+              className="text-blue-500 hover:underline font-semibold"
+            >
+              register
+            </button>{" "}
+            first.
+          </div>,
+          {
+            theme: "colored",
+          }
+        );
+      } else if (typedError.response?.data?.message === "User not found") {
+        toast.error(
+          <div>
+            User not registered. Please{" "}
+            <button
+              onClick={handleJoinNowClick}
+              className="text-blue-500 hover:underline font-semibold"
+            >
+              register
+            </button>{" "}
+            first.
+          </div>,
+          {
+            theme: "colored",
+          }
+        );
+      } else if (typedError.response?.data?.message === "Invalid password") {
+        toast.error("Invalid password. Please try again.", {
+          theme: "colored",
+        });
+      } else {
+        toast.error("Please Register First", {
+          theme: "colored",
+        });
+      }
     }
   };
 
@@ -47,6 +122,7 @@ const Login = () => {
   const togglePasswordVisibility = () => {
     setPasswordVisible(!passwordVisible);
   };
+
   return (
     <div className="h-screen bg-gray-100">
       {/* LINKEDIN LOGO */}
@@ -75,13 +151,22 @@ const Login = () => {
                 {/* INPUTS: EMAIL AND PASSWORD */}
                 <div className="flex flex-col gap-2 mb-4">
                   {/* EMAIL */}
-                  <input
-                    type="email"
-                    placeholder="Enter Email"
-                    value={email}
-                    onChange={(e) => setEmail(e.target.value)}
-                    className="w-full px-3 py-2 placeholder-gray-300 border border-gray-300 rounded-md focus:outline-none focus:ring focus:ring-indigo-100 focus:border-indigo-300"
-                  />
+                  <div className="flex flex-col">
+                    <input
+                      type="email"
+                      placeholder="Enter Email"
+                      value={email}
+                      onChange={handleEmailChange}
+                      className={`w-full px-3 py-2 placeholder-gray-300 border rounded-md focus:outline-none focus:ring ${
+                        emailError
+                          ? "border-red-500 focus:ring-red-100 focus:border-red-300"
+                          : "border-gray-300 focus:ring-indigo-100 focus:border-indigo-300"
+                      }`}
+                    />
+                    {emailError && (
+                      <p className="text-red-500 text-sm mt-1">{emailError}</p>
+                    )}
+                  </div>
                   {/* PASSWORD */}
                   <div className="relative">
                     <input
