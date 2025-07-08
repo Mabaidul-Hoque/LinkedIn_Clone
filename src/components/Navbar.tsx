@@ -1,3 +1,4 @@
+import React from "react";
 import {
   faBell,
   faBriefcase,
@@ -19,11 +20,11 @@ import { useSearchData } from "../contexts/SearchDataProvider";
 import { AutocompleteModal, ProfileDropdown, ResponsiveMenu } from "../ui";
 import { useDarkMode } from "../contexts/DarkModeProvider";
 
-interface NavabrProps {
+interface NavbarProps {
   handleMenu: () => void;
   menu: boolean;
 }
-const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
+const Navbar: React.FC<NavbarProps> = ({ handleMenu, menu }) => {
   const { pathname } = useLocation();
   const [searchTerm, setSearchTerm] = useState("");
   const { setResults, searchItems, setSearchItems } = useSearchData();
@@ -36,7 +37,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
     setOpen(!open);
   };
 
-  const onSearch = async (searchItems: {}) => {
+  const onSearch = async (searchItems: object) => {
     const res = await searchContent(searchItems);
     console.log("res from search ", res);
     if (res.status === "success") {
@@ -82,6 +83,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
             onChange={handleInputChange}
           />
           <button
+            data-testid="search-button"
             className={`${
               open ? "block" : "hidden"
             } lg:block text-gray-500 border border-gray-200 px-2 py-1 h-9 rounded-e-full bg-[#EDF3F8] focus:text-green-500`}
@@ -175,7 +177,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           </li>
           {/* MESSAGING ROUTE */}
           <li
-            onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
+            onClick={() => toast.info("Coming Soon...!", { theme: "colored" })}
             className={`${
               pathname === "/messaging"
                 ? darkMode
@@ -199,7 +201,7 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           </li>
           {/* NOTIFICATIONS ROUTE */}
           <li
-            onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
+            onClick={() => toast.info("Coming Soon...!", { theme: "colored" })}
             className={`${
               pathname === "/notifications"
                 ? darkMode
@@ -230,22 +232,22 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           <ProfileDropdown onMenu={() => {}} />
           {/* DIVIDER */}
           <div className="border-r-1 border-gray-500"></div>
-          {/*  FOR BUSSINESS  */}
+          {/*  FOR BUSINESS  */}
           <div
-            onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
+            onClick={() => toast.info("Coming Soon...!", { theme: "colored" })}
             className={`flex flex-col justify-center items-center ${
               darkMode ? "text-white" : "text-gray-600 hover:text-black"
             } cursor-pointer`}
           >
             <FontAwesomeIcon className="w-6 h-6" icon={faGripVertical} />
             <span className="text-[12px] max-[800px]:hidden">
-              For Bussiness{" "}
+              For Business{" "}
               <FontAwesomeIcon className="w-3 h-3" icon={faCaretDown} />
             </span>
           </div>
           {/* ADVERTISE */}
           <div
-            onClick={() => toast.info("Cooming Soon...!", { theme: "colored" })}
+            onClick={() => toast.info("Coming Soon...!", { theme: "colored" })}
             className={`flex flex-col justify-center items-center  ${
               darkMode ? "text-white" : "text-gray-600 hover:text-black"
             }   cursor-pointer`}
@@ -255,9 +257,13 @@ const Navbar: React.FC<NavabrProps> = ({ handleMenu, menu }) => {
           </div>
         </div>
         {/* RESPONSIVE MENU */}
-        <div onClick={handleMenu} className="cursor-pointer min-[550px]:hidden">
+        <button
+          data-testid="ellipsis-button"
+          onClick={handleMenu}
+          className="cursor-pointer min-[550px]:hidden"
+        >
           <FontAwesomeIcon className="text-3xl" icon={faEllipsis} />
-        </div>
+        </button>
       </div>
       <div className="min-[550px]:hidden">
         <ResponsiveMenu menu={menu} handleMenu={handleMenu} />
