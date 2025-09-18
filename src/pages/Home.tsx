@@ -40,6 +40,7 @@ const Home = () => {
 
   useEffect(() => {
     getPosts();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [page]);
 
   const getPosts = async () => {
@@ -47,7 +48,7 @@ const Home = () => {
     // console.log("res from posts", res);
     if (res?.status === "success") {
       setStopData(true);
-      setPosts((prevPosts) => [...prevPosts, ...res?.data]);
+      setPosts((prevPosts) => [...prevPosts, ...res.data]);
     } else {
       setHasMore(false);
     }

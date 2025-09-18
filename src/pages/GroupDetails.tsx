@@ -25,6 +25,7 @@ const GroupDetails = () => {
 
   useEffect(() => {
     getGroupDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getGroupDetails = async () => {
